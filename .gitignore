@@ -11,9 +11,9 @@ config.log
 *~
 archive/
 
-# Built by sconsUtils
-version.py
-bin/
+.eggs
+python/cm_prod.egg-info/
+python/lsst/cm/prod/_version.py
 
 # Pytest
 tests/.tests

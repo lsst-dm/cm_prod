@@ -1,0 +1,33 @@
+includeConfigs:
+- ${CTRL_BPS_PANDA_DIR}/config/bps_idf.yaml
+
+iddsServer: "https://aipanda015.cern.ch:443/idds"
+
+project: dev
+campaign: quick
+computeSite: SLAC
+computeCloud: US
+queue: "SLAC_TEST"
+
+weekly: w_2022_27
+runnerCommand: 'unset PYTHONPATH; env; source /cvmfs/sw.lsst.eu/linux-x86_64/lsst_distrib/{weekly}/loadLSST.bash;pwd;ls -al;setup lsst_distrib; python3 ${CTRL_BPS_PANDA_DIR}/python/lsst/ctrl/bps/panda/edgenode/cmd_line_decoder.py _cmd_line_;retStat=$?; rm -fr EXEC_REPO-*; exit $retStat'
+
+wmsServiceClass: lsst.ctrl.bps.panda.panda_service.PanDAService
+
+pipelineYaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step1"
+
+payload:
+  payloadName: "{weekly}/test"
+  output: "u/{operator}/{payloadName}"
+  butlerConfig: /sdf/group/rubin/repo/main
+  inCollection: "HSC/RC2/defaults"
+  dataQuery: ""
+  payloadFolder: payload
+  fileDistributionEndPoint: "file:///sdf/group/rubin/sandbox/hfc/panda_cache_box/{payloadFolder}/{uniqProcName}/"
+  forcedPhotCoadd:
+     queue: "SLAC_TEST"
+
+executionButler:
+  queue: "SLAC_TEST"
+
+maxJobsPerTask: 30000
