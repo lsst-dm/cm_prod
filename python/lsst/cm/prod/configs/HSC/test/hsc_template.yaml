@@ -1,0 +1,29 @@
+includeConfigs:
+- ${{CTRL_BPS_PANDA_DIR}}/config/bps_idf.yaml
+
+iddsServer: "https://aipanda015.cern.ch:443/idds"
+
+project: dev
+campaign: quick
+computeSite: SLAC
+computeCloud: US
+queue: "SLAC_TEST"
+
+wmsServiceClass: lsst.ctrl.bps.panda.panda_service.PanDAService
+
+pipelineYaml: "{pipeline_yaml}"
+
+payload:
+  payloadName: "HSC/test"
+  output: {w_coll_out}
+  butlerConfig: {butler_config}
+  inCollection: {w_coll_in}
+  dataQuery: {data_query}
+  payloadFolder: payload
+  forcedPhotCoadd:
+     queue: "SLAC_TEST"
+
+executionButler:
+  queue: "SLAC_TEST"
+
+maxJobsPerTask: 30000
