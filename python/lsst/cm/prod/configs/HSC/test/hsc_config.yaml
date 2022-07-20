@@ -1,0 +1,12 @@
+workflow_template_yaml: "${CM_PROD_DIR}/python/lsst/cm/prod/configs/HSC/test/hsc_template.yaml"
+sw_image: ""
+coll_source: 'HSC/raw/RC2'
+command_tmpl: 'bps'
+pipeline_yaml:
+    step1: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step1"
+    step2: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step2"
+    step3: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step3"
+    step4: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step4"
+    step5: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step5"
+    step6: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step6"
+    step7: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step7"

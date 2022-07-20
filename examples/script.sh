@@ -1,14 +1,17 @@
 \rm cm.db
 
-p_name="example"
+p_name="HSC"
 c_name="test"
-handler="lsst.cm.prod.DP0p2.handler.DP0p2Handler"
-config="${CM_PROD_DIR}/python/lsst/cm/prod/configs/DP0p2/DP0p2_config.yaml"
+handler="lsst.cm.prod.HSC.handler.HSCHandler"
+config="${CM_PROD_DIR}/python/lsst/cm/prod/configs/HSC/test/hsc_config.yaml"
 command="${CM_TOOLS_DIR}/bin.src/cm"
+butler_repo=/sdf/group/rubin/repo/main
+
+\rm -rf archive_hsc_test cm.db
 
 ${command} create 
 ${command} insert --level production --production_name ${p_name} --handler ${handler} --config_yaml ${config}
-${command} insert --recurse --level campaign --production_name ${p_name} --campaign_name ${c_name} --handler ${handler} --config_yaml ${config}
+${command} insert --recurse --level campaign --production_name ${p_name} --campaign_name ${c_name} --handler ${handler} --config_yaml ${config} --butler_repo ${butler_repo}
 
 ${command} prepare --recurse --level step --production_name ${p_name} --campaign_name ${c_name} --step_name step1
 ${command} queue --level step --production_name ${p_name} --campaign_name ${c_name} --step_name step1
@@ -45,6 +48,7 @@ ${command} accept --level step --production_name ${p_name} --campaign_name ${c_n
 
 ${command} check --level campaign --production_name ${p_name} --campaign_name ${c_name}
 ${command} accept --level campaign --production_name ${p_name} --campaign_name ${c_name}
+${command} accept --recurse --level step --production_name ${p_name} --campaign_name ${c_name} --step_name step1
 
 ${command} print_table --level production
 ${command} print_table --level campaign
