@@ -1,4 +1,4 @@
-workflow_template_yaml: "${CM_PROD_DIR}/python/lsst/cm/prod/configs/HSC/test/hsc_template.yaml"
+workflow_template_yaml: "python/lsst/cm/prod/configs/HSC/test/hsc_template.yaml"
 sw_image: ""
 coll_source: 'HSC/raw/RC2'
 command_tmpl: 'bps'

@@ -26,9 +26,7 @@ import numpy as np
 from lsst.daf.butler import Butler
 
 
-def get_sorted_array(
-        itr,
-        field: str) -> np.ndarray:
+def get_sorted_array(itr, field: str) -> np.ndarray:
     the_set = set()
     for x_ in itr:
         the_set.add(x_.dataId[field])
@@ -37,11 +35,12 @@ def get_sorted_array(
 
 
 def build_data_queries(
-        butler: Butler,
-        dataset: str,
-        field: str,
-        min_queries: Optional[int] = None,
-        max_step_size: Optional[int] = None) -> np.ndarray:
+    butler: Butler,
+    dataset: str,
+    field: str,
+    min_queries: Optional[int] = None,
+    max_step_size: Optional[int] = None,
+) -> np.ndarray:
 
     if min_queries is None and max_step_size is None:
         return []
@@ -55,9 +54,9 @@ def build_data_queries(
         step_size = min(max_step_size, n_matched)
     else:
         if max_step_size is None:
-            step_size = int(n_matched/min_queries)
+            step_size = int(n_matched / min_queries)
         else:
-            step_size = min(max_step_size, int(n_matched/min_queries))
+            step_size = min(max_step_size, int(n_matched / min_queries))
 
     ret_list = []
 
@@ -75,12 +74,13 @@ def build_data_queries(
     return ret_list
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     from lsst.daf.butler import Butler
-    the_butler = Butler('/sdf/group/rubin/repo/main', collections=['HSC/raw/RC2'])
 
-    data_queries_0 = build_data_queries(the_butler, 'raw', 'exposure')
-    data_queries_1 = build_data_queries(the_butler, 'raw', 'exposure', 5)
-    data_queries_2 = build_data_queries(the_butler, 'raw', 'exposure', None, 20)
-    data_queries_3 = build_data_queries(the_butler, 'raw', 'exposure', 5, 20)
+    the_butler = Butler("/sdf/group/rubin/repo/main", collections=["HSC/raw/RC2"])
+
+    data_queries_0 = build_data_queries(the_butler, "raw", "exposure")
+    data_queries_1 = build_data_queries(the_butler, "raw", "exposure", 5)
+    data_queries_2 = build_data_queries(the_butler, "raw", "exposure", None, 20)
+    data_queries_3 = build_data_queries(the_butler, "raw", "exposure", 5, 20)
