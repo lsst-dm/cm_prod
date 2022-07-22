@@ -28,13 +28,15 @@ from lsst.daf.butler import Butler
 
 from lsst.cm.tools.core.utils import StatusEnum, LevelEnum
 from lsst.cm.tools.core.grouper import Grouper
-from lsst.cm.tools.core.db_interface import DbInterface, DbId
+from lsst.cm.tools.core.db_interface import DbInterface, ScriptBase, DbId
 from lsst.cm.tools.db.sqlalch_handler import SQLAlchemyHandler
 
 from lsst.cm.tools.core.script_utils import (
     YamlChecker,
     make_butler_associate_command,
     make_butler_chain_command,
+    make_bps_command,
+    add_command_script,
     write_status_to_yaml,
 )
 from lsst.cm.prod.core.butler_utils import build_data_queries
@@ -155,13 +157,20 @@ class HSCHandler(SQLAlchemyHandler):
     default_config = SQLAlchemyHandler.default_config.copy()
 
     default_config.update(
-        prepare_script_url_template="{prod_base_url}/{fullname}/prepare.sh",
-        prepare_log_url_template="{prod_base_url}/{fullname}/prepare.log",
-        collect_script_url_template="{prod_base_url}/{fullname}/collect.sh",
-        collect_log_url_template="{prod_base_url}/{fullname}/collect.log",
-        run_script_url_template="bps",
-        run_log_url_template="{prod_base_url}/{fullname}/run.log",
-        run_config_url_template="{prod_base_url}/{fullname}/bps.yaml",
+        prepare_script_url_template="{prod_base_url}/{fullname}/01_prepare.sh",
+        prepare_log_url_template="{prod_base_url}/{fullname}/01_prepare.log",
+        run_script_url_template="{prod_base_url}/{fullname}/02_run.sh",
+        run_log_url_template="{prod_base_url}/{fullname}/02_run.log",
+        run_config_url_template="{prod_base_url}/{fullname}/02_run_bps.yaml",
+        collect_script_url_template="{prod_base_url}/{fullname}/03_collect.sh",
+        collect_log_url_template="{prod_base_url}/{fullname}/03_collect.log",
+        coll_in_template="prod/{fullname}_input",
+        coll_out_template="prod/{fullname}_output",
+    )
+
+    coll_template_names = dict(
+        coll_in="coll_in_template",
+        coll_out="coll_out_template",
     )
 
     prepare_script_url_template_names = dict(
@@ -182,105 +191,100 @@ class HSCHandler(SQLAlchemyHandler):
 
     yaml_checker_class = YamlChecker().get_checker_class_name()
 
+    def coll_name_hook(self, level: LevelEnum, insert_fields: dict, **kwargs) -> dict[str, str]:
+        return self.resolve_templated_strings(self.coll_template_names, **insert_fields, **kwargs)
+
     def prepare_script_hook(
-        self, level: LevelEnum, dbi: DbInterface, db_id: DbId, data
-    ) -> Optional[int]:
+        self, level: LevelEnum, dbi: DbInterface, data
+    ) -> Optional[ScriptBase]:
         assert level.value >= LevelEnum.campaign.value
         if level == LevelEnum.workflow:
             return None
-        butler_repo = dbi.get_repo(db_id)
         script_data = self.resolve_templated_strings(
             self.prepare_script_url_template_names,
-            {},
-            prod_base_url=dbi.get_prod_base(db_id),
+            prod_base_url=data.prod_base_url,
             fullname=data.fullname,
         )
-        script_id = dbi.add_script(checker=self.yaml_checker_class, **script_data)
-        with open(script_data["script_url"], "wt", encoding="utf-8") as fout:
-            fout.write(make_butler_associate_command(butler_repo, data))
-            fout.write("\n")
-        write_status_to_yaml(script_data["log_url"], StatusEnum.completed)
-        return script_id
-
-    def workflow_script_hook(
-        self, dbi: DbInterface, db_id: DbId, data, **kwargs
-    ) -> str:
-        """Internal function to write the bps.yaml file for a given workflow"""
-        workflow_template_yaml = os.path.expandvars(
-            self.config["workflow_template_yaml"]
+        command = make_butler_associate_command(data.butler_repo, data)
+        script = add_command_script(
+            dbi,
+            command,
+            script_data,
+            "callback_stamp",
+            checker=self.yaml_checker_class,
         )
-        butler_repo = dbi.get_repo(db_id)
+        #stream = os.popen(f'source {os.path.abspath(script.script_url)}')
+        #print(f'Running {command} gave {stream.read()}')
+        return script
+
+    def workflow_script_hook(self, dbi: DbInterface, data, **kwargs) -> Optional[ScriptBase]:
+        """Internal function to write the bps.yaml file for a given workflow"""
+        workflow_template_yaml = os.path.expandvars(self.config["workflow_template_yaml"])
+        butler_repo = dbi.get_repo(data.db_id)
         script_data = self.resolve_templated_strings(
             self.run_script_url_template_names,
-            {},
-            prod_base_url=dbi.get_prod_base(db_id),
+            prod_base_url=dbi.get_prod_base(data.db_id),
             fullname=data.fullname,
         )
         outpath = script_data["config_url"]
-        script_id = dbi.add_script(
-            checker="lsst.cm.tools.core.script_utils.YamlChecker", **script_data
-        )
-        tokens = data.fullname.split("/")
-        production_name = tokens[0]
-        campaign_name = tokens[1]
-        step_name = tokens[2]
+        script = dbi.add_script(checker=self.yaml_checker_class, **script_data)
         import yaml
 
         with open(workflow_template_yaml, "rt", encoding="utf-8") as fin:
             workflow_config = yaml.safe_load(fin)
 
-        workflow_config["project"] = production_name
-        workflow_config["campaign"] = f"{production_name}/{campaign_name}"
+        workflow_config["project"] = data.p_name
+        workflow_config["campaign"] = f"{data.p_name}/{data.c_name}"
 
-        workflow_config["pipelineYaml"] = self.config["pipeline_yaml"][step_name]
+        workflow_config["pipelineYaml"] = self.config["pipeline_yaml"][data.s_name]
         payload = dict(
-            payloadName=f"{production_name}/{campaign_name}",
+            payloadName=f"{data.p_name}/{data.c_name}",
             output=data.coll_out,
             butlerConfig=butler_repo,
-            inCollection=data.coll_in,
+            inCollection=f"{data.coll_in},/HSC/proc/ancil"
         )
         workflow_config["payload"] = payload
         with open(outpath, "wt", encoding="utf-8") as fout:
             yaml.dump(workflow_config, fout)
-        return script_id
+
+        command = make_bps_command(outpath)
+        return add_command_script(dbi, command, script_data, "fake_stamp", checker=self.yaml_checker_class)
 
     def fake_run_hook(
         self,
         dbi: DbInterface,
-        db_id: DbId,
         data,
         status: StatusEnum = StatusEnum.completed,
     ) -> None:
         script_id = data.run_script
-        script_data = dbi.get_script(script_id)
-        write_status_to_yaml(script_data.log_url, status)
+        script = dbi.get_script(script_id)
+        write_status_to_yaml(script.log_url, status)  # type: ignore
 
-    def collection_hook(
-        self, level: LevelEnum, dbi: DbInterface, db_id: DbId, itr: Iterable, data
-    ) -> dict[str, Any]:
+    def collect_script_hook(
+        self, level: LevelEnum, dbi: DbInterface, itr: Iterable, data
+    ) -> Optional[ScriptBase]:
         assert level.value >= LevelEnum.campaign.value
-        if level == LevelEnum.workflow:
-            return dict(status=StatusEnum.collecting, collect_script=None)
-        butler_repo = dbi.get_repo(db_id)
+        if level == LevelEnum.campaign:
+            return None
         script_data = self.resolve_templated_strings(
             self.collect_script_url_template_names,
-            {},
-            prod_base_url=dbi.get_prod_base(db_id),
+            prod_base_url=data.prod_base_url,
             fullname=data.fullname,
         )
-        script_id = dbi.add_script(checker=self.yaml_checker_class, **script_data)
-        with open(script_data["script_url"], "wt", encoding="utf-8") as fout:
-            fout.write(make_butler_chain_command(butler_repo, data, itr))
-            fout.write("\n")
-        write_status_to_yaml(script_data["log_url"], StatusEnum.completed)
-        return dict(status=StatusEnum.collecting, collect_script=script_id)
+        command = make_butler_chain_command(data.butler_repo, data, itr)
+        script = add_command_script(
+            dbi,
+            command,
+            script_data,
+            "callback_stamp",
+            checker=self.yaml_checker_class,
+        )
+        #stream = os.popen(f'source {os.path.abspath(script.script_url)}')
+        #print(f'Running {command} gave {stream.read()}')
+        return script
 
-    def accept_hook(
-        self, level: LevelEnum, dbi: DbInterface, db_id: DbId, itr: Iterable, data
-    ) -> None:
+    def accept_hook(self, level: LevelEnum, dbi: DbInterface, itr: Iterable, data) -> None:
         return
 
-    def reject_hook(
-        self, level: LevelEnum, dbi: DbInterface, db_id: DbId, data
-    ) -> None:
+    def reject_hook(self, level: LevelEnum, dbi: DbInterface, data) -> None:
         return
