@@ -1,7 +1,7 @@
 workflow_template_yaml: "python/lsst/cm/prod/configs/HSC/test/hsc_template.yaml"
 sw_image: ""
-coll_source: 'HSC/raw/RC2'
-command_tmpl: 'bps'
+campaign_coll_source: HSC/raw/RC2
+campaign_data_query: ""
 pipeline_yaml:
     step1: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step1"
     step2: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step2"
