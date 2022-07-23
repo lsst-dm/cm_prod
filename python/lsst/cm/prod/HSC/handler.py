@@ -191,8 +191,12 @@ class HSCHandler(SQLAlchemyHandler):
 
     yaml_checker_class = YamlChecker().get_checker_class_name()
 
-    def coll_name_hook(self, level: LevelEnum, insert_fields: dict, **kwargs) -> dict[str, str]:
-        return self.resolve_templated_strings(self.coll_template_names, **insert_fields, **kwargs)
+    def coll_name_hook(
+        self, level: LevelEnum, insert_fields: dict, **kwargs
+    ) -> dict[str, str]:
+        return self.resolve_templated_strings(
+            self.coll_template_names, **insert_fields, **kwargs
+        )
 
     def prepare_script_hook(
         self, level: LevelEnum, dbi: DbInterface, data
@@ -211,13 +215,17 @@ class HSCHandler(SQLAlchemyHandler):
             "callback_stamp",
             checker=self.yaml_checker_class,
         )
-        stream = os.popen(f'source {os.path.abspath(script.script_url)}')
-        print(f'Running {command} gave {stream.read()}')
+        stream = os.popen(f"source {os.path.abspath(script.script_url)}")
+        print(f"Running {command} gave {stream.read()}")
         return script
 
-    def workflow_script_hook(self, dbi: DbInterface, data, **kwargs) -> Optional[ScriptBase]:
+    def workflow_script_hook(
+        self, dbi: DbInterface, data, **kwargs
+    ) -> Optional[ScriptBase]:
         """Internal function to write the bps.yaml file for a given workflow"""
-        workflow_template_yaml = os.path.expandvars(self.config["workflow_template_yaml"])
+        workflow_template_yaml = os.path.expandvars(
+            self.config["workflow_template_yaml"]
+        )
         butler_repo = data.butler_repo
         script_data = self.resolve_templated_strings(
             self.run_script_url_template_names,
@@ -244,8 +252,23 @@ class HSCHandler(SQLAlchemyHandler):
         with open(outpath, "wt", encoding="utf-8") as fout:
             yaml.dump(workflow_config, fout)
 
+        prepend = """
+export PANDA_AUTH=oidc
+export PANDA_VERIFY_HOST=off
+export PANDA_AUTH_VO=Rubin
+export PANDA_URL_SSL=https://pandaserver-doma.cern.ch:25443/server/panda
+export PANDA_URL=http://pandaserver-doma.cern.ch:25080/server/panda
+"""
+
         command = make_bps_command(outpath)
-        return add_command_script(dbi, command, script_data, "", checker=self.yaml_checker_class)
+        return add_command_script(
+            dbi,
+            command,
+            script_data,
+            "",
+            checker=self.yaml_checker_class,
+            prepend=prepend,
+        )
 
     def fake_run_hook(
         self,
@@ -276,11 +299,13 @@ class HSCHandler(SQLAlchemyHandler):
             "callback_stamp",
             checker=self.yaml_checker_class,
         )
-        stream = os.popen(f'source {os.path.abspath(script.script_url)}')
-        print(f'Running {command} gave {stream.read()}')
+        stream = os.popen(f"source {os.path.abspath(script.script_url)}")
+        print(f"Running {command} gave {stream.read()}")
         return script
 
-    def accept_hook(self, level: LevelEnum, dbi: DbInterface, itr: Iterable, data) -> None:
+    def accept_hook(
+        self, level: LevelEnum, dbi: DbInterface, itr: Iterable, data
+    ) -> None:
         return
 
     def reject_hook(self, level: LevelEnum, dbi: DbInterface, data) -> None:
