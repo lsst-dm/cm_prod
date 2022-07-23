@@ -21,14 +21,14 @@
 
 import os
 
-from typing import Any, Iterable, Optional
+from typing import Iterable, Optional
 from collections import OrderedDict
 
 from lsst.daf.butler import Butler
 
 from lsst.cm.tools.core.utils import StatusEnum, LevelEnum
 from lsst.cm.tools.core.grouper import Grouper
-from lsst.cm.tools.core.db_interface import DbInterface, ScriptBase, DbId
+from lsst.cm.tools.core.db_interface import DbInterface, ScriptBase
 from lsst.cm.tools.db.sqlalch_handler import SQLAlchemyHandler
 
 from lsst.cm.tools.core.script_utils import (
@@ -51,7 +51,7 @@ class HSCStep1Grouper(Grouper):
         )
 
         butler = Butler(
-            self.dbi.get_repo(self.parent_db_id),
+            self.data.butler_repo,
             collections=[self.config["coll_source"]],
         )
 
@@ -198,8 +198,6 @@ class HSCHandler(SQLAlchemyHandler):
         self, level: LevelEnum, dbi: DbInterface, data
     ) -> Optional[ScriptBase]:
         assert level.value >= LevelEnum.campaign.value
-        if level == LevelEnum.workflow:
-            return None
         script_data = self.resolve_templated_strings(
             self.prepare_script_url_template_names,
             prod_base_url=data.prod_base_url,
@@ -213,21 +211,20 @@ class HSCHandler(SQLAlchemyHandler):
             "callback_stamp",
             checker=self.yaml_checker_class,
         )
-        #stream = os.popen(f'source {os.path.abspath(script.script_url)}')
-        #print(f'Running {command} gave {stream.read()}')
+        stream = os.popen(f'source {os.path.abspath(script.script_url)}')
+        print(f'Running {command} gave {stream.read()}')
         return script
 
     def workflow_script_hook(self, dbi: DbInterface, data, **kwargs) -> Optional[ScriptBase]:
         """Internal function to write the bps.yaml file for a given workflow"""
         workflow_template_yaml = os.path.expandvars(self.config["workflow_template_yaml"])
-        butler_repo = dbi.get_repo(data.db_id)
+        butler_repo = data.butler_repo
         script_data = self.resolve_templated_strings(
             self.run_script_url_template_names,
-            prod_base_url=dbi.get_prod_base(data.db_id),
+            prod_base_url=data.prod_base_url,
             fullname=data.fullname,
         )
         outpath = script_data["config_url"]
-        script = dbi.add_script(checker=self.yaml_checker_class, **script_data)
         import yaml
 
         with open(workflow_template_yaml, "rt", encoding="utf-8") as fin:
@@ -241,14 +238,14 @@ class HSCHandler(SQLAlchemyHandler):
             payloadName=f"{data.p_name}/{data.c_name}",
             output=data.coll_out,
             butlerConfig=butler_repo,
-            inCollection=f"{data.coll_in},/HSC/proc/ancil"
+            inCollection=f"{data.coll_in},/prod/HSC/test/calibs",
         )
         workflow_config["payload"] = payload
         with open(outpath, "wt", encoding="utf-8") as fout:
             yaml.dump(workflow_config, fout)
 
         command = make_bps_command(outpath)
-        return add_command_script(dbi, command, script_data, "fake_stamp", checker=self.yaml_checker_class)
+        return add_command_script(dbi, command, script_data, "", checker=self.yaml_checker_class)
 
     def fake_run_hook(
         self,
@@ -279,8 +276,8 @@ class HSCHandler(SQLAlchemyHandler):
             "callback_stamp",
             checker=self.yaml_checker_class,
         )
-        #stream = os.popen(f'source {os.path.abspath(script.script_url)}')
-        #print(f'Running {command} gave {stream.read()}')
+        stream = os.popen(f'source {os.path.abspath(script.script_url)}')
+        print(f'Running {command} gave {stream.read()}')
         return script
 
     def accept_hook(self, level: LevelEnum, dbi: DbInterface, itr: Iterable, data) -> None:
