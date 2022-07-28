@@ -32,7 +32,7 @@ class HSCConfig:
     )
 
 
-class HSCJobHandler(HSCConfig, WorkflowHandler):
+class HSCJobHandler(HSCConfig, JobHandler):
     yaml_checker_class = YamlChecker().get_checker_class_name()
     fake_rollback_class = FakeRollback().get_rollback_class_name()
 
