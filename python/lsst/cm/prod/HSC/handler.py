@@ -48,7 +48,7 @@ class HSCWorkflowHander(HSCConfig, WorkflowHandler):
         workflow_config["project"] = parent.p_.name
         workflow_config["campaign"] = f"{parent.p_.name}/{parent.c_.name}"
 
-        workflow_config["pipelineYaml"] = self.config["pipeline_yaml"][parent.s_name]
+        workflow_config["pipelineYaml"] = self.config["pipeline_yaml"][parent.s_.name]
         payload = dict(
             payloadName=f"{parent.p_.name}/{parent.c_.name}",
             output=parent.coll_out,
