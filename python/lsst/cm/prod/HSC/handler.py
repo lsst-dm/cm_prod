@@ -45,12 +45,12 @@ class HSCWorkflowHander(HSCConfig, WorkflowHandler):
         with open(workflow_template_yaml, "rt", encoding="utf-8") as fin:
             workflow_config = yaml.safe_load(fin)
 
-        workflow_config["project"] = parent.p_name
-        workflow_config["campaign"] = f"{parent.p_name}/{parent.c_name}"
+        workflow_config["project"] = parent.p_.name
+        workflow_config["campaign"] = f"{parent.p_.name}/{parent.c_.name}"
 
         workflow_config["pipelineYaml"] = self.config["pipeline_yaml"][parent.s_name]
         payload = dict(
-            payloadName=f"{parent.p_name}/{parent.c_name}",
+            payloadName=f"{parent.p_.name}/{parent.c_.name}",
             output=parent.coll_out,
             butlerConfig=butler_repo,
             inCollection=f"{parent.coll_in},/prod/HSC/test/calibs",
@@ -131,7 +131,7 @@ class HSCStep1Handler(HSCEntryHandler, StepHandler):
             collections=[entry.coll_source],
         )
 
-        data_queries = build_data_queries(butler, "raw", "exposure", 2, 500)
+        data_queries = build_data_queries(butler, "raw", "exposure", 20, 500)
 
         for i, dq_ in enumerate(data_queries):
             out_dict.update(group_name=f"group{i}", data_query=dq_)
