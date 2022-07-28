@@ -22,7 +22,6 @@
 from typing import Optional
 
 import numpy as np
-
 from lsst.daf.butler import Butler
 
 
@@ -68,9 +67,7 @@ def build_data_queries(
         max_idx = min(idx, n_matched - 1)
         min_val = sorted_field_values[previous_idx]
         max_val = sorted_field_values[max_idx]
-        ret_list.append(
-            f"instrument = 'HSC' and ({min_val} <= {field}) and ({field} < {max_val})"
-        )
+        ret_list.append(f"instrument = 'HSC' and ({min_val} <= {field}) and ({field} < {max_val})")
         previous_idx = idx
 
     return ret_list
