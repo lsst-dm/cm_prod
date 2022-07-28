@@ -10,6 +10,8 @@ config.log
 *Lib.py
 *~
 archive/
+payload-log.json
+submit/
 
 .eggs
 python/cm_prod.egg-info/
