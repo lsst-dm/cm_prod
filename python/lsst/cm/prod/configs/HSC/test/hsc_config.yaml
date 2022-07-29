@@ -1,15 +1,32 @@
 campaign:
     root_coll: cm
-    coll_source: HSC/raw/RC2
-    coll_ancil_template: "{root_coll}/{fullname}_ancil"
     data_query: "instrument = 'HSC' and exposure < 500"
-ancil:
-    collections:
-        - HSC/calib
-        - HSC/masks
-        - HSC/fgcmcal/lut/RC2
-        - refcats
-        - skymaps
+    input_type: tagged
+    output_type: chained
+    templates:
+        coll_source: HSC/raw/RC2
+        coll_in: "{root_coll}/{fullname}_input"
+        coll_out: "{root_coll}/{fullname}_ouput"
+        coll_ancil: "{root_coll}/{fullname}_ancil"
+        coll_validate: "{root_coll}/{fullname}_validate"
+step:
+    input_type: source
+    output_type: chained
+    templates:
+         coll_out: "{root_coll}/{fullname}_ouput"
+         coll_validate: "{root_coll}/{fullname}_validate"
+group:
+    input_type: tagged
+    output_type: chained
+    templates:
+        coll_in: "{root_coll}/{fullname}_input"
+        coll_out: "{root_coll}/{fullname}_ouput"
+        coll_validate: "{root_coll}/{fullname}_validate"
+workflow:
+    input_type: source
+    output_type: run
+    templates:
+        coll_out: "{root_coll}/{fullname}_ouput"
 job:
     bps_template_yaml: "examples/example_template.yaml"
     sw_image: ""
@@ -21,3 +38,10 @@ job:
         step5: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step5"
         step6: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step6"
         step7: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step7"
+ancil:
+    collections:
+        - HSC/calib
+        - HSC/masks
+        - HSC/fgcmcal/lut/RC2
+        - refcats
+        - skymaps

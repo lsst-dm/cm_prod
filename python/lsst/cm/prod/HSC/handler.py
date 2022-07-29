@@ -19,20 +19,7 @@ from lsst.cm.tools.db.workflow_handler import WorkflowHandler
 from lsst.daf.butler import Butler
 
 
-class HSCConfig:
-
-    default_config = dict(
-        script_url_template="{prod_base_url}/{fullname}/{name}_{idx:03}.sh",
-        stamp_url_template="{prod_base_url}/{fullname}/{name}_{idx:03}.stamp",
-        log_url_template="{prod_base_url}/{fullname}/{name}_{idx:03}.log",
-        config_url_template="{prod_base_url}/{fullname}/{name}_{idx:03}_bps.yaml",
-        coll_in_template="prod/{fullname}_input",
-        coll_out_template="prod/{fullname}_output",
-        coll_validate_template="prod/{fullname}_validate",
-    )
-
-
-class HSCJobHandler(HSCConfig, JobHandler):
+class HSCJobHandler(JobHandler):
     yaml_checker_class = YamlChecker().get_checker_class_name()
     fake_rollback_class = FakeRollback().get_rollback_class_name()
 
@@ -72,7 +59,7 @@ export PANDA_URL=http://pandaserver-doma.cern.ch:25080/server/panda
         write_command_script(job, command, prepend=prepend)
 
 
-class HSCWorkflowHander(HSCConfig, WorkflowHandler):
+class HSCWorkflowHander(WorkflowHandler):
 
     job_handler_class = HSCJobHandler().get_handler_class_name()
 
@@ -80,7 +67,7 @@ class HSCWorkflowHander(HSCConfig, WorkflowHandler):
         return Handler.get_handler(self.job_handler_class, self.config_url)
 
 
-class HSCEntryHandler(HSCConfig):
+class HSCEntryHandler:
 
     yaml_checker_class = YamlChecker().get_checker_class_name()
     fake_rollback_class = FakeRollback().get_rollback_class_name()
