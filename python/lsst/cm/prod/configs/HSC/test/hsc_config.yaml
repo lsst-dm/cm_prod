@@ -28,7 +28,7 @@ workflow:
     templates:
         coll_out: "{root_coll}/{fullname}_ouput"
 job:
-    bps_template_yaml: "python/lsst/cm/prod/configs/HSC/hsc_template.yaml"
+    bps_template_yaml: "python/lsst/cm/prod/configs/HSC/test/hsc_template.yaml"
     sw_image: ""
     pipeline_yaml:
         step1: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step1"
