@@ -81,7 +81,6 @@ class HSCEntryHandler:
             dbi,
             entry,
             name="prepare",
-            idx=0,
             prepend=f"# Written by {handler.get_handler_class_name()}\n",
             stamp=StatusEnum.completed,
         )
@@ -96,8 +95,8 @@ class HSCEntryHandler:
             dbi,
             entry,
             name="collect",
-            idx=0,
             prepend=f"# Written by {handler.get_handler_class_name()}\n",
+            stamp=StatusEnum.completed,
         )
         status = handler.run(dbi, script)
         if status != StatusEnum.ready:
@@ -108,12 +107,6 @@ class HSCEntryHandler:
         assert dbi
         assert entry
         return []
-
-    def accept_hook(self, dbi: DbInterface, itr: Iterable, entry: Any) -> None:
-        pass
-
-    def reject_hook(self, dbi: DbInterface, entry: Any) -> None:
-        pass
 
 
 class HSCGroupHandler(HSCEntryHandler, GroupHandler):
@@ -241,6 +234,18 @@ class HSCHandler(HSCEntryHandler, CampaignHandler):
 
     ancil_chain_handler_class = AncillaryScriptHandler().get_handler_class_name()
 
+    step_dict = OrderedDict(
+        [
+            ("step1", HSCStep1Handler),
+            ("step2", HSCStep2Handler),
+            ("step3", HSCStep3Handler),
+            ("step4", HSCStep4Handler),
+            ("step5", HSCStep5Handler),
+            ("step6", HSCStep6Handler),
+            ("step7", HSCStep7Handler),
+        ]
+    )
+
     def prepare_script_hook(self, dbi: DbInterface, entry: Any) -> list[ScriptBase]:
 
         scripts = HSCEntryHandler.prepare_script_hook(self, dbi, entry)
@@ -258,15 +263,3 @@ class HSCHandler(HSCEntryHandler, CampaignHandler):
             script.update_values(dbi, script.id, status=status)
         scripts += [script]
         return scripts
-
-    step_dict = OrderedDict(
-        [
-            ("step1", HSCStep1Handler),
-            ("step2", HSCStep2Handler),
-            ("step3", HSCStep3Handler),
-            ("step4", HSCStep4Handler),
-            ("step5", HSCStep5Handler),
-            ("step6", HSCStep6Handler),
-            ("step7", HSCStep7Handler),
-        ]
-    )
