@@ -11,7 +11,7 @@ from lsst.cm.tools.core.utils import StatusEnum
 from lsst.cm.tools.db.campaign_handler import CampaignHandler
 from lsst.cm.tools.db.group_handler import GroupHandler
 from lsst.cm.tools.db.job_handler import JobHandler
-from lsst.cm.tools.db.script_handler import CollectScriptHandler, PrepareScriptHandler
+from lsst.cm.tools.db.script_handler import AncillaryScriptHandler, CollectScriptHandler, PrepareScriptHandler
 from lsst.cm.tools.db.step import Step
 from lsst.cm.tools.db.step_handler import StepHandler
 from lsst.cm.tools.db.workflow import Workflow
@@ -251,6 +251,26 @@ class HSCStep7Handler(HSCEntryHandler, StepHandler):
 
 
 class HSCHandler(HSCEntryHandler, CampaignHandler):
+
+    ancil_chain_handler_class = AncillaryScriptHandler().get_handler_class_name()
+
+    def prepare_script_hook(self, dbi: DbInterface, entry: Any) -> list[ScriptBase]:
+
+        scripts = HSCEntryHandler.prepare_script_hook(self, dbi, entry)
+
+        handler = Handler.get_handler(self.ancil_chain_handler_class, entry.config_yaml)
+        script = handler.insert(
+            dbi,
+            entry,
+            name="ancillary",
+            prepend=f"# Written by {handler.get_handler_class_name()}",
+            stamp=StatusEnum.completed,
+        )
+        status = handler.run(dbi, script)
+        if status != StatusEnum.ready:
+            script.update_values(dbi, script.id, status=status)
+        scripts += [script]
+        return scripts
 
     step_dict = OrderedDict(
         [
