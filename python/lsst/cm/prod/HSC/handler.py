@@ -4,14 +4,13 @@ from typing import Any, Iterable
 
 import yaml
 from lsst.cm.prod.core.butler_utils import build_data_queries
-from lsst.cm.tools.core.db_interface import DbInterface, JobBase, ScriptBase
+from lsst.cm.tools.core.db_interface import DbInterface, JobBase
 from lsst.cm.tools.core.handler import Handler
 from lsst.cm.tools.core.script_utils import FakeRollback, YamlChecker, make_bps_command, write_command_script
-from lsst.cm.tools.core.utils import StatusEnum
 from lsst.cm.tools.db.campaign_handler import CampaignHandler
+from lsst.cm.tools.db.entry_handler import GenericEntryHandlerMixin
 from lsst.cm.tools.db.group_handler import GroupHandler
 from lsst.cm.tools.db.job_handler import JobHandler
-from lsst.cm.tools.db.script_handler import AncillaryScriptHandler, CollectScriptHandler, PrepareScriptHandler
 from lsst.cm.tools.db.step import Step
 from lsst.cm.tools.db.step_handler import StepHandler
 from lsst.cm.tools.db.workflow import Workflow
@@ -67,49 +66,7 @@ class HSCWorkflowHander(WorkflowHandler):
         return Handler.get_handler(self.job_handler_class, self.config_url)
 
 
-class HSCEntryHandler:
-
-    yaml_checker_class = YamlChecker().get_checker_class_name()
-    fake_rollback_class = FakeRollback().get_rollback_class_name()
-
-    prepare_handler_class = PrepareScriptHandler().get_handler_class_name()
-    collect_handler_class = CollectScriptHandler().get_handler_class_name()
-
-    def prepare_script_hook(self, dbi: DbInterface, entry: Any) -> list[ScriptBase]:
-        handler = Handler.get_handler(self.prepare_handler_class, entry.config_yaml)
-        script = handler.insert(
-            dbi,
-            entry,
-            name="prepare",
-            prepend=f"# Written by {handler.get_handler_class_name()}\n",
-            stamp=StatusEnum.completed,
-        )
-        status = handler.run(dbi, script)
-        if status != StatusEnum.ready:
-            script.update_values(dbi, script.id, status=status)
-        return [script]
-
-    def collect_script_hook(self, dbi: DbInterface, entry: Any) -> list[ScriptBase]:
-        handler = Handler.get_handler(self.collect_handler_class, entry.config_yaml)
-        script = handler.insert(
-            dbi,
-            entry,
-            name="collect",
-            prepend=f"# Written by {handler.get_handler_class_name()}\n",
-            stamp=StatusEnum.completed,
-        )
-        status = handler.run(dbi, script)
-        if status != StatusEnum.ready:
-            script.update_values(dbi, script.id, status=status)
-        return [script]
-
-    def validate_script_hook(self, dbi: DbInterface, entry: Any) -> list[ScriptBase]:
-        assert dbi
-        assert entry
-        return []
-
-
-class HSCGroupHandler(HSCEntryHandler, GroupHandler):
+class HSCGroupHandler(GenericEntryHandlerMixin, GroupHandler):
 
     workflow_handler_class = HSCWorkflowHander().get_handler_class_name()
 
@@ -117,7 +74,7 @@ class HSCGroupHandler(HSCEntryHandler, GroupHandler):
         return Handler.get_handler(self.workflow_handler_class, self.config_url)
 
 
-class HSCStep1Handler(HSCEntryHandler, StepHandler):
+class HSCStep1Handler(GenericEntryHandlerMixin, StepHandler):
 
     group_handler_class = HSCGroupHandler().get_handler_class_name()
 
@@ -140,7 +97,7 @@ class HSCStep1Handler(HSCEntryHandler, StepHandler):
             yield out_dict
 
 
-class HSCStep2Handler(HSCEntryHandler, StepHandler):
+class HSCStep2Handler(GenericEntryHandlerMixin, StepHandler):
 
     group_handler_class = HSCGroupHandler().get_handler_class_name()
 
@@ -155,7 +112,7 @@ class HSCStep2Handler(HSCEntryHandler, StepHandler):
             yield out_dict
 
 
-class HSCStep3Handler(HSCEntryHandler, StepHandler):
+class HSCStep3Handler(GenericEntryHandlerMixin, StepHandler):
 
     group_handler_class = HSCGroupHandler().get_handler_class_name()
 
@@ -170,7 +127,7 @@ class HSCStep3Handler(HSCEntryHandler, StepHandler):
             yield out_dict
 
 
-class HSCStep4Handler(HSCEntryHandler, StepHandler):
+class HSCStep4Handler(GenericEntryHandlerMixin, StepHandler):
 
     group_handler_class = HSCGroupHandler().get_handler_class_name()
 
@@ -185,7 +142,7 @@ class HSCStep4Handler(HSCEntryHandler, StepHandler):
             yield out_dict
 
 
-class HSCStep5Handler(HSCEntryHandler, StepHandler):
+class HSCStep5Handler(GenericEntryHandlerMixin, StepHandler):
 
     group_handler_class = HSCGroupHandler().get_handler_class_name()
 
@@ -200,7 +157,7 @@ class HSCStep5Handler(HSCEntryHandler, StepHandler):
             yield out_dict
 
 
-class HSCStep6Handler(HSCEntryHandler, StepHandler):
+class HSCStep6Handler(GenericEntryHandlerMixin, StepHandler):
 
     group_handler_class = HSCGroupHandler().get_handler_class_name()
 
@@ -215,7 +172,7 @@ class HSCStep6Handler(HSCEntryHandler, StepHandler):
             yield out_dict
 
 
-class HSCStep7Handler(HSCEntryHandler, StepHandler):
+class HSCStep7Handler(GenericEntryHandlerMixin, StepHandler):
 
     group_handler_class = HSCGroupHandler().get_handler_class_name()
 
@@ -230,9 +187,7 @@ class HSCStep7Handler(HSCEntryHandler, StepHandler):
             yield out_dict
 
 
-class HSCHandler(HSCEntryHandler, CampaignHandler):
-
-    ancil_chain_handler_class = AncillaryScriptHandler().get_handler_class_name()
+class HSCHandler(GenericEntryHandlerMixin, CampaignHandler):
 
     step_dict = OrderedDict(
         [
@@ -245,21 +200,3 @@ class HSCHandler(HSCEntryHandler, CampaignHandler):
             ("step7", HSCStep7Handler),
         ]
     )
-
-    def prepare_script_hook(self, dbi: DbInterface, entry: Any) -> list[ScriptBase]:
-
-        scripts = HSCEntryHandler.prepare_script_hook(self, dbi, entry)
-
-        handler = Handler.get_handler(self.ancil_chain_handler_class, entry.config_yaml)
-        script = handler.insert(
-            dbi,
-            entry,
-            name="ancillary",
-            prepend=f"# Written by {handler.get_handler_class_name()}",
-            stamp=StatusEnum.completed,
-        )
-        status = handler.run(dbi, script)
-        if status != StatusEnum.ready:
-            script.update_values(dbi, script.id, status=status)
-        scripts += [script]
-        return scripts
