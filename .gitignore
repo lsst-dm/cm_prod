@@ -14,8 +14,7 @@ payload-log.json
 submit/
 
 .eggs
-python/cm_prod.egg-info/
-python/lsst/cm/prod/_version.py
+src/lsst.cm.prod.egg-info/
 
 # Pytest
 tests/.tests
