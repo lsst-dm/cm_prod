@@ -26,7 +26,7 @@ step:
     input_type: source
     output_type: chained
     templates:
-         coll_out: "{root_coll}/{fullname}_ouput"
+        coll_out: "{root_coll}/{fullname}_ouput"
     prepare:
         prepare:
             class_name: lsst.cm.tools.db.script_handler.PrepareScriptHandler

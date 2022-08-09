@@ -21,7 +21,7 @@ payload:
   dataQuery: {data_query}
   payloadFolder: payload
   forcedPhotCoadd:
-     queue: "SLAC_TEST"
+    queue: "SLAC_TEST"
 
 executionButler:
   queue: "SLAC_TEST"

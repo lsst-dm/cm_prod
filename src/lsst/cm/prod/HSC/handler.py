@@ -3,7 +3,6 @@ from collections import OrderedDict
 from typing import Any, Iterable
 
 import yaml
-from lsst.cm.prod.core.butler_utils import build_data_queries
 from lsst.cm.tools.core.db_interface import DbInterface, JobBase
 from lsst.cm.tools.core.handler import Handler
 from lsst.cm.tools.core.script_utils import FakeRollback, YamlChecker, make_bps_command, write_command_script
@@ -16,6 +15,8 @@ from lsst.cm.tools.db.step_handler import StepHandler
 from lsst.cm.tools.db.workflow import Workflow
 from lsst.cm.tools.db.workflow_handler import WorkflowHandler
 from lsst.daf.butler import Butler
+
+from lsst.cm.prod.core.butler_utils import build_data_queries
 
 
 class HSCJobHandler(JobHandler):
