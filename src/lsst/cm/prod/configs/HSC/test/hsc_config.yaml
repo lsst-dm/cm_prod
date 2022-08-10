@@ -12,16 +12,13 @@ campaign:
         prepare:
             class_name: lsst.cm.tools.db.script_handler.PrepareScriptHandler
             stamp: completed
-            fake: true
         ancil:
             class_name: lsst.cm.tools.db.script_handler.AncillaryScriptHandler
             stamp: completed
-            fake: true
     collect:
         collect:
             class_name: lsst.cm.tools.db.script_handler.CollectScriptHandler
             stamp: completed
-            fake: true
 step:
     input_type: source
     output_type: chained
@@ -31,12 +28,10 @@ step:
         prepare:
             class_name: lsst.cm.tools.db.script_handler.PrepareScriptHandler
             stamp: completed
-            fake: true
     collect:
         collect:
             class_name: lsst.cm.tools.db.script_handler.CollectScriptHandler
             stamp: completed
-            fake: true
 group:
     input_type: tagged
     output_type: chained
@@ -47,19 +42,17 @@ group:
         prepare:
             class_name: lsst.cm.tools.db.script_handler.PrepareScriptHandler
             stamp: completed
-            fake: true
     collect:
         collect:
             class_name: lsst.cm.tools.db.script_handler.CollectScriptHandler
             stamp: completed
-            fake: true
 workflow:
     input_type: source
     output_type: run
     templates:
         coll_out: "{root_coll}/{fullname}_ouput"
 job:
-    bps_template_yaml: "python/lsst/cm/prod/configs/HSC/test/hsc_template.yaml"
+    bps_template_yaml: "src/lsst/cm/prod/configs/HSC/test/hsc_template.yaml"
     sw_image: ""
     pipeline_yaml:
         step1: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step1"

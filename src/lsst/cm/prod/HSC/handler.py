@@ -59,7 +59,7 @@ export PANDA_URL=http://pandaserver-doma.cern.ch:25080/server/panda
         write_command_script(job, command, prepend=prepend)
 
 
-class HSCWorkflowHander(WorkflowHandler):
+class HSCWorkflowHander(GenericEntryHandlerMixin, WorkflowHandler):
 
     job_handler_class = HSCJobHandler().get_handler_class_name()
 
@@ -192,12 +192,12 @@ class HSCHandler(GenericEntryHandlerMixin, CampaignHandler):
 
     step_dict = OrderedDict(
         [
-            ("step1", HSCStep1Handler),
-            ("step2", HSCStep2Handler),
-            ("step3", HSCStep3Handler),
-            ("step4", HSCStep4Handler),
-            ("step5", HSCStep5Handler),
-            ("step6", HSCStep6Handler),
-            ("step7", HSCStep7Handler),
+            ("step1", (HSCStep1Handler, [])),
+            ("step2", (HSCStep2Handler, ["step1"])),
+            ("step3", (HSCStep3Handler, ["step2"])),
+            ("step4", (HSCStep4Handler, ["step3"])),
+            ("step5", (HSCStep5Handler, ["step4"])),
+            ("step6", (HSCStep6Handler, ["step5"])),
+            ("step7", (HSCStep7Handler, ["step6"])),
         ]
     )
