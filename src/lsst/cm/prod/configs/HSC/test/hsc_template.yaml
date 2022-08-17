@@ -1,12 +1,10 @@
 includeConfigs:
-- ${CTRL_BPS_PANDA_DIR}/config/bps_idf.yaml
+- ${CTRL_BPS_PANDA_DIR}/config/bps_usdf.yaml
 
 iddsServer: "https://aipanda015.cern.ch:443/idds"
 
 project: dev
 campaign: quick
-computeSite: SLAC
-computeCloud: US
 queue: "SLAC_TEST"
 
 wmsServiceClass: lsst.ctrl.bps.panda.panda_service.PanDAService
