@@ -1,58 +1,21 @@
-campaign:
-    root_coll: cm
-    data_query: "instrument = 'HSC' and exposure < 500"
-    input_type: tagged
-    output_type: chained
-    templates:
-        coll_source: HSC/raw/RC2
-        coll_in: "{root_coll}/{fullname}_input"
-        coll_out: "{root_coll}/{fullname}_ouput"
-        coll_ancil: "{root_coll}/{fullname}_ancil"
-    prepare:
-        prepare:
-            class_name: lsst.cm.tools.db.script_handler.PrepareScriptHandler
-            stamp: completed
-        ancil:
-            class_name: lsst.cm.tools.db.script_handler.AncillaryScriptHandler
-            stamp: completed
-    collect:
-        collect:
-            class_name: lsst.cm.tools.db.script_handler.CollectScriptHandler
-            stamp: completed
-step:
-    input_type: source
-    output_type: chained
-    templates:
-        coll_out: "{root_coll}/{fullname}_ouput"
-    prepare:
-        prepare:
-            class_name: lsst.cm.tools.db.script_handler.PrepareScriptHandler
-            stamp: completed
-    collect:
-        collect:
-            class_name: lsst.cm.tools.db.script_handler.CollectScriptHandler
-            stamp: completed
-group:
-    input_type: tagged
-    output_type: chained
-    templates:
-        coll_in: "{root_coll}/{fullname}_input"
-        coll_out: "{root_coll}/{fullname}_ouput"
-    prepare:
-        prepare:
-            class_name: lsst.cm.tools.db.script_handler.PrepareScriptHandler
-            stamp: completed
-    collect:
-        collect:
-            class_name: lsst.cm.tools.db.script_handler.CollectScriptHandler
-            stamp: completed
-workflow:
-    input_type: source
-    output_type: run
-    templates:
-        coll_out: "{root_coll}/{fullname}_ouput"
+prepare:
+    class_name: lsst.cm.tools.db.script_handler.PrepareScriptHandler
+    stamp: completed
+ancil:
+    class_name: lsst.cm.tools.db.script_handler.AncillaryScriptHandler
+    stamp: completed
+    collections:
+        - HSC/calib
+        - HSC/masks
+        - HSC/fgcmcal/lut/RC2
+        - refcats
+        - skymaps
+collect:
+    class_name: lsst.cm.tools.db.script_handler.CollectScriptHandler
+    stamp: completed
 job:
-    bps_template_yaml: "src/lsst/cm/prod/configs/HSC/test/hsc_template.yaml"
+    class_name: HSC.handler.HSCJobHandler
+    bps_template_yaml: "${CM_CONFIGS}/HSC/test/hsc_template.yaml"
     sw_image: ""
     pipeline_yaml:
         step1: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step1"
@@ -62,10 +25,79 @@ job:
         step5: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step5"
         step6: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step6"
         step7: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step7"
-ancil:
-    collections:
-        - HSC/calib
-        - HSC/masks
-        - HSC/fgcmcal/lut/RC2
-        - refcats
-        - skymaps
+workflow:
+    class_name: lsst.cm.tools.db.workflow_handler.WorkflowHandler
+    input_type: source
+    output_type: run
+    templates:
+        coll_out: "{root_coll}/{fullname}_ouput"
+    job_config: job
+group:
+    class_name: lsst.cm.tools.db.group_handler.GroupHandler
+    input_type: tagged
+    output_type: chained
+    templates:
+        coll_in: "{root_coll}/{fullname}_input"
+        coll_out: "{root_coll}/{fullname}_ouput"
+    scripts:
+        - prepare
+        - collect
+step:
+    input_type: source
+    output_type: chained
+    templates:
+        coll_out: "{root_coll}/{fullname}_ouput"
+    scripts:
+        - prepare
+        - collect
+step1:
+    class_name: HSC.handler.HSCStep1Handler
+    prerequisites: []
+    includes: ["step"]
+step2:
+    class_name: HSC.handler.HSCStep2Handler
+    prerequisites: ["step1"]
+    includes: ["step"]
+step3:
+    class_name: HSC.handler.HSCStep3Handler
+    prerequisites: ["step2"]
+    includes: ["step"]
+step4:
+    class_name: HSC.handler.HSCStep4Handler
+    prerequisites: ["step3"]
+    includes: ["step"]
+step5:
+    class_name: HSC.handler.HSCStep5Handler
+    prerequisites: ["step4"]
+    includes: ["step"]
+step6:
+    class_name: HSC.handler.HSCStep6Handler
+    prerequisites: ["step5"]
+    includes: ["step"]
+step7:
+    class_name: HSC.handler.HSCStep7Handler
+    prerequisites: ["step6"]
+    includes: ["step"]
+campaign:
+    class_name: lsst.cm.tools.db.campaign_handler.CampaignHandler
+    root_coll: cm
+    data_query: "instrument = 'HSC' and exposure < 500"
+    input_type: tagged
+    output_type: chained
+    templates:
+        coll_source: HSC/raw/RC2
+        coll_in: "{root_coll}/{fullname}_input"
+        coll_out: "{root_coll}/{fullname}_ouput"
+        coll_ancil: "{root_coll}/{fullname}_ancil"
+    scripts:
+        - ancil
+        - prepare
+        - collect
+    steps:
+        - step1
+        - step2
+        - step3
+        - step4
+        - step5
+        - step6
+        - step7

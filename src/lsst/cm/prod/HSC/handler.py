@@ -1,19 +1,13 @@
 import os
-from collections import OrderedDict
 from typing import Any, Iterable
 
 import yaml
 from lsst.cm.tools.core.db_interface import DbInterface, JobBase
-from lsst.cm.tools.core.handler import Handler
 from lsst.cm.tools.core.script_utils import FakeRollback, YamlChecker, make_bps_command, write_command_script
-from lsst.cm.tools.db.campaign_handler import CampaignHandler
-from lsst.cm.tools.db.entry_handler import GenericEntryHandlerMixin
-from lsst.cm.tools.db.group_handler import GroupHandler
 from lsst.cm.tools.db.job_handler import JobHandler
 from lsst.cm.tools.db.step import Step
 from lsst.cm.tools.db.step_handler import StepHandler
 from lsst.cm.tools.db.workflow import Workflow
-from lsst.cm.tools.db.workflow_handler import WorkflowHandler
 from lsst.daf.butler import Butler
 
 from lsst.cm.prod.core.butler_utils import build_data_queries
@@ -72,26 +66,7 @@ export BPS_WMS_SERVICE_CLASS=lsst.ctrl.bps.panda.PanDAService
         write_command_script(job, command, prepend=prepend)
 
 
-class HSCWorkflowHander(GenericEntryHandlerMixin, WorkflowHandler):
-
-    job_handler_class = HSCJobHandler().get_handler_class_name()
-
-    def make_job_handler(self) -> JobHandler:
-        return Handler.get_handler(self.job_handler_class, self.config_url)
-
-
-class HSCGroupHandler(GenericEntryHandlerMixin, GroupHandler):
-
-    workflow_handler_class = HSCWorkflowHander().get_handler_class_name()
-
-    def make_workflow_handler(self) -> WorkflowHandler:
-        return Handler.get_handler(self.workflow_handler_class, self.config_url)
-
-
-class HSCStep1Handler(GenericEntryHandlerMixin, StepHandler):
-
-    group_handler_class = HSCGroupHandler().get_handler_class_name()
-
+class HSCStep1Handler(StepHandler):
     def group_iterator(self, dbi: DbInterface, entry: Step, **kwargs: Any) -> Iterable:
         out_dict = dict(
             production_name=entry.p_.name,
@@ -111,10 +86,7 @@ class HSCStep1Handler(GenericEntryHandlerMixin, StepHandler):
             yield out_dict
 
 
-class HSCStep2Handler(GenericEntryHandlerMixin, StepHandler):
-
-    group_handler_class = HSCGroupHandler().get_handler_class_name()
-
+class HSCStep2Handler(StepHandler):
     def group_iterator(self, dbi: DbInterface, entry: Step, **kwargs: Any) -> Iterable:
         out_dict = dict(
             production_name=entry.p_.name,
@@ -126,10 +98,7 @@ class HSCStep2Handler(GenericEntryHandlerMixin, StepHandler):
             yield out_dict
 
 
-class HSCStep3Handler(GenericEntryHandlerMixin, StepHandler):
-
-    group_handler_class = HSCGroupHandler().get_handler_class_name()
-
+class HSCStep3Handler(StepHandler):
     def group_iterator(self, dbi: DbInterface, entry: Step, **kwargs: Any) -> Iterable:
         out_dict = dict(
             production_name=entry.p_.name,
@@ -141,10 +110,7 @@ class HSCStep3Handler(GenericEntryHandlerMixin, StepHandler):
             yield out_dict
 
 
-class HSCStep4Handler(GenericEntryHandlerMixin, StepHandler):
-
-    group_handler_class = HSCGroupHandler().get_handler_class_name()
-
+class HSCStep4Handler(StepHandler):
     def group_iterator(self, dbi: DbInterface, entry: Step, **kwargs: Any) -> Iterable:
         out_dict = dict(
             production_name=entry.p_.name,
@@ -156,10 +122,7 @@ class HSCStep4Handler(GenericEntryHandlerMixin, StepHandler):
             yield out_dict
 
 
-class HSCStep5Handler(GenericEntryHandlerMixin, StepHandler):
-
-    group_handler_class = HSCGroupHandler().get_handler_class_name()
-
+class HSCStep5Handler(StepHandler):
     def group_iterator(self, dbi: DbInterface, entry: Step, **kwargs: Any) -> Iterable:
         out_dict = dict(
             production_name=entry.p_.name,
@@ -171,10 +134,7 @@ class HSCStep5Handler(GenericEntryHandlerMixin, StepHandler):
             yield out_dict
 
 
-class HSCStep6Handler(GenericEntryHandlerMixin, StepHandler):
-
-    group_handler_class = HSCGroupHandler().get_handler_class_name()
-
+class HSCStep6Handler(StepHandler):
     def group_iterator(self, dbi: DbInterface, entry: Step, **kwargs: Any) -> Iterable:
         out_dict = dict(
             production_name=entry.p_.name,
@@ -186,10 +146,7 @@ class HSCStep6Handler(GenericEntryHandlerMixin, StepHandler):
             yield out_dict
 
 
-class HSCStep7Handler(GenericEntryHandlerMixin, StepHandler):
-
-    group_handler_class = HSCGroupHandler().get_handler_class_name()
-
+class HSCStep7Handler(StepHandler):
     def group_iterator(self, dbi: DbInterface, entry: Step, **kwargs: Any) -> Iterable:
         out_dict = dict(
             production_name=entry.p_.name,
@@ -199,18 +156,3 @@ class HSCStep7Handler(GenericEntryHandlerMixin, StepHandler):
         for i in range(10):
             out_dict.update(group_name=f"group{i}", data_query=f"i == {i}")
             yield out_dict
-
-
-class HSCHandler(GenericEntryHandlerMixin, CampaignHandler):
-
-    step_dict = OrderedDict(
-        [
-            ("step1", (HSCStep1Handler, [])),
-            ("step2", (HSCStep2Handler, ["step1"])),
-            ("step3", (HSCStep3Handler, ["step2"])),
-            ("step4", (HSCStep4Handler, ["step3"])),
-            ("step5", (HSCStep5Handler, ["step4"])),
-            ("step6", (HSCStep6Handler, ["step5"])),
-            ("step7", (HSCStep7Handler, ["step6"])),
-        ]
-    )
