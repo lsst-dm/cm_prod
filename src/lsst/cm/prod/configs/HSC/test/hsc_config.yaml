@@ -14,7 +14,7 @@ collect:
     class_name: lsst.cm.tools.db.script_handler.CollectScriptHandler
     stamp: completed
 job:
-    class_name: HSC.handler.HSCJobHandler
+    class_name: lsst.cm.prod.HSC.handler.HSCJobHandler
     bps_template_yaml: "${CM_CONFIGS}/HSC/test/hsc_template.yaml"
     sw_image: ""
     pipeline_yaml:
@@ -51,31 +51,31 @@ step:
         - prepare
         - collect
 step1:
-    class_name: HSC.handler.HSCStep1Handler
+    class_name: lsst.cm.prod.HSC.handler.HSCStep1Handler
     prerequisites: []
     includes: ["step"]
 step2:
-    class_name: HSC.handler.HSCStep2Handler
+    class_name: lsst.cm.prod.HSC.handler.HSCStep2Handler
     prerequisites: ["step1"]
     includes: ["step"]
 step3:
-    class_name: HSC.handler.HSCStep3Handler
+    class_name: lsst.cm.prod.HSC.handler.HSCStep3Handler
     prerequisites: ["step2"]
     includes: ["step"]
 step4:
-    class_name: HSC.handler.HSCStep4Handler
+    class_name: lsst.cm.prod.HSC.handler.HSCStep4Handler
     prerequisites: ["step3"]
     includes: ["step"]
 step5:
-    class_name: HSC.handler.HSCStep5Handler
+    class_name: lsst.cm.prod.HSC.handler.HSCStep5Handler
     prerequisites: ["step4"]
     includes: ["step"]
 step6:
-    class_name: HSC.handler.HSCStep6Handler
+    class_name: lsst.cm.prod.HSC.handler.HSCStep6Handler
     prerequisites: ["step5"]
     includes: ["step"]
 step7:
-    class_name: HSC.handler.HSCStep7Handler
+    class_name: lsst.cm.prod.HSC.handler.HSCStep7Handler
     prerequisites: ["step6"]
     includes: ["step"]
 campaign:
