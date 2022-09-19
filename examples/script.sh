@@ -1,20 +1,27 @@
+#!/usr/bin/env bash
 
+EXAMPLES="$(dirname -- "$(readlink -f -- "$0";)";)"
+
+db_path="output/cm.db"
+config="hsc_config.yaml"
 p_name="HSC"
 c_name="test"
-handler="lsst.cm.prod.HSC.handler.HSCHandler"
-config="src/lsst/cm/prod/configs/HSC/test/hsc_config.yaml"
-command="cm"
 butler_repo="/sdf/group/rubin/repo/main"
 
-\rm -rf archive cm.db
+export CM_DB="sqlite:///${db_path}"
+export CM_PROD_URL="output/archive"
+export CM_CONFIGS="$EXAMPLES/../src/lsst/cm/prod/configs/HSC/test"
 
-${command} create
-${command} insert --level production --production-name ${p_name}
-${command} insert --level campaign --production-name ${p_name} --campaign-name ${c_name} --handler ${handler} --config-yaml ${config} --butler-repo ${butler_repo}
-${command} prepare --level campaign --production-name ${p_name} --campaign-name ${c_name}
+\rm -rf $CM_PROD_URL $db_path
+mkdir -p output
 
-${command} print-table --table production
-${command} print-table --table campaign
-${command} print-table --table step
-${command} print-table --table group
-${command} print-table --table workflow
+cm create
+cm parse --config-name hsc_test --config-yaml ${config}
+cm insert --level production --production-name ${p_name}
+cm insert --level campaign --production-name ${p_name} --campaign-name ${c_name} --butler-repo ${butler_repo} --config-name hsc_test --config-block campaign
+
+cm print-table --table production
+cm print-table --table campaign
+cm print-table --table step
+cm print-table --table group
+cm print-table --table workflow
