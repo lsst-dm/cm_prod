@@ -17,8 +17,8 @@ mkdir -p output
 
 cm create
 cm parse --config-name hsc_test --config-yaml ${config}
-cm insert --level production --production-name ${p_name}
-cm insert --level campaign --production-name ${p_name} --campaign-name ${c_name} --butler-repo ${butler_repo} --config-name hsc_test --config-block campaign
+cm insert --production-name ${p_name}
+cm insert --production-name ${p_name} --campaign-name ${c_name} --butler-repo ${butler_repo} --config-name hsc_test --config-block campaign
 
 cm print-table --table production
 cm print-table --table campaign

@@ -35,13 +35,15 @@ class HSCJobHandler(JobHandler):
             payloadName=f"{parent.p_.name}/{parent.c_.name}",
             output=parent.coll_out,
             butlerConfig=butler_repo,
-            inCollection=f"{parent.coll_in},/prod/HSC/test/calibs",
+            inCollection=f"{parent.coll_in},cm/HSC/test_ancil",
         )
         workflow_config["payload"] = payload
         with open(outpath, "wt", encoding="utf-8") as fout:
             yaml.dump(workflow_config, fout)
 
         prepend = """
+#!/bin/sh
+
 export LSST_VERSION=w_2022_32
 source /cvmfs/sw.lsst.eu/linux-x86_64/lsst_distrib/${LSST_VERSION}/loadLSST.bash
 setup lsst_distrib

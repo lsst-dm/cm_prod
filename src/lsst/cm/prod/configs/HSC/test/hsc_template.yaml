@@ -5,7 +5,7 @@ iddsServer: "https://aipanda015.cern.ch:443/idds"
 
 project: dev
 campaign: quick
-queue: "SLAC_TEST"
+queue: "SLAC_Rubin"
 
 wmsServiceClass: lsst.ctrl.bps.panda.panda_service.PanDAService
 
@@ -19,9 +19,9 @@ payload:
   dataQuery: {data_query}
   payloadFolder: payload
   forcedPhotCoadd:
-    queue: "SLAC_TEST"
+    queue: "SLAC_Rubin"
 
 executionButler:
-  queue: "SLAC_TEST"
+  queue: "SLAC_Rubin"
 
 maxJobsPerTask: 30000
