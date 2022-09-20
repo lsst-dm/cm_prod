@@ -41,8 +41,7 @@ class HSCJobHandler(JobHandler):
         with open(outpath, "wt", encoding="utf-8") as fout:
             yaml.dump(workflow_config, fout)
 
-        prepend = """
-#!/bin/sh
+        prepend = """#!/bin/sh
 
 export LSST_VERSION=w_2022_32
 source /cvmfs/sw.lsst.eu/linux-x86_64/lsst_distrib/${LSST_VERSION}/loadLSST.bash
