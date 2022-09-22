@@ -1,9 +1,7 @@
 prepare:
     class_name: lsst.cm.tools.db.script_handler.PrepareScriptHandler
-    stamp: completed
 ancil:
     class_name: lsst.cm.tools.db.script_handler.AncillaryScriptHandler
-    stamp: completed
     collections:
         - HSC/calib
         - HSC/masks
@@ -12,10 +10,9 @@ ancil:
         - skymaps
 collect:
     class_name: lsst.cm.tools.db.script_handler.CollectScriptHandler
-    stamp: completed
 job:
     class_name: lsst.cm.prod.HSC.handler.HSCJobHandler
-    bps_template_yaml: "${CM_CONFIGS}/HSC/test/hsc_template.yaml"
+    bps_template_yaml: "${CM_CONFIGS}/hsc_template.yaml"
     sw_image: ""
     pipeline_yaml:
         step1: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step1"
