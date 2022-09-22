@@ -3,7 +3,8 @@ from typing import Any, Iterable
 
 import yaml
 from lsst.cm.tools.core.db_interface import DbInterface, JobBase
-from lsst.cm.tools.core.script_utils import FakeRollback, YamlChecker, make_bps_command, write_command_script
+from lsst.cm.tools.core.panda_utils import PandaChecker
+from lsst.cm.tools.core.script_utils import make_bps_command, write_command_script
 from lsst.cm.tools.db.job_handler import JobHandler
 from lsst.cm.tools.db.step import Step
 from lsst.cm.tools.db.step_handler import StepHandler
@@ -14,8 +15,8 @@ from lsst.cm.prod.core.butler_utils import build_data_queries
 
 
 class HSCJobHandler(JobHandler):
-    yaml_checker_class = YamlChecker().get_checker_class_name()
-    fake_rollback_class = FakeRollback().get_rollback_class_name()
+
+    checker_class_name = PandaChecker().get_checker_class_name()
 
     def write_job_hook(self, dbi: DbInterface, parent: Workflow, job: JobBase, **kwargs: Any) -> None:
         """Internal function to write the bps.yaml file for a given workflow"""
@@ -63,7 +64,7 @@ export IDDS_CONFIG=${PANDA_SYS}/etc/idds/idds.cfg.client.template
 # WMS plugin
 export BPS_WMS_SERVICE_CLASS=lsst.ctrl.bps.panda.PanDAService
 """
-        command = make_bps_command(outpath)
+        command = make_bps_command(outpath, job.json_url, job.log_url)
         write_command_script(job, command, prepend=prepend)
 
 
