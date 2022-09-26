@@ -13,6 +13,7 @@ collect:
 job:
     class_name: lsst.cm.prod.HSC.handler.HSCJobHandler
     bps_template_yaml: "${CM_CONFIGS}/hsc_template.yaml"
+    bps_script_template: "${CM_CONFIGS}/hsc_bps_template.sh"
     sw_image: ""
     pipeline_yaml:
         step1: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step1"
