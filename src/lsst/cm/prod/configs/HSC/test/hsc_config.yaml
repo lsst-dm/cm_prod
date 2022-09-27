@@ -78,7 +78,7 @@ step7:
     includes: ["step"]
 campaign:
     class_name: lsst.cm.tools.db.campaign_handler.CampaignHandler
-    root_coll: cm
+    root_coll: u/echarles/cm
     data_query: "instrument = 'HSC' and exposure < 500"
     input_type: tagged
     output_type: chained

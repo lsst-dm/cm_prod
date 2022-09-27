@@ -10,8 +10,9 @@ butler_repo="/sdf/group/rubin/repo/main"
 
 export CM_DB="sqlite:///${db_path}"
 export CM_PROD_URL="output/archive"
-export CM_CONFIGS="$EXAMPLES/../src/lsst/cm/prod/configs/HSC/test"
+export CM_CONFIGS="$EXAMPLES/src/lsst/cm/prod/configs/HSC/test"
 export CM_SCRIPT_METHOD="slurm"
+export CM_BUTLER="/sdf/group/rubin/repo/main_20220411"
 
 \rm -rf $CM_PROD_URL $db_path
 mkdir -p output

@@ -1,15 +1,10 @@
 includeConfigs:
 - ${CTRL_BPS_PANDA_DIR}/config/bps_usdf.yaml
+- requestMemory.yaml
 
-iddsServer: "https://aipanda015.cern.ch:443/idds"
+pipelineYaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step1"
 
-project: dev
-campaign: quick
-queue: "SLAC_Rubin"
-
-wmsServiceClass: lsst.ctrl.bps.panda.panda_service.PanDAService
-
-pipelineYaml: "{pipeline_yaml}"
+LSST_VERSION: w_2022_36
 
 payload:
   payloadName: "HSC/test"
@@ -17,11 +12,9 @@ payload:
   butlerConfig: {butler_config}
   inCollection: {w_coll_in}
   dataQuery: {data_query}
-  payloadFolder: payload
-  forcedPhotCoadd:
-    queue: "SLAC_Rubin"
 
 executionButler:
-  queue: "SLAC_Rubin"
+  requestMemory: 64000
+  queue: "SLAC_Rubin_Merge"
 
-maxJobsPerTask: 30000
+numberOfRetries: 3

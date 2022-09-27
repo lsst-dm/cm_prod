@@ -36,7 +36,7 @@ class HSCJobHandler(JobHandler):
             payloadName=f"{parent.p_.name}/{parent.c_.name}",
             output=parent.coll_out,
             butlerConfig=butler_repo,
-            inCollection=f"{parent.coll_in},cm/HSC/test_ancil",
+            inCollection=f"{parent.coll_in},{parent.c_.coll_ancil}",
         )
         workflow_config["payload"] = payload
         with open(outpath, "wt", encoding="utf-8") as fout:
