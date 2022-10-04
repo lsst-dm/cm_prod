@@ -1,4 +1,8 @@
-#!/bin/sh
+#!/usr/bin/env -S -i CM_PROD_DIR="${CM_PROD_DIR}" HOME="${HOME}" bash
+
+# The shebang lines above are needed b/c setup lsst_distrib in putting
+# the lsst python _after_ the virtual env python in the PATH, which
+# is causing errors
 
 # setup LSST env.
 export WEEKLY='w_2022_40'
