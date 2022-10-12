@@ -5,6 +5,7 @@ import yaml
 from lsst.cm.tools.core.db_interface import DbInterface, JobBase
 from lsst.cm.tools.core.panda_utils import PandaChecker
 from lsst.cm.tools.core.script_utils import make_bps_command, write_command_script
+from lsst.cm.tools.core.utils import StatusEnum
 from lsst.cm.tools.db.job_handler import JobHandler
 from lsst.cm.tools.db.step import Step
 from lsst.cm.tools.db.step_handler import StepHandler
@@ -50,6 +51,11 @@ class HSCJobHandler(JobHandler):
         command = make_bps_command(outpath, job.json_url, job.log_url)
         write_command_script(job, command, prepend=prepend)
 
+    def fake_run_hook(
+        self, dbi: DbInterface, job: JobBase, status: StatusEnum = StatusEnum.completed
+    ) -> None:
+        job.update_values(dbi, job.id, status=status)
+
 
 class HSCStep1Handler(StepHandler):
     def group_iterator(self, dbi: DbInterface, entry: Step, **kwargs: Any) -> Iterable:
@@ -78,8 +84,15 @@ class HSCStep2Handler(StepHandler):
             campaign_name=entry.c_.name,
             step_name=entry.name,
         )
-        for i in range(10):
-            out_dict.update(group_name=f"group{i}", data_query=f"i == {i}")
+
+        butler = Butler(
+            entry.butler_repo,
+            collections=[entry.coll_source],
+        )
+
+        data_queries = build_data_queries(butler, "raw", "exposure", 20, 500)
+        for i, dq_ in enumerate(data_queries):
+            out_dict.update(group_name=f"group{i}", data_query=dq_)
             yield out_dict
 
 

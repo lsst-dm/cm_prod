@@ -38,7 +38,6 @@ group:
         coll_out: "{root_coll}/{fullname}_ouput"
     scripts:
         - prepare
-        - collect
 step:
     input_type: source
     output_type: chained
