@@ -36,6 +36,7 @@ class HSCJobHandler(JobHandler):
         payload = dict(
             payloadName=f"{parent.p_.name}/{parent.c_.name}",
             output=parent.coll_out,
+            outputRun=job.coll_out,
             butlerConfig=butler_repo,
             inCollection=f"{parent.coll_in},{parent.c_.coll_ancil}",
         )

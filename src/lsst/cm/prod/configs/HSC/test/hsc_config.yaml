@@ -10,6 +10,8 @@ ancil:
         - skymaps
 collect:
     class_name: lsst.cm.tools.db.script_handler.CollectScriptHandler
+collect_step:
+    class_name: lsst.cm.tools.db.script_handler.CollectStepScriptHandler
 job:
     class_name: lsst.cm.prod.HSC.handler.HSCJobHandler
     bps_template_yaml: "${CM_CONFIGS}/hsc_template.yaml"
@@ -38,11 +40,12 @@ group:
         - prepare
 step:
     input_type: source
-    output_type: chained
+    output_type: tagged
     templates:
         coll_out: "{root_coll}/{production_name}/{campaign_name}/{step_name}_output"
     scripts:
-        - collect
+        - prepare
+        - collect_step
 step1:
     class_name: lsst.cm.prod.HSC.handler.HSCStep1Handler
     prerequisites: []
