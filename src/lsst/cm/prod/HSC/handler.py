@@ -91,7 +91,7 @@ class HSCStep2Handler(StepHandler):
             collections=[entry.coll_source],
         )
 
-        data_queries = build_data_queries(butler, "raw", "exposure", 20, 500)
+        data_queries = build_data_queries(butler, "calexp", "visit", 20, 500)
         for i, dq_ in enumerate(data_queries):
             out_dict.update(group_name=f"group{i}", data_query=dq_)
             yield out_dict

@@ -44,7 +44,6 @@ step:
     templates:
         coll_out: "{root_coll}/{production_name}/{campaign_name}/{step_name}_output"
     scripts:
-        - prepare
         - collect_step
 step1:
     class_name: lsst.cm.prod.HSC.handler.HSCStep1Handler
