@@ -31,21 +31,17 @@ workflow:
     job_config: job
 group:
     class_name: lsst.cm.tools.db.group_handler.GroupHandler
-    input_type: tagged
-    output_type: chained
+    input_type: source
+    output_type: run
     templates:
-        coll_in: "{root_coll}/{production_name}/{campaign_name}/{step_name}/{group_name}_input"
-        coll_out: "{root_coll}/{production_name}/{campaign_name}/{step_name}/{group_name}_output"
-    scripts:
-        - prepare
+        coll_in: "{root_coll}/{production_name}/{campaign_name}_input"
+        coll_out: "{root_coll}/{production_name}/{campaign_name}_output"
 step:
     class_name: lsst.cm.prod.HSC.handler.HSCStepHandler
     input_type: source
-    output_type: tagged
+    output_type: run
     templates:
-        coll_out: "{root_coll}/{production_name}/{campaign_name}/{step_name}_output"
-    scripts:
-        - collect_step
+        coll_out: "{root_coll}/{production_name}/{campaign_name}_output"
 step1:
     prerequisites: []
     includes: ["step"]
@@ -55,7 +51,6 @@ step1:
         field: exposure
         min_queries: 5
 step2:
-    class_name: lsst.cm.prod.HSC.handler.HSCStep2Handler
     prerequisites: ["step1"]
     includes: ["step"]
     data_query_base: "instrument = 'HSC'"
@@ -64,36 +59,30 @@ step2:
         field: visit
         min_queries: 1
 step3:
-    class_name: lsst.cm.prod.HSC.handler.HSCStep3Handler
     prerequisites: ["step2"]
     includes: ["step"]
     data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
 step4:
-    class_name: lsst.cm.prod.HSC.handler.HSCStep4Handler
     prerequisites: ["step3"]
     includes: ["step"]
     data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
 step5:
-    class_name: lsst.cm.prod.HSC.handler.HSCStep5Handler
     prerequisites: ["step4"]
     includes: ["step"]
     data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
 step6:
-    class_name: lsst.cm.prod.HSC.handler.HSCStep6Handler
     prerequisites: ["step5"]
     includes: ["step"]
     data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
 step7:
-    class_name: lsst.cm.prod.HSC.handler.HSCStep7Handler
     prerequisites: ["step6"]
     includes: ["step"]
     data_query_base: "instrument = 'HSC'"
 campaign:
     class_name: lsst.cm.tools.db.campaign_handler.CampaignHandler
     root_coll: u/echarles/cm
-    data_query: "instrument = 'HSC' and exposure < 500"
     input_type: tagged
-    output_type: chained
+    output_type: run
     templates:
         coll_source: HSC/raw/RC2
         coll_in: "{root_coll}/{production_name}/{campaign_name}_input"
@@ -102,7 +91,6 @@ campaign:
     scripts:
         - ancil
         - prepare
-        - collect
     steps:
         - step1
         - step2

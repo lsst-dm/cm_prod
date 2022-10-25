@@ -40,6 +40,9 @@ class HSCJobHandler(JobHandler):
             butlerConfig=butler_repo,
             inCollection=f"{parent.coll_in},{parent.c_.coll_ancil}",
         )
+        if parent.data_query:
+            payload["dataQuery"] = parent.data_query
+
         workflow_config["payload"] = payload
         with open(outpath, "wt", encoding="utf-8") as fout:
             yaml.dump(workflow_config, fout)
@@ -58,7 +61,7 @@ class HSCJobHandler(JobHandler):
         job.update_values(dbi, job.id, status=status)
 
 
-class HSCStep1Handler(StepHandler):
+class HSCStepHandler(StepHandler):
     def group_iterator(self, dbi: DbInterface, entry: Step, **kwargs: Any) -> Iterable:
         out_dict = dict(
             production_name=entry.p_.name,
@@ -70,88 +73,18 @@ class HSCStep1Handler(StepHandler):
             entry.butler_repo,
             collections=[entry.coll_source],
         )
-
-        data_queries = build_data_queries(butler, "raw", "exposure", 20, 500)
-
+        data_query_base = self.config["data_query_base"]
+        split_args = self.config.get("split_args", {})
+        if split_args:
+            data_queries = build_data_queries(butler, **split_args)
+        else:
+            data_queries = [None]
         for i, dq_ in enumerate(data_queries):
-            out_dict.update(group_name=f"group{i}", data_query=dq_)
-            yield out_dict
-
-
-class HSCStep2Handler(StepHandler):
-    def group_iterator(self, dbi: DbInterface, entry: Step, **kwargs: Any) -> Iterable:
-        out_dict = dict(
-            production_name=entry.p_.name,
-            campaign_name=entry.c_.name,
-            step_name=entry.name,
-        )
-
-        butler = Butler(
-            entry.butler_repo,
-            collections=[entry.coll_source],
-        )
-
-        data_queries = build_data_queries(butler, "calexp", "visit", 20, 500)
-        for i, dq_ in enumerate(data_queries):
-            out_dict.update(group_name=f"group{i}", data_query=dq_)
-            yield out_dict
-
-
-class HSCStep3Handler(StepHandler):
-    def group_iterator(self, dbi: DbInterface, entry: Step, **kwargs: Any) -> Iterable:
-        out_dict = dict(
-            production_name=entry.p_.name,
-            campaign_name=entry.c_.name,
-            step_name=entry.name,
-        )
-        for i in range(10):
-            out_dict.update(group_name=f"group{i}", data_query=f"i == {i}")
-            yield out_dict
-
-
-class HSCStep4Handler(StepHandler):
-    def group_iterator(self, dbi: DbInterface, entry: Step, **kwargs: Any) -> Iterable:
-        out_dict = dict(
-            production_name=entry.p_.name,
-            campaign_name=entry.c_.name,
-            step_name=entry.name,
-        )
-        for i in range(10):
-            out_dict.update(group_name=f"group{i}", data_query=f"i == {i}")
-            yield out_dict
-
-
-class HSCStep5Handler(StepHandler):
-    def group_iterator(self, dbi: DbInterface, entry: Step, **kwargs: Any) -> Iterable:
-        out_dict = dict(
-            production_name=entry.p_.name,
-            campaign_name=entry.c_.name,
-            step_name=entry.name,
-        )
-        for i in range(10):
-            out_dict.update(group_name=f"group{i}", data_query=f"i == {i}")
-            yield out_dict
-
-
-class HSCStep6Handler(StepHandler):
-    def group_iterator(self, dbi: DbInterface, entry: Step, **kwargs: Any) -> Iterable:
-        out_dict = dict(
-            production_name=entry.p_.name,
-            campaign_name=entry.c_.name,
-            step_name=entry.name,
-        )
-        for i in range(10):
-            out_dict.update(group_name=f"group{i}", data_query=f"i == {i}")
-            yield out_dict
-
-
-class HSCStep7Handler(StepHandler):
-    def group_iterator(self, dbi: DbInterface, entry: Step, **kwargs: Any) -> Iterable:
-        out_dict = dict(
-            production_name=entry.p_.name,
-            campaign_name=entry.c_.name,
-            step_name=entry.name,
-        )
-        for i in range(10):
-            out_dict.update(group_name=f"group{i}", data_query=f"i == {i}")
+            data_query = data_query_base
+            if dq_ is not None:
+                data_query += f" AND {dq_}"
+            out_dict.update(
+                group_name=f"group{i}",
+                data_query=data_query,
+            )
             yield out_dict
