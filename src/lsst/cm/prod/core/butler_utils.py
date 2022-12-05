@@ -33,6 +33,18 @@ def get_sorted_array(itr: Iterable, field: str) -> np.ndarray:
     return np.sort(the_array)
 
 
+def print_dataset_summary(stream, butler_url: str, collections: list[str]) -> None:
+    butler = Butler(butler_url, collections=collections)
+
+    summary_dict = {}
+    for results in butler.registry.queryDatasets(...).byParentDatasetType():
+        n_dataset = results.count(exact=False)
+        summary_dict[results.parentDatasetType.name] = n_dataset
+    for ds_name, n_ds in summary_dict.items():
+        stream.write(f"{ds_name:20} {n_ds}\n")
+    stream.flush()
+
+
 def build_data_queries(
     butler: Butler,
     dataset: str,
