@@ -13,3 +13,8 @@ setup lsst_distrib
 latest_panda=$(ls -td /cvmfs/sw.lsst.eu/linux-x86_64/panda_env/v* | head -1)
 setupScript=${latest_panda}/setup_panda_s3df.sh
 source $setupScript ${WEEKLY}
+
+env | grep PANDA
+
+# let's drop a panda_auth status here for kicks
+panda_auth status

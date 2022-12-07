@@ -53,11 +53,13 @@ def build_data_queries(
     max_step_size: int = 10000000,
 ) -> list[str]:
 
-    itr = butler.registry.queryDatasets(dataset)
-    sorted_field_values = get_sorted_array(itr, field)
+    # itr = butler.registry.queryDatasets(dataset)
+    # sorted_field_values = get_sorted_array(itr, field)
 
-    n_matched = sorted_field_values.size
-
+    itr = butler.registry.queryDimensionRecords(datasets=dataset, element=field)
+    sorted_field_values = list(set(x.id for x in itr))
+    sorted_field_values.sort()
+    n_matched = len(sorted_field_values)
     step_size = min(max_step_size, int(n_matched / min_queries))
 
     ret_list = []

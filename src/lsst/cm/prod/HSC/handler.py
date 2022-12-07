@@ -75,8 +75,13 @@ class HSCStepHandler(StepHandler):
         )
         data_query_base = self.config["data_query_base"]
         split_args = self.config.get("split_args", {})
+        split_vals = self.config.get("split_vals", {})
+
         if split_args:
             data_queries = build_data_queries(butler, **split_args)
+        elif split_vals:
+            split_field = split_vals["field"]
+            data_queries = [f"{split_field} IN str({v})" for v in split_vals["values"]]
         else:
             data_queries = [None]
         for i, dq_ in enumerate(data_queries):
