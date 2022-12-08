@@ -81,7 +81,7 @@ class HSCStepHandler(StepHandler):
             data_queries = build_data_queries(butler, **split_args)
         elif split_vals:
             split_field = split_vals["field"]
-            data_queries = [f"{split_field} IN str({v})" for v in split_vals["values"]]
+            data_queries = [f"{split_field} IN ( {v} )" for v in split_vals["values"]]
         else:
             data_queries = [None]
         for i, dq_ in enumerate(data_queries):
