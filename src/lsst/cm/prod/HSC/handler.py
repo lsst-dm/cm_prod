@@ -44,6 +44,10 @@ class HSCJobHandler(JobHandler):
             payload["dataQuery"] = parent.data_query
 
         workflow_config["payload"] = payload
+
+        if parent.get_handler().config.get("rescue", False):
+            workflow_config["extraQgraphOptions"] = f"--clobber-outputs --skip-existing-in {parent.coll_out}"
+
         with open(outpath, "wt", encoding="utf-8") as fout:
             yaml.dump(workflow_config, fout)
 
