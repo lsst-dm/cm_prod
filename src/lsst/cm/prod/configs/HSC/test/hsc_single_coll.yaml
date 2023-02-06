@@ -25,6 +25,9 @@ workflow:
     input_type: source
     output_type: run
     job_config: job
+rescue_workflow:
+    includes: ["workflow"]
+    rescue: True
 group:
     class_name: lsst.cm.tools.db.group_handler.GroupHandler
     input_type: source
@@ -44,32 +47,45 @@ step1:
     data_query_base: instrument = 'HSC'
     split_args:
         dataset: raw
-        field: exposure
+        field: visit
         min_queries: 5
 step2:
     prerequisites: ["step1"]
     includes: ["step"]
     data_query_base: "instrument = 'HSC'"
-    split_args:
-        dataset: calexp
-        field: visit
-        min_queries: 1
 step3:
     prerequisites: ["step2"]
     includes: ["step"]
-    data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1' AND tract IN ( 9615, 9697, 9813 )"
+    data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
+    split_vals:
+        field: tract
+        values:
+            - 9615
+            - 9697
+            - 9813
 step4:
     prerequisites: ["step3"]
     includes: ["step"]
     data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
+    split_args:
+        dataset: raw
+        field: visit
+        min_queries: 5
 step5:
     prerequisites: ["step4"]
     includes: ["step"]
     data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
+    split_vals:
+        field: tract
+        values: [9615, 9697, 9813]
 step6:
     prerequisites: ["step5"]
     includes: ["step"]
     data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
+    split_args:
+        dataset: raw
+        field: visit
+        min_queries: 5
 step7:
     prerequisites: ["step6"]
     includes: ["step"]
