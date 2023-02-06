@@ -2,9 +2,9 @@ includeConfigs:
 - ${CTRL_BPS_PANDA_DIR}/config/bps_usdf.yaml
 - ${CM_PROD_DIR}/src/lsst/cm/prod/configs/HSC/test/requestMemory.yaml
 
-pipelineYaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step1"
+pipelineYaml: {pipeline_yaml}
 
-LSST_VERSION: w_2022_36
+LSST_VERSION: {lsst_version}
 
 payload:
   payloadName: "HSC/test"

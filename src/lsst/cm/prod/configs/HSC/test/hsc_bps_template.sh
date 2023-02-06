@@ -5,7 +5,7 @@
 # is causing errors
 
 # setup LSST env.
-export WEEKLY='w_2022_40'
+export WEEKLY='{lsst_version}'
 source /cvmfs/sw.lsst.eu/linux-x86_64/lsst_distrib/${WEEKLY}/loadLSST.bash
 setup lsst_distrib
 
