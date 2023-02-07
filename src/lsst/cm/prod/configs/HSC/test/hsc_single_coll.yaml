@@ -36,7 +36,7 @@ group:
         coll_in: "{root_coll}/{production_name}/{campaign_name}_input"
         coll_out: "{root_coll}/{production_name}/{campaign_name}_output"
 step:
-    class_name: lsst.cm.prod.HSC.handler.HSCStepHandler
+    class_name: lsst.cm.tools.db.step_handler.StepHandler
     input_type: source
     output_type: run
     templates:
@@ -47,7 +47,7 @@ step1:
     data_query_base: instrument = 'HSC'
     split_args:
         dataset: raw
-        field: visit
+        field: exposure
         min_queries: 5
 step2:
     prerequisites: ["step1"]
@@ -69,7 +69,7 @@ step4:
     data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
     split_args:
         dataset: raw
-        field: visit
+        field: exposure
         min_queries: 5
 step5:
     prerequisites: ["step4"]
@@ -84,7 +84,7 @@ step6:
     data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
     split_args:
         dataset: raw
-        field: visit
+        field: exposure
         min_queries: 5
 step7:
     prerequisites: ["step6"]
@@ -92,7 +92,7 @@ step7:
     data_query_base: "instrument = 'HSC'"
 campaign:
     class_name: lsst.cm.tools.db.campaign_handler.CampaignHandler
-    root_coll: u/echarles/cm
+    root_coll: dummy
     input_type: tagged
     output_type: run
     templates:
