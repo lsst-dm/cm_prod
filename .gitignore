@@ -8,10 +8,13 @@ config.log
 *.pyc
 *_wrap.cc
 *Lib.py
+*~
+archive/
+payload-log.json
+submit/
 
-# Built by sconsUtils
-version.py
-bin/
+.eggs
+src/lsst.cm.prod.egg-info/
 
 # Pytest
 tests/.tests
@@ -19,3 +22,7 @@ pytest_session.txt
 .cache/
 .pytest_cache
 .coverage
+
+# Test stuff
+archive_*
+cm.db

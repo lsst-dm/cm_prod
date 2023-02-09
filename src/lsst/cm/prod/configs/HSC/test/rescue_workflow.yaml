@@ -1,0 +1,6 @@
+rescue_workflow:
+    class_name: lsst.cm.tools.db.workflow_handler.WorkflowHandler
+    input_type: source
+    output_type: run
+    job_config: job
+    rescue: True

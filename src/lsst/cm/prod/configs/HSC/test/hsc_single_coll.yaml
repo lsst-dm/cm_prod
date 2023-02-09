@@ -1,0 +1,113 @@
+prepare:
+    class_name: lsst.cm.tools.db.script_handler.PrepareScriptHandler
+ancil:
+    class_name: lsst.cm.tools.db.script_handler.AncillaryScriptHandler
+    collections:
+        - HSC/calib
+        - HSC/masks
+        - HSC/fgcmcal/lut/RC2
+        - refcats
+        - skymaps
+job:
+    class_name: lsst.cm.prod.HSC.handler.HSCJobHandler
+    bps_template_yaml: "${CM_CONFIGS}/hsc_template.yaml"
+    bps_script_template: "${CM_CONFIGS}/hsc_bps_template.sh"
+    pipeline_yaml:
+        step1: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step1"
+        step2: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step2"
+        step3: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step3"
+        step4: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step4"
+        step5: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step5"
+        step6: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step6"
+        step7: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step7"
+workflow:
+    class_name: lsst.cm.tools.db.workflow_handler.WorkflowHandler
+    input_type: source
+    output_type: run
+    job_config: job
+rescue_workflow:
+    includes: ["workflow"]
+    rescue: True
+group:
+    class_name: lsst.cm.tools.db.group_handler.GroupHandler
+    input_type: source
+    output_type: run
+    templates:
+        coll_in: "{root_coll}/{production_name}/{campaign_name}_input"
+        coll_out: "{root_coll}/{production_name}/{campaign_name}_output"
+step:
+    class_name: lsst.cm.tools.db.step_handler.StepHandler
+    input_type: source
+    output_type: run
+    templates:
+        coll_out: "{root_coll}/{production_name}/{campaign_name}_output"
+step1:
+    prerequisites: []
+    includes: ["step"]
+    data_query_base: instrument = 'HSC'
+    split_args:
+        dataset: raw
+        field: exposure
+        min_queries: 5
+step2:
+    prerequisites: ["step1"]
+    includes: ["step"]
+    data_query_base: "instrument = 'HSC'"
+step3:
+    prerequisites: ["step2"]
+    includes: ["step"]
+    data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
+    split_vals:
+        field: tract
+        values:
+            - 9615
+            - 9697
+            - 9813
+step4:
+    prerequisites: ["step3"]
+    includes: ["step"]
+    data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
+    split_args:
+        dataset: raw
+        field: exposure
+        min_queries: 5
+step5:
+    prerequisites: ["step4"]
+    includes: ["step"]
+    data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
+    split_vals:
+        field: tract
+        values: [9615, 9697, 9813]
+step6:
+    prerequisites: ["step5"]
+    includes: ["step"]
+    data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
+    split_args:
+        dataset: raw
+        field: exposure
+        min_queries: 5
+step7:
+    prerequisites: ["step6"]
+    includes: ["step"]
+    data_query_base: "instrument = 'HSC'"
+campaign:
+    class_name: lsst.cm.tools.db.campaign_handler.CampaignHandler
+    root_coll: dummy
+    input_type: tagged
+    output_type: run
+    templates:
+        coll_source: HSC/raw/RC2
+        coll_in: "{root_coll}/{production_name}/{campaign_name}_input"
+        coll_out: "{root_coll}/{production_name}/{campaign_name}_output"
+        coll_ancil: "{root_coll}/{production_name}/{campaign_name}_ancil"
+    scripts:
+        - ancil
+        - prepare
+    steps:
+        - step1
+        - step2
+        - step3
+        - step4
+        - step5
+        - step6
+        - step7
