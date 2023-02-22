@@ -2,18 +2,6 @@ includeConfigs:
 - ${CTRL_BPS_PANDA_DIR}/config/bps_usdf.yaml
 - ${CM_PROD_DIR}/src/lsst/cm/prod/configs/HSC/test/requestMemory.yaml
 
-pipelineYaml: {pipeline_yaml}
-
-LSST_VERSION: {lsst_version}
-
-payload:
-  payloadName: "HSC/test"
-  output: {w_coll_out}
-  outputRun: "{w_coll_out}_{job_id}"
-  butlerConfig: {butler_config}
-  inCollection: {w_coll_in}
-  dataQuery: {data_query}
-
 executionButler:
   requestMemory: 64000
   queue: "SLAC_Rubin_Merge"
