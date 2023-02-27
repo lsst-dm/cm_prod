@@ -4,10 +4,10 @@ EXAMPLES="$(dirname -- "$(readlink -f -- "$0";)";)"
 
 source $EXAMPLES/examples/common_setup.sh
 
-config="hsc_single_coll.yaml"
-config_name="hsc_test_single_coll"
+config="hsc_weekly.yaml"
+config_name="hsc_weekly"
 p_name="HSC"
-lsst_version="w_2022_48"
+lsst_version="w_2023_08"
 c_name="${lsst_version}_test0"
 fullname="${p_name}/${c_name}"
 db_path="output/cm_${p_name}.db"
