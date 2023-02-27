@@ -24,7 +24,6 @@ group:
     output_type: run
     workflow_config: workflow
     templates:
-        coll_in: "{root_coll}/{production_name}/{campaign_name}_input"
         coll_out: "{root_coll}/{production_name}/{campaign_name}_output"
 step:
     class_name: lsst.cm.tools.db.step_handler.StepHandler
