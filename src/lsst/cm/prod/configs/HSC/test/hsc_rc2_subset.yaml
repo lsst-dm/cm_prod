@@ -1,5 +1,9 @@
 prepare:
     class_name: lsst.cm.tools.db.script_handler.PrepareScriptHandler
+collect:
+    class_name: lsst.cm.tools.db.script_handler.CollectScriptHandler
+collect_step:
+    class_name: lsst.cm.tools.db.script_handler.CollectStepScriptHandler
 ancil:
     class_name: lsst.cm.tools.db.script_handler.AncillaryScriptHandler
     collections:
@@ -23,15 +27,15 @@ group:
     input_type: source
     output_type: run
     workflow_config: workflow
-    templates:
-        coll_out: "{root_coll}/{production_name}/{campaign_name}_output"
 step:
     class_name: lsst.cm.tools.db.step_handler.StepHandler
     input_type: source
     output_type: run
     group_config: group
+    scripts:
+        - collect_step
     templates:
-        coll_out: "{root_coll}/{production_name}/{campaign_name}_output"
+        coll_out: "{root_coll}/{production_name}/{campaign_name}/{step_name}"
 step1:
     prerequisites: []
     includes: ["step"]
@@ -81,12 +85,13 @@ campaign:
     bps_script_template: "${CM_CONFIGS}/hsc_bps_template.sh"
     templates:
         coll_source: HSC/raw/RC2_subset
-        coll_in: "{root_coll}/{production_name}/{campaign_name}_input"
-        coll_out: "{root_coll}/{production_name}/{campaign_name}_output"
-        coll_ancil: "{root_coll}/{production_name}/{campaign_name}_ancil"
+        coll_in: "{root_coll}/{production_name}/{campaign_name}/input"
+        coll_out: "{root_coll}/{production_name}/{campaign_name}"
+        coll_ancil: "{root_coll}/{production_name}/{campaign_name}/ancillary"
     scripts:
         - ancil
         - prepare
+        - collect
     steps:
         - step1
         - step2a
