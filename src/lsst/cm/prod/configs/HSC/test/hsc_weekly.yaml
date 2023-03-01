@@ -65,7 +65,7 @@ step2cde:
     prerequisites: ["step2b"]
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step2cde"
-    data_query_base: "instrument = 'HSC'"
+    data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
 step3:
     prerequisites: ["step2cde"]
     includes: ["step"]

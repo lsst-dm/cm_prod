@@ -45,7 +45,7 @@ step2a:
     prerequisites: ["step1"]
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step2a"
-    data_query_base: "instrument = 'HSC'"
+    data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
 step2b:
     prerequisites: ["step2a"]
     includes: ["step"]
@@ -55,7 +55,7 @@ step2cde:
     prerequisites: ["step2b"]
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step2cde"
-    data_query_base: "instrument = 'HSC'"
+    data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
 step3:
     prerequisites: ["step2cde"]
     includes: ["step"]
