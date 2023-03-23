@@ -5,8 +5,8 @@ includeConfigs:
 numberOfRetries: 3
 
 custom_lsst_setup: >
-  setup -j -r /sdf/home/e/eiger/u/ctrl_bps_panda
-  setup -j -r /sdf/home/e/eiger/u/ip_diffim
+  setup -j -r /sdf/home/e/eiger/u/ctrl_bps_panda;
+  setup -j -r /sdf/home/e/eiger/u/ip_diffim;
 
 # turn off the -o option in pipetask commands
 pipetaskOutput: ""
