@@ -18,3 +18,6 @@ env | grep PANDA
 
 # let's drop a panda_auth status here for kicks
 panda_auth status
+
+# custom ctrl_bps_panda for not messing up the output collections
+setup -j -r /sdf/home/e/eiger/u/ctrl_bps_panda
