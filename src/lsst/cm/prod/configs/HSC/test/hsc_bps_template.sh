@@ -20,4 +20,5 @@ env | grep PANDA
 panda_auth status
 
 # custom ctrl_bps_panda for not messing up the output collections
-setup -j -r /sdf/home/e/eiger/u/ctrl_bps_panda
+setup -j -r /sdf/home/e/eiger/u/ctrl_bps;
+setup -j -r /sdf/home/e/eiger/u/ctrl_bps_panda;
