@@ -19,9 +19,5 @@ export PANDA_AUTH=oidc
 export PANDA_VERIFY_HOST=off
 export PANDA_AUTH_VO=Rubin
 
-# IDDS_CONFIG path depends on the weekly version
-export PANDA_SYS=$CONDA_PREFIX
-export IDDS_CONFIG=${PANDA_SYS}/etc/idds/idds.cfg.client.template
-
 # WMS plugin
 export BPS_WMS_SERVICE_CLASS=lsst.ctrl.bps.panda.PanDAService
