@@ -4,6 +4,12 @@ EXAMPLES="$(dirname -- "$(readlink -f -- "$0";)";)"
 
 source $EXAMPLES/examples/hsc_rc2_subset_setup.sh
 
+read -p "This script will blow away the cm database and start a fresh one based on your setup file. Are you sure you want to do this? (y/N)" $ANSWER
+if [[$ANSWER!='y']] && [[$ANSWER!='yes']] && [[$ANSWER!='Y']] && [[$ANSWER!='Yes']] && [[$ANSWER!='YES']]; then
+    echo "The environment variables for your production were already sourced. You may proceed to your usual cm business without panic."
+    exit 1
+fi
+
 \rm -rf $CM_PROD_URL/$fullname $db_path
 mkdir -p output
 
