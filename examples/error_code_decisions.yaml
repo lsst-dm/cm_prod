@@ -88,14 +88,6 @@ pandaErrorCode:
             rescue: False
             flavor: "pipelines"
             intensity: 0
-        vague_finalizeCharacterization:
-            diagMessage: "Failed to execute payload"
-            pipetask: finalizeCharacterization
-            ticket: ["DM-36066"]
-            resolved: True
-            rescue: True
-            flavor: "panda"
-            intensity: 0
         do_compute_kernel_image:
             diagMessage: >
                 File \"src/CoaddPsf.cc\", line 254, in virtual std:shared_ptr > lsst:meas:algorithms:
