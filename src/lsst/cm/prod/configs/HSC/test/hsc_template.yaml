@@ -4,7 +4,9 @@ includeConfigs:
 
 numberOfRetries: 3
 
-custom_lsst_setup: ""
+custom_lsst_setup: >
+  setup -j -r /sdf/home/e/eiger/u/ctrl_bps;
+  setup -j -r /sdf/home/e/eiger/u/ctrl_bps_panda;
 
 executionButler:
   requestMemory: 64000
