@@ -111,6 +111,11 @@ step7:
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step7"
     data_query_base: "instrument = 'HSC'"
+step8:
+    prerequisites: ["step7"]
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step8"
+    data_query_base: "instrument = 'HSC'"
 campaign:
     class_name: lsst.cm.tools.db.campaign_handler.CampaignHandler
     root_coll: dummy
@@ -137,3 +142,4 @@ campaign:
         - step5
         - step6
         - step7
+        - step8
