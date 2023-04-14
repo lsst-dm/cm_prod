@@ -1,0 +1,131 @@
+prepare:
+    class_name: lsst.cm.tools.db.script_handler.PrepareScriptHandler
+ancil:
+    class_name: lsst.cm.tools.db.script_handler.AncillaryScriptHandler
+job:
+    class_name: lsst.cm.tools.db.job_handler.JobHandler
+workflow:
+    class_name: lsst.cm.tools.db.workflow_handler.WorkflowHandler
+    input_type: source
+    output_type: run
+    job_config: job
+rescue_workflow:
+    includes: ["workflow"]
+    rescue: True
+group:
+    class_name: lsst.cm.tools.db.group_handler.GroupHandler
+    input_type: source
+    output_type: run
+    workflow_config: workflow
+    templates:
+        coll_in: "{root_coll}/{production_name}/{campaign_name}_input"
+        coll_out: "{root_coll}/{production_name}/{campaign_name}_output"
+step:
+    class_name: lsst.cm.tools.db.step_handler.StepHandler
+    input_type: source
+    output_type: run
+    group_config: group
+    templates:
+        coll_out: "{root_coll}/{production_name}/{campaign_name}_output"
+step1:
+    prerequisites: []
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#step1"
+    data_query_base: "instrument='LSSTCam-imSim' and skymap='DC2' and tract in (3828, 3829)"
+    split_args:
+        dataset: raw
+        field: exposure
+        min_queries: 4
+step2:
+    prerequisites: ["step1"]
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#step2"
+    data_query_base: "instrument='LSSTCam-imSim' and skymap='DC2' and tract in (3828, 3829)"
+step3:
+    prerequisites: ["step2"]
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#step3"
+    data_query_base: "instrument='LSSTCam-imSim' and skymap='DC2'"
+    split_vals:
+        field: tract
+        values:
+            - 3828
+            - 3829
+step4:
+    prerequisites: ["step3"]
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#step4"
+    data_query_base: "instrument='LSSTCam-imSim' and skymap='DC2' and tract in (3828, 3829)"
+    split_args:
+        dataset: calexp # test or research the reasonable arguments here
+        field: visit
+        min_queries: 4
+step5:
+    prerequisites: ["step4"]
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#step5"
+    data_query_base: "instrument='LSSTCam-imSim' and skymap='DC2' and tract in (3828, 3829)"
+    split_vals:
+        field: tract
+        values:
+            - 3828
+            - 3829
+step6:
+    prerequisites: ["step4"]
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#step6"
+    data_query_base: "instrument='LSSTCam-imSim' and skymap='DC2' and tract in (3828, 3829)"
+    split_args:
+        dataset: calexp # could also be DiaSource_something
+        field: visit
+        min_queries: 4
+step7:
+    prerequisites: ["step3"]
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#step7"
+    data_query_base: "instrument = 'LSSTCam-imSim'"
+step8:
+    prerequisites: ["step5"]
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#step8"
+faro:
+    prerequisites: ["step3"]
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#faro_all"
+plots:
+    prerequisites: ["step3"]
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#analysis_coadd_plots"
+    split_vals:
+        field: tract
+        values:
+            - 3828
+            - 3829
+
+
+campaign:
+    class_name: lsst.cm.tools.db.campaign_handler.CampaignHandler
+    root_coll: dummy
+    input_type: tagged
+    output_type: run
+    bps_yaml_template: "${CM_CONFIGS}/dc2_template.yaml"
+    bps_script_template: "${CM_CONFIGS}/dc2_bps_template.sh"
+    templates:
+        coll_source: 2.2i/defaults/test-med-1
+        coll_in: "{root_coll}/{production_name}/{campaign_name}_input"
+        coll_out: "{root_coll}/{production_name}/{campaign_name}_output"
+        coll_ancil: "{root_coll}/{production_name}/{campaign_name}_ancil"
+    scripts:
+        - ancil
+        - prepare
+    steps:
+        - step1
+        - step2
+        - step3
+        - step4
+        - step5
+        - step6
+        - step7
+        - step8
+        - faro
+        - plots
