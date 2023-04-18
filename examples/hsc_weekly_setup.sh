@@ -15,3 +15,4 @@ db_path="output/cm_${p_name}.db"
 
 export CM_CONFIGS="src/lsst/cm/prod/configs/HSC/test"
 export CM_DB="sqlite:///${db_path}"
+export CM_DAEMON="cm daemon --fullname ${fullname} --sleep-time 600 --verbose --log-file ${p_name}_daemon_mutterings.log"

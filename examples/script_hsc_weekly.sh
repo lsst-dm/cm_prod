@@ -34,7 +34,7 @@ then
     cm insert --production-name ${p_name} --campaign-name ${c_name} --butler-repo ${butler_repo} --config-name ${config_name} --config-block campaign --lsst-version ${lsst_version} --root-coll ${root_coll}
     cm daemon --fullname ${fullname} --sleep-time 60 --n-iter 5
     touch ${p_name}_daemon_mutterings.log
-    cm daemon --fullname ${fullname} --sleep-time 600 --verbose &>> ${p_name}_daemon_mutterings.log &
+    cm daemon --fullname ${fullname} --sleep-time 600 --verbose --log-file ${p_name}_daemon_mutterings.log &
 else
     echo "We did not delete your cm database. You may proceed to your usual cm business without panic."
 fi
