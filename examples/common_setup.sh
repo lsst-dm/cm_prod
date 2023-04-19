@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-EXAMPLES="$(dirname -- "$(readlink -f -- "$0";)";)"
+EXAMPLES=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
 butler_repo="/sdf/group/rubin/repo/main"
 root_coll="u/${USER}/cm"
 

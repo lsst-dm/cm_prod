@@ -2,8 +2,17 @@ includeConfigs:
 - ${CTRL_BPS_PANDA_DIR}/config/bps_usdf.yaml
 - ${CM_PROD_DIR}/src/lsst/cm/prod/configs/HSC/test/requestMemory.yaml
 
+numberOfRetries: 3
+
+custom_lsst_setup: ""
+
+# turn off the -o option in pipetask commands
+pipetaskOutput: ""
+
 executionButler:
   requestMemory: 64000
   queue: "SLAC_Rubin_Merge"
-
-numberOfRetries: 3
+  # turn off chaining in the execution butler because
+  # no output collection
+  command2: ""
+  command3: ""
