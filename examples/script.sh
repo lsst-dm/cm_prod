@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-EXAMPLES="$(dirname -- "$(readlink -f -- "$0";)";)"
+EXAMPLES=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
+# Prompt for config/setup files
+# Each new setup will need its own elif here
 
 valid_config=false
 read -p "Which config would you like to use? (HSC-RC2, rc2_subset) " CONFIG

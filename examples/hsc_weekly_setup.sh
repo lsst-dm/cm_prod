@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-EXAMPLES="$(dirname -- "$(readlink -f -- "$0";)";)"
+EXAMPLES=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 source $EXAMPLES/examples/common_setup.sh
 
