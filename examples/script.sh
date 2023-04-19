@@ -6,15 +6,19 @@ EXAMPLES=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 # Each new setup will need its own elif here
 
 valid_config=false
-read -p "Which config would you like to use? (HSC-RC2, rc2_subset) " CONFIG
+read -p "Which config would you like to use? (HSC RC2, rc2 subset, DC2 test-med-1) " CONFIG
 while [ $valid_config = false ]; do
-    if [ $CONFIG = 'HSC-RC2' ]
+    if [ $CONFIG = 'HSC RC2' ]
     then
 	    source $EXAMPLES/hsc_weekly_setup.sh
         valid_config=true
-    elif [ $CONFIG = 'rc2_subset' ]
+    elif [ $CONFIG = 'rc2 subset' ]
     then
         source $EXAMPLES/hsc_rc2_subset_setup.sh
+        valid_config=true
+    elif [ $CONFIG = 'DC2 test-med-1' ]
+    then
+        source $EXAMPLES/examples/dc2_test-med-1_setup.sh
         valid_config=true
     else
         read -p "That config was not valid. Please enter a valid config " CONFIG
