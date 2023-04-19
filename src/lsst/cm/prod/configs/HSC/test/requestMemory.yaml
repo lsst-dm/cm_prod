@@ -1,4 +1,6 @@
 pipetask:
+  calibrate:
+    requestMemory: 8192
   makeWarp:
     requestMemory: 8192
   assembleCoadd:
