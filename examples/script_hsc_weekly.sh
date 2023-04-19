@@ -26,6 +26,8 @@ then
     echo "Enjoy your fresh cm database!"
     \rm -rf $CM_PROD_URL/$fullname $db_path
     \rm -rf submit/${root_coll}/${fullname}
+    butler remove-collections --confirm /repo/main "${root_coll}/${fullname}*"
+
     mkdir -p output
 
     cm create
