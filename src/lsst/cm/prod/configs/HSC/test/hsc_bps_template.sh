@@ -18,3 +18,7 @@ env | grep PANDA
 
 # let's drop a panda_auth status here for kicks
 panda_auth status
+
+# Uncomment this for any custom bps setups
+#setup -j -r path/to/local/ctrl_bps
+#setup -j -r path/to/local/ctrl_bps_panda
