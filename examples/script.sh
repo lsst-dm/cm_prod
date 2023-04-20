@@ -10,11 +10,11 @@ read -p "Which config would you like to use? (HSC-RC2, rc2_subset) " CONFIG
 while [ $valid_config = false ]; do
     if [ $CONFIG = 'HSC-RC2' ]
     then
-	    source $EXAMPLES/examples/hsc_weekly_setup.sh
+	    source $EXAMPLES/hsc_weekly_setup.sh
         valid_config=true
     elif [ $CONFIG = 'rc2_subset' ]
     then
-        source $EXAMPLES/examples/hsc_rc2_subset_setup.sh
+        source $EXAMPLES/hsc_rc2_subset_setup.sh
         valid_config=true
     else
         read -p "That config was not valid. Please enter a valid config " CONFIG
