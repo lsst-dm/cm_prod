@@ -1,4 +1,6 @@
 pipetask:
+  fgcmBuildFromIsolatedStars:
+    requestMemory: 8192
   calibrate:
     requestMemory: 8192
   makeWarp:
