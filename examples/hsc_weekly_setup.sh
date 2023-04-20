@@ -2,7 +2,7 @@
 
 EXAMPLES=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-source $EXAMPLES/examples/common_setup.sh
+source $EXAMPLES/common_setup.sh
 
 config="hsc_weekly.yaml"
 config_name="hsc_weekly"
