@@ -2,6 +2,14 @@ prepare:
     class_name: lsst.cm.tools.db.script_handler.PrepareScriptHandler
 ancil:
     class_name: lsst.cm.tools.db.script_handler.AncillaryScriptHandler
+    collections:
+        - 2.2i/calib/DM-30694
+        - 2.2i/calib/gen2
+        - 2.2i/calib/DM-30694/unbounded
+        - skymaps
+        - refcats/PREOPS-301
+        - 2.2i/truth_summary
+        - 2.2i/red_galaxies_cosmodc2
 job:
     class_name: lsst.cm.tools.db.job_handler.JobHandler
 workflow:
