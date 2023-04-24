@@ -5,6 +5,8 @@ pipetask:
     requestMemory: 8192
   makeWarp:
     requestMemory: 8192
+  makeVisitTable:
+    requestMemory: 8192
   assembleCoadd:
     requestMemory: 24576
   measure:
