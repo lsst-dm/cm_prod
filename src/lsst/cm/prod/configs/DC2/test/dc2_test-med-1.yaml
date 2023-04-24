@@ -1,5 +1,9 @@
 prepare:
     class_name: lsst.cm.tools.db.script_handler.PrepareScriptHandler
+collect:
+    class_name: lsst.cm.tools.db.script_handler.CollectScriptHandler
+collect_step:
+    class_name: lsst.cm.tools.db.script_handler.CollectStepScriptHandler
 ancil:
     class_name: lsst.cm.tools.db.script_handler.AncillaryScriptHandler
     collections:
@@ -25,9 +29,6 @@ group:
     input_type: source
     output_type: run
     workflow_config: workflow
-    templates:
-        coll_in: "{root_coll}/{production_name}/{campaign_name}_input"
-        coll_out: "{root_coll}/{production_name}/{campaign_name}_output"
 step:
     class_name: lsst.cm.tools.db.step_handler.StepHandler
     input_type: source
@@ -45,7 +46,7 @@ step1:
     split_args:
         dataset: raw
         field: exposure
-        min_queries: 4
+        min_queries: 3
 step2:
     prerequisites: ["step1"]
     includes: ["step"]
@@ -128,6 +129,7 @@ campaign:
     scripts:
         - ancil
         - prepare
+        - collect
     steps:
         - step1
         - step2
