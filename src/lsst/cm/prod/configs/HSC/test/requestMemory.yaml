@@ -44,7 +44,7 @@ pipetask:
   templateGen:
     requestMemory: 5000
   healSparsePropertyMaps:
-    requestMemory: 30000
+    requestMemory: 160000
   consolidateObjectTable:
     requestMemory: 30000
   getTemplate:
@@ -60,3 +60,9 @@ pipetask:
     requestMemory: 5000
   consolidateForcedSourceTable:
     requestMemory: 200000
+  makeVisitTable:
+    requestMemory: 160000
+  makeCcdVisitTable:
+    requestMemory: 160000
+  selectGoodSeeingVisits:
+    requestMemory: 8000 

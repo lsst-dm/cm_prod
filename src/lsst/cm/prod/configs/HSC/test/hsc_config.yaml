@@ -108,6 +108,21 @@ step7:
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step7"
     data_query_base: "instrument = 'HSC'"
+faro:
+    prerequisites: ["step7"]
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#faro_all"
+    data_query_base: "instrument = 'HSC'"
+analysis_1:
+    prerequisites: ["faro"]
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#analysis_coadd_plots"
+    data_query_base: "instrument = 'HSC'"
+analysis_2:
+    prerequisites: ["analysis_1"]
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#coaddQualityCore"
+    data_query_base: "instrument = 'HSC'"
 campaign:
     class_name: lsst.cm.tools.db.campaign_handler.CampaignHandler
     root_coll: dummy
@@ -133,3 +148,7 @@ campaign:
         - step5
         - step6
         - step7
+        - faro
+        - analysis_1
+        - analysis_2
+

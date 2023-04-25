@@ -5,9 +5,17 @@ includeConfigs:
 numberOfRetries: 3
 
 custom_lsst_setup: >
-  setup -j -r /sdf/home/e/eiger/u/ctrl_bps;
-  setup -j -r /sdf/home/e/eiger/u/ctrl_bps_panda;
+  setup -j -r /sdf/home/m/mccarthy/prod/ctrl_bps;
+  setup -j -r /sdf/home/m/mccarthy/prod/ctrl_bps_panda;
 
 executionButler:
   requestMemory: 64000
   queue: "SLAC_Rubin_Merge"
+# turn off the -o option in pipetask commands
+pipetaskOutput: ""
+# turn off chaining in the execution butler because
+# no output collection
+executionButler:
+ command2: ""
+ command3: ""
+ 
