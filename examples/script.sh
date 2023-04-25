@@ -11,14 +11,18 @@ while [ $valid_config = false ]; do
     if [ $CONFIG = 'HSC-RC2' ]
     then
 	    source $EXAMPLES/hsc_weekly_setup.sh
+        butler_repo='/sdf/group/rubin/repo/main'
         valid_config=true
+
     elif [ $CONFIG = 'rc2_subset' ]
     then
         source $EXAMPLES/hsc_rc2_subset_setup.sh
+        butler_repo='/sdf/group/rubin/repo/main'
         valid_config=true
     elif [ $CONFIG = 'DC2_test-med-1' ]
     then
         source $EXAMPLES/dc2_test-med-1_setup.sh
+        butler_repo="/sdf/group/rubin/repo/dc2"
         valid_config=true
     else
         read -p "That config was not valid. Please enter a valid config " CONFIG

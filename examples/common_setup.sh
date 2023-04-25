@@ -2,10 +2,11 @@
 
 EXAMPLES=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
+# Let's see if we can move the butler to the campaign setup file instead so we don't have to do so much uncommenting
 # HSC Butler:
 #butler_repo="/sdf/group/rubin/repo/main"
 # DC2 Butler:
-butler_repo="/sdf/group/rubin/repo/dc2"
+#butler_repo="/sdf/group/rubin/repo/dc2"
 
 # Use this for tests or things you're not quite sure of
 root_coll="u/${USER}/cm"
