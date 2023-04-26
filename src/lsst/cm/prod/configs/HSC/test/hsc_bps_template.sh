@@ -18,3 +18,7 @@ env | grep PANDA
 
 # let's drop a panda_auth status here for kicks
 panda_auth status
+
+# custom setups
+setup -j -r /sdf/home/e/eiger/u/pipe_base;
+setup -j -r /sdf/home/e/eiger/u/fgcmcal;
