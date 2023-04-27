@@ -12,7 +12,7 @@ pipetask:
   writeObjectTable:
     requestMemory: 16384
   matchCatalogsPatch:
-    requestMemory: 4096
+    requestMemory: 120000
   modelPhotRepGal4:
     requestMemory: 4096
   imageDifference:
@@ -66,3 +66,15 @@ pipetask:
     requestMemory: 160000
   selectGoodSeeingVisits:
     requestMemory: 8000 
+  matchCatalogsTractMag17to21p5:
+    requestMemory: 160000
+  matchCatalogsTractStarsSNR5to80:
+    requestMemory: 160000
+  matchCatalogsTractGxsSNR5to80:
+    requestMemory: 160000
+  modelPhotRepGal2:
+    requestMemory: 64000
+  modelPhotRepGal3:
+    requestMemory: 64000
+  modelPhotRepGal1:
+    requestMemory: 64000
