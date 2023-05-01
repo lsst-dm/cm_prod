@@ -3,7 +3,8 @@
 EXAMPLES=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 butler_repo="/sdf/group/rubin/repo/main"
-root_coll="u/${USER}/cm"
+#root_coll="u/${USER}/cm"
+root_coll="HSC/runs"
 
 export CM_PROD_DIR="${EXAMPLES}"
 export CM_PROD_URL="output/archive"
