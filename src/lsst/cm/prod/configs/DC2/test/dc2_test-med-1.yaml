@@ -38,6 +38,7 @@ step:
         - collect_step
     templates:
         coll_out: "{root_coll}/{production_name}/{campaign_name}/{step_name}"
+    data_query_base: "instrument='LSSTCam-imSim'"
 step1:
     prerequisites: []
     includes: ["step"]

@@ -1,0 +1,5 @@
+pipetask:
+  consolidateObjectTable:
+    requestMemory: 12000
+  healSparsePropertyMaps:
+    requestMemory: 12000
