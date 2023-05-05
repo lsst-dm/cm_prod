@@ -20,21 +20,69 @@ pipetask:
   writeObjectTable:
     requestMemory: 16384
   matchCatalogsPatch:
-    requestMemory: 4096
+    requestMemory: 120000
   modelPhotRepGal4:
-    requestMemory: 4096
+    requestMemory: 120000
+  modelPhotRepGal1:
+    requestMemory: 120000
+  modelPhotRepGal2:
+    requestMemory: 120000
+  modelPhotRepGal3:
+    requestMemory: 120000
   imageDifference:
     requestMemory: 4096
+  AM3:
+    requestMemory: 120000
+  AF1_design:
+    requestMemory: 120000
+  AD3_design:
+    requestMemory: 120000
+  AD2_design:
+    requestMemory: 120000
+  AM2:
+    requestMemory: 120000
+  AD1_design:
+    requestMemory: 120000
+  AF3_design:
+    requestMemory: 120000
+  AF2_design:
+    requestMemory: 120000
+  AM1:
+    requestMemory: 120000
   matchCatalogsPatchMultiBand:
     requestMemory: 120000
   matchCatalogsTract:
     requestMemory: 120000
+  matchCatalogsTractStarsSNR5to80:
+    requestMemory: 120000
+  matchCatalogsTractGxsSNR5to80:
+    requestMemory: 120000
+  matchCatalogsTractMag17to21p5:
+    requestMemory: 120000
+  psfPhotRepStar3:
+    requestMemory: 120000
+  psfPhotRepStar2:
+    requestMemory: 120000
+  psfPhotRepStar4:
+    requestMemory: 120000
+  psfPhotRepStar1:
+    requestMemory: 120000
+  modelPhotRepStar1:
+    requestMemory: 120000
+  modelPhotRepStar2:
+    requestMemory: 120000
+  modelPhotRepStar3:
+    requestMemory: 120000
+  modelPhotRepStar4:
+    requestMemory: 120000
   wPerp:
     requestMemory: 120000
   TE1:
-    requestMemory: 46000
+    requestMemory: 120000
   TE2:
     requestMemory: 46000
+  skyObjectStd:
+    requestMemory: 120000
   # from Brock
   fgcmBuildStarsTable:
     requestMemory: 8192

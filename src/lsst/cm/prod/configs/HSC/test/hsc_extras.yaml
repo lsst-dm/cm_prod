@@ -1,0 +1,19 @@
+extra_step:
+    class_name: lsst.cm.tools.db.step_handler.StepHandler
+    input_type: source
+    output_type: run
+    group_config: group
+    scripts:
+        - collect_step
+    templates:
+        coll_out: "{root_coll}/{production_name}/{campaign_name}/{step_name}"
+plots_step:
+    prerequisites: ["step3"]
+    includes: ["extra_step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#analysis_coadd_plots"
+    data_query_base: "instrument = 'HSC'"
+faro_step:
+    prerequisites: ["step3"]
+    includes: ["extra_step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#faro_all"
+    data_query_base: "instrument = 'HSC' AND band != 'N921'"
