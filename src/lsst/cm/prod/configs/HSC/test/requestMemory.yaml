@@ -1,0 +1,118 @@
+pipetask:
+  fgcmBuildFromIsolatedStars:
+    requestMemory: 8192
+  calibrate:
+    requestMemory: 8192
+  makeWarp:
+    requestMemory: 8192
+  makeVisitTable:
+    requestMemory: 8192
+  makeCcdVisitTable:
+    requestMemory: 8192
+  assembleCoadd:
+    requestMemory: 24576
+  measure:
+    requestMemory: 16384
+  mergeMeasurements:
+    requestMemory: 16384
+  forcedPhotCoadd:
+    requestMemory: 4096
+  writeObjectTable:
+    requestMemory: 16384
+  matchCatalogsPatch:
+    requestMemory: 120000
+  modelPhotRepGal4:
+    requestMemory: 120000
+  modelPhotRepGal1:
+    requestMemory: 120000
+  modelPhotRepGal2:
+    requestMemory: 120000
+  modelPhotRepGal3:
+    requestMemory: 120000
+  imageDifference:
+    requestMemory: 4096
+  AM3:
+    requestMemory: 120000
+  AF1_design:
+    requestMemory: 120000
+  AD3_design:
+    requestMemory: 120000
+  AD2_design:
+    requestMemory: 120000
+  AM2:
+    requestMemory: 120000
+  AD1_design:
+    requestMemory: 120000
+  AF3_design:
+    requestMemory: 120000
+  AF2_design:
+    requestMemory: 120000
+  AM1:
+    requestMemory: 120000
+  matchCatalogsPatchMultiBand:
+    requestMemory: 120000
+  matchCatalogsTract:
+    requestMemory: 120000
+  matchCatalogsTractStarsSNR5to80:
+    requestMemory: 120000
+  matchCatalogsTractGxsSNR5to80:
+    requestMemory: 120000
+  matchCatalogsTractMag17to21p5:
+    requestMemory: 120000
+  psfPhotRepStar3:
+    requestMemory: 120000
+  psfPhotRepStar2:
+    requestMemory: 120000
+  psfPhotRepStar4:
+    requestMemory: 120000
+  psfPhotRepStar1:
+    requestMemory: 120000
+  modelPhotRepStar1:
+    requestMemory: 120000
+  modelPhotRepStar2:
+    requestMemory: 120000
+  modelPhotRepStar3:
+    requestMemory: 120000
+  modelPhotRepStar4:
+    requestMemory: 120000
+  wPerp:
+    requestMemory: 120000
+  TE1:
+    requestMemory: 120000
+  TE2:
+    requestMemory: 46000
+  skyObjectStd:
+    requestMemory: 120000
+  # from Brock
+  fgcmBuildStarsTable:
+    requestMemory: 8192
+  fgcmFitCycle:
+    requestMemory: 24576
+  fgcmOutputProducts:
+    requestMemory: 8192
+  jointcal:
+    requestMemory: 21000
+  skyCorr:
+    requestMemory: 15500
+  deblend:
+    requestMemory: 15500
+  # new at USDF
+  templateGen:
+    requestMemory: 5000
+  healSparsePropertyMaps:
+    requestMemory: 30000
+  consolidateObjectTable:
+    requestMemory: 30000
+  getTemplate:
+    requestMemory: 5000
+  consolidateFullDiaObjectTable:
+    requestMemory: 10000
+  consolidateForcedSourceOnDiaObjectTable:
+    requestMemory: 350000
+    queue: "SLAC_Rubin_Merge"
+  transformForcedSourceOnDiaObjectTable:
+    requestMemory: 10000
+  consolidateAssocDiaSourceTable:
+    requestMemory: 5000
+  consolidateForcedSourceTable:
+    requestMemory: 200000
