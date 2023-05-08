@@ -107,15 +107,25 @@ step6:
         field: exposure
         min_queries: 5
 step7:
-    prerequisites: ["step6"]
+    prerequisites: ["step3"]
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step7"
     data_query_base: "instrument = 'HSC'"
 step8:
-    prerequisites: ["step7"]
+    prerequisites: ["step3"]
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step8"
     data_query_base: "instrument = 'HSC'"
+plots:
+    prerequisites: ["step3"]
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#analysis_coadd_plots"
+    data_query_base: "instrument = 'HSC'"
+faro:
+    prerequisites: ["step3"]
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#faro_all"
+    data_query_base: "instrument = 'HSC' AND band != 'N921'"
 campaign:
     class_name: lsst.cm.tools.db.campaign_handler.CampaignHandler
     root_coll: dummy
