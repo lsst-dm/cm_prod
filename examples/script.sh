@@ -33,7 +33,7 @@ default=no
 read -p "This script will blow away the cm database and start a fresh one based on your setup file. Are you sure you want to do this? (y/N)" ANSWER
 ANSWER=${ANSWER:-$default}
 
-yeses="y Y yes Yes YES yEs yES yeS"
+yeses="y Y yes Yes YES yEs yES yeS YeS YEs"
 blow_away=false
 for yes in $yeses; do
     if [ $yes = $ANSWER ]
@@ -51,7 +51,7 @@ then
     echo "Enjoy your fresh cm database!"
     \rm -rf $CM_PROD_URL/$fullname $db_path
     \rm -rf submit/${root_coll}/${fullname}
-    butler remove-collections --confirm /repo/main "${root_coll}/${fullname}*"
+    butler remove-collections --confirm ${butler_repo} "${root_coll}/${fullname}*"
 
     mkdir -p output
 
