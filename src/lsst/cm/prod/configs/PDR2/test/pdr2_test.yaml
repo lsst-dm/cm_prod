@@ -40,7 +40,8 @@ step1:
     prerequisites: []
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step1"
-    data_query_base: "instrument = 'HSC' and exposure = 100038 "
+    data_query_base: instrument = 'HSC' and exposure = 100038 
+
 
 step2a:
     prerequisites: ["step1"]
@@ -121,7 +122,7 @@ campaign:
     bps_yaml_template: "${CM_CONFIGS}/pdr2_template.yaml"
     bps_script_template: "${CM_CONFIGS}/pdr2_bps_template.sh"
     templates:
-        coll_source: HSC/raw/all
+        coll_source: HSC/raw/PDR2/WIDE
         coll_in: "{root_coll}/{production_name}/{campaign_name}/input"
         coll_out: "{root_coll}/{production_name}/{campaign_name}"
         coll_ancil: "{root_coll}/{production_name}/{campaign_name}/ancillary"

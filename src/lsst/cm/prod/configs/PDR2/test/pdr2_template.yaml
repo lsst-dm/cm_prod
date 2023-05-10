@@ -1,7 +1,7 @@
 includeConfigs:
 - ${CTRL_BPS_PANDA_DIR}/config/bps_usdf.yaml
 - ${CM_PROD_DIR}/src/lsst/cm/prod/configs/PDR2/test/requestMemory.yaml
-
+- ${CM_PROD_DIR}/src/lsst/cm/prod/configs/PDR2/test/clustering_step1.yaml
 numberOfRetries: 3
 
 custom_lsst_setup: ""

@@ -6,7 +6,7 @@ butler_repo="/sdf/group/rubin/repo/main"
 #root_coll="u/${USER}/cm"
 root_coll="HSC/runs"
 
-export CM_PROD_DIR="${EXAMPLES}"
+export CM_PROD_DIR="${EXAMPLES}/.."
 export CM_PROD_URL="output/archive"
 export CM_BUTLER="${butler_repo}"
 export CM_SCRIPT_METHOD="slurm"
