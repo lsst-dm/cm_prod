@@ -6,11 +6,12 @@ EXAMPLES=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 # Each new setup will need its own elif here
 
 valid_config=false
+daemon_options="--max-running 0"
 read -p "Which config would you like to use? (HSC-RC2, rc2_subset, micro) " CONFIG
 while [ $valid_config = false ]; do
     if [ $CONFIG = 'HSC-RC2' ]
     then
-	    source $EXAMPLES/hsc_weekly_setup.sh
+        source $EXAMPLES/hsc_weekly_setup.sh
         valid_config=true
     elif [ $CONFIG = 'rc2_subset' ]
     then
@@ -20,6 +21,7 @@ while [ $valid_config = false ]; do
     then
         source $EXAMPLES/hsc_rc2_singleframe_micro_setup.sh
         valid_config=true
+        daemon_options="--max-running 10 --sleep-time 30"
     else
         read -p "That config was not valid. Please enter a valid config " CONFIG
     fi
@@ -56,7 +58,7 @@ then
     cm load-error-types --config-yaml examples/error_code_decisions.yaml
     cm insert --production-name ${p_name}
     cm insert --production-name ${p_name} --campaign-name ${c_name} --butler-repo ${butler_repo} --config-name ${config_name} --config-block campaign --lsst-version ${lsst_version} --root-coll ${root_coll}
-    cm daemon --fullname ${fullname} --max-running 0
+    cm daemon --fullname ${fullname} ${daemon_options}
 else
     echo "We did not delete your cm database. You may proceed to your usual cm business without panic."
 fi
