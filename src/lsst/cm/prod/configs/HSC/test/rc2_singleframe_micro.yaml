@@ -32,7 +32,9 @@ step:
     output_type: run
     group_config: group
     templates:
-        coll_out: "{root_coll}/{production_name}/{campaign_name}_output"
+        coll_out: "{root_coll}/{production_name}/{campaign_name}/{step_name}"
+    scripts:
+        - collect_step
 isr:
     prerequisites: []
     includes: ["step"]
