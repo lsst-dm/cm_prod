@@ -8,6 +8,10 @@ ancil:
         - HSC/fgcmcal/lut/RC2
         - refcats
         - skymaps
+collect:
+    class_name: lsst.cm.tools.db.script_handler.CollectScriptHandler
+collect_step:
+    class_name: lsst.cm.tools.db.script_handler.CollectStepScriptHandler
 job:
     class_name: lsst.cm.tools.db.job_handler.JobHandler
 workflow:
@@ -78,6 +82,7 @@ campaign:
     scripts:
         - ancil
         - prepare
+        - collect
     steps:
         - isr
         - characterizeImage
