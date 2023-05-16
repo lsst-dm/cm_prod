@@ -16,3 +16,6 @@ executionButler:
   # no output collection
   command2: ""
   command3: ""
+
+# Added to be a higher priority than PDR2 runs:
+priority: 1000

@@ -22,6 +22,3 @@ panda_auth status
 # Uncomment this for any custom bps setups
 #setup -j -r path/to/local/ctrl_bps
 #setup -j -r path/to/local/ctrl_bps_panda
-
-# Added to be a higher priority than PDR2 runs:
-priority: 1000
