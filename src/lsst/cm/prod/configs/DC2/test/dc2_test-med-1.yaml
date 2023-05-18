@@ -38,7 +38,6 @@ step:
         - collect_step
     templates:
         coll_out: "{root_coll}/{production_name}/{campaign_name}/{step_name}"
-    data_query_base: "instrument='LSSTCam-imSim'"
 step1:
     prerequisites: []
     includes: ["step"]
@@ -100,21 +99,22 @@ step8:
     prerequisites: ["step5"]
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#step8"
+    data_query_base: "instrument = 'LSSTCam-imSim'"
 faro:
     prerequisites: ["step3"]
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#faro_all"
+    data_query_base: "instrument = 'LSSTCam-imSim'"
 plots:
     prerequisites: ["step3"]
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#analysis_coadd_plots"
+    data_query_base: "instrument = 'LSSTCam-imSim'"
     split_vals:
         field: tract
         values:
             - 3828
             - 3829
-
-
 campaign:
     class_name: lsst.cm.tools.db.campaign_handler.CampaignHandler
     root_coll: dummy

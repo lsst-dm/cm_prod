@@ -1,5 +1,31 @@
 pipetask:
-  consolidateObjectTable:
-    requestMemory: 12000
+  # DRP tasks
+  writeObjectTable:
+    requestMemory: 16384
   healSparsePropertyMaps:
-    requestMemory: 12000
+    requestMemory: 8192
+  consolidateObjectTable:
+    requestMemory: 16384
+  # faro tasks
+  matchCatalogsPatch:
+    requestMemory: 4096
+  matchCatalogsPatchMultiBand:
+    requestMemory: 8196
+  modelPhotRepGal4:
+    requestMemory: 4096
+  matchCatalogsTract:
+    requestMemory: 32000
+  wPerp:
+    requestMemory: 32000
+  TE1:
+    requestMemory: 16384
+  TE2:
+    requestMemory: 16384
+  matchCatalogsTractMag17to21p5:
+    requestMemory: 24000
+  matchCatalogsTractStarsSNR5to80:
+    requestMemory: 24000
+  matchCatalogsTractGxsSNR5to80:
+    requestMemory: 32000
+  consolidateForcedSourceTable:
+    requestMemory: 64000

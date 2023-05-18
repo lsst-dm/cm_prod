@@ -4,7 +4,10 @@ imports:
 includeConfigs:
   - ${CTRL_BPS_PANDA_DIR}/config/bps_usdf.yaml
   - ${DRP_PIPE_DIR}/bps/resources/LSSTCam-imSim/DRP-test-med-1.yaml
-  - ${CM_PROD_DIR}/src/lsst/cm/prod/configs/DC2/test/requestMemory.yaml
+# The above is all that's needed to request only the memory specified in the
+# drp_pipe defaults which should be updated regularly. To use custom memory
+# requests, uncomment the following:
+#  - ${CM_PROD_DIR}/src/lsst/cm/prod/configs/DC2/test/requestMemory.yaml
 
 custom_lsst_setup: ""
 
