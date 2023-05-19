@@ -107,7 +107,7 @@ pandaErrorCode:
             flavor: "pipelines"
             intensity: 0.001
         psf_matching_kernel_subtractImages:
-            diagMessage: "Unable to calculate psf matching kernel"
+            diagMessage: ".*Unable to calculate psf matching kernel"
             pipetask: subtractImages
             ticket: ["DM-37570", "DM-37089"]
             resolved: False
@@ -433,6 +433,14 @@ pandaErrorCode:
             rescue: False
             flavor: "critical" # this is a usdf failure, but it was enough to stop production
             intensity: 0
+        input_X_contains_NaN:
+            diagMessage: "ValueError: Input X contains NaN."
+            pipetask: plot_yFit_CModel
+            ticket: ["DM-37822"]
+            resolved: False
+            rescue: False
+            flavor: "pipelines"
+            intensity: 0.001
     taskbuffer, 300:
         failed_while_starting_job:
             diagMessage: "The worker was failed while the job was starting : .* gridjob roma shared .* FAILED .*."
