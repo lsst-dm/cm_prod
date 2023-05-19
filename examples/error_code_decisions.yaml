@@ -101,15 +101,15 @@ pandaErrorCode:
         kernel_candidacy:
             diagMessage: "Cannot find any objects suitable for KernelCandidacy"
             pipetask: subtractImages
-            ticket: ["DM-37570", "DM-37483", "DM-37089", "DM-36265", "DM-36356", "DM-36066"]
+            ticket: ["DM-38042", "DM-37570", "DM-37483", "DM-37089", "DM-36265", "DM-36356", "DM-36066"]
             resolved: False
             rescue: False
             flavor: "pipelines"
             intensity: 0.001
         psf_matching_kernel_subtractImages:
-            diagMessage: ".*Unable to calculate psf matching kernel"
+            diagMessage: "Unable to calculate psf matching kernel"
             pipetask: subtractImages
-            ticket: ["DM-37570", "DM-37089"]
+            ticket: ["DM-38042", "DM-37570", "DM-37089"]
             resolved: False
             rescue: False
             flavor: "pipelines"
@@ -171,7 +171,7 @@ pandaErrorCode:
         p_psf_matching_kernel:
             diagMessage: "ERROR: Unable to calculate psf matching kernel"
             pipetask: characterizeImage
-            ticket: ["DM-37570", "DM-37483", "DM-36763", "DM-36356", "DM-36066"]
+            ticket: ["DM-38042", "DM-37570", "DM-37483", "DM-36763", "DM-36356", "DM-36066"]
             resolved: False
             rescue: False
             flavor: "pipelines"
@@ -181,7 +181,7 @@ pandaErrorCode:
                 Failed to solve for PSF matching kernel in GAaP for (.*): Problematic scaling factors = .* Errors: Exception
                 ('Unable to determine kernel sum; 0 candidates')
             pipetask: characterizeImage
-            ticket: ["DM-37483", "DM-33375", "DM-36763", "DM-36356"]
+            ticket: ["DM-38042", "DM-37483", "DM-33375", "DM-36763", "DM-36356"]
             resolved: False
             rescue: False
             flavor: "pipelines"
@@ -335,7 +335,7 @@ pandaErrorCode:
         p_psf_matching_kernel_subtractImages:
             diagMessage: "ERROR: Unable to calculate psf matching kernel"
             pipetask: subtractImages
-            ticket: ["DM-37570", "DM-37483", "DM-37089", "DM-36265", "DM-36356", "DM-36066"]
+            ticket: ["DM-38042", "DM-37570", "DM-37483", "DM-37089", "DM-36265", "DM-36356", "DM-36066"]
             resolved: False
             rescue: False
             flavor: "pipelines"
@@ -358,7 +358,7 @@ pandaErrorCode:
                 Execution of task 'subtractImages' on quantum {.*} failed. Exception
                 RuntimeError: Cannot find any objects suitable for KernelCandidacy
             pipetask: subtractImages
-            ticket: ["DM-37570", "DM-37483", "DM-36265", "DM-36356", "DM-36066"]
+            ticket: ["DM-38042", "DM-37570", "DM-37483", "DM-36265", "DM-36356", "DM-36066"]
             resolved: False
             rescue: False
             flavor: "pipelines"
@@ -384,7 +384,7 @@ pandaErrorCode:
         kernel_sum:
             diagMessage: "Unable to determine kernel sum; 0 candidates"
             pipetask: subtractImages
-            ticket: ["DM-37483", "DM-36265", "DM-36356", "DM-36066"]
+            ticket: ["DM-38042", "DM-37483", "DM-36265", "DM-36356", "DM-36066"]
             resolved: False
             rescue: False
             flavor: "pipelines"
@@ -478,6 +478,15 @@ pandaErrorCode:
             rescue: True
             flavor: "panda"
             intensity: 0
+    trans, 139:
+        SIGSEGV:
+            diagMessage: "SIGSEGV"
+            pipetask:
+            ticket: ["DM-38042"]
+            resolved: False
+            rescue: False
+            flavor: "critical" # this means there is a segfault in the pipelines
+            intensity: 0
     jobdispatcher, 102:
         no_reply:
             diagMessage: "Sent job didn't receive reply from pilot within 30 min"
@@ -509,7 +518,7 @@ pandaErrorCode:
         sigkill:
             diagMessage: "Transform received signal SIGKILL"
             pipetask:
-            ticket: ["DM-37570", "DM-37483", "DM-36356", "DM-36741"]
+            ticket: ["DM-38042", "DM-37570", "DM-37483", "DM-36356", "DM-36741"]
             resolved: True
             rescue: True
             flavor: "panda"
