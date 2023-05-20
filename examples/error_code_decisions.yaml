@@ -436,7 +436,7 @@ pandaErrorCode:
         input_X_contains_NaN:
             diagMessage: "ValueError: Input X contains NaN."
             pipetask: plot_yFit_CModel
-            ticket: ["DM-37822"]
+            ticket: ["DM-38781", "DM-37822"]
             resolved: False
             rescue: False
             flavor: "pipelines"
