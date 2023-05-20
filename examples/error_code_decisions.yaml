@@ -22,10 +22,12 @@ pandaErrorCode:
     pilot, 1305:
         aperture_correction:
             diagMessage: >
-                Unable to measure aperture correction for required algorithm 'modelfit_CModel': only .* sources, but
-                require at least 2
+                Unable to measure aperture correction for required algorithm '*.': only 0 sources, but
+                require at least 2.
+            # algorithms which say this include modelfit_CModel, modelfit_CModel_exp, base_GaussianFlux,
+            # ext_photometryKron_KronFlux... can note these as different errors if need be.
             pipetask: characterizeImage
-            ticket: ["DM-37483", "DM-37089"]
+            ticket: ["DM-38360", "DM-37483", "DM-37089"]
             resolved: False
             rescue: False
             flavor: "pipelines"
@@ -101,7 +103,7 @@ pandaErrorCode:
         kernel_candidacy:
             diagMessage: "Cannot find any objects suitable for KernelCandidacy"
             pipetask: subtractImages
-            ticket: ["DM-38042", "DM-37570", "DM-37483", "DM-37089", "DM-36265", "DM-36356", "DM-36066"]
+            ticket: ["DM-38360", "DM-38042", "DM-37570", "DM-37483", "DM-37089", "DM-36265", "DM-36356", "DM-36066"]
             resolved: False
             rescue: False
             flavor: "pipelines"
@@ -109,7 +111,7 @@ pandaErrorCode:
         psf_matching_kernel_subtractImages:
             diagMessage: "Unable to calculate psf matching kernel"
             pipetask: subtractImages
-            ticket: ["DM-38042", "DM-37570", "DM-37089"]
+            ticket: ["DM-38360", "DM-38042", "DM-37570", "DM-37089"]
             resolved: False
             rescue: False
             flavor: "pipelines"
@@ -126,6 +128,18 @@ pandaErrorCode:
             diagMessage: "fp and xp are not of the same length."
             pipetask: subtractImages
             ticket: ["DM-37570"]
+            resolved: False
+            rescue: False
+            flavor: "pipelines"
+            intensity: 0.001
+        lmfit_mad:
+            diagMessage: >
+                ValueError: NaN values detected in your input data or the output of your objective/model
+                 function - fitting algorithms cannot handle this! Please read
+                  https://lmfit.github.io/lmfit-py/faq.html#i-get-errors-from-nan-in-my-fit-what-can-i-do
+                  for more information.
+            pipetask: detectAndMeasureDiaSources
+            ticket: ["DM-38360"]
             resolved: False
             rescue: False
             flavor: "pipelines"
@@ -156,14 +170,24 @@ pandaErrorCode:
             rescue: False
             flavor: "critical" # this is a usdf failure, but it was enough to stop production
             intensity: 0
+        butler_unreachable:
+            diagMessage: "[Errno 2] No such file or directory: '/sdf/group/rubin/repo/.*'"
+            pipetask:
+            ticket: ["DM-38360"]
+            resolved: False # we had problems finding the butler; could happen for many reasons
+            rescue: True
+            flavor: "usdf"
+            intensity: 0
     trans, 1:
         p_aperture_correction:
             diagMessage: >
                 Execution of task 'characterizeImage' on quantum {.*} failed. Exception
-                RuntimeError: Unable to measure aperture correction for required algorithm 'modelfit_CModel': only 0 sources, but
+                RuntimeError: Unable to measure aperture correction for required algorithm '*.': only 0 sources, but
                 require at least 2.
+            # algorithms which say this include modelfit_CModel, modelfit_CModel_exp, base_GaussianFlux,
+            # ext_photometryKron_KronFlux... can note these as different errors if need be.
             pipetask: characterizeImage
-            ticket: ["DM-37483", "DM-37089", "DM-36763", "DM-36356"]
+            ticket: ["DM-38360", "DM-37483", "DM-37089", "DM-36763", "DM-36356"]
             resolved: False
             rescue: False
             flavor: "pipelines"
@@ -171,7 +195,7 @@ pandaErrorCode:
         p_psf_matching_kernel:
             diagMessage: "ERROR: Unable to calculate psf matching kernel"
             pipetask: characterizeImage
-            ticket: ["DM-38042", "DM-37570", "DM-37483", "DM-36763", "DM-36356", "DM-36066"]
+            ticket: ["DM-38360", "DM-38042", "DM-37570", "DM-37483", "DM-36763", "DM-36356", "DM-36066"]
             resolved: False
             rescue: False
             flavor: "pipelines"
@@ -358,7 +382,7 @@ pandaErrorCode:
                 Execution of task 'subtractImages' on quantum {.*} failed. Exception
                 RuntimeError: Cannot find any objects suitable for KernelCandidacy
             pipetask: subtractImages
-            ticket: ["DM-38042", "DM-37570", "DM-37483", "DM-36265", "DM-36356", "DM-36066"]
+            ticket: ["DM-38360", "DM-38042", "DM-37570", "DM-37483", "DM-36265", "DM-36356", "DM-36066"]
             resolved: False
             rescue: False
             flavor: "pipelines"
@@ -384,7 +408,7 @@ pandaErrorCode:
         kernel_sum:
             diagMessage: "Unable to determine kernel sum; 0 candidates"
             pipetask: subtractImages
-            ticket: ["DM-38042", "DM-37483", "DM-36265", "DM-36356", "DM-36066"]
+            ticket: ["DM-38360", "DM-38042", "DM-37483", "DM-36265", "DM-36356", "DM-36066"]
             resolved: False
             rescue: False
             flavor: "pipelines"
@@ -482,7 +506,7 @@ pandaErrorCode:
         SIGSEGV:
             diagMessage: "SIGSEGV"
             pipetask:
-            ticket: ["DM-38042"]
+            ticket: ["DM-38360", "DM-38042"]
             resolved: False
             rescue: False
             flavor: "critical" # this means there is a segfault in the pipelines
