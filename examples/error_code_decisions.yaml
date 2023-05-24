@@ -25,9 +25,9 @@ pandaErrorCode:
                 .*Unable to measure aperture correction for required algorithm '*.': only 0 sources, but
                 require at least 2.
             # algorithms which say this include modelfit_CModel, modelfit_CModel_exp, base_GaussianFlux,
-            # ext_photometryKron_KronFlux... can note these as different errors if need be.
+            # ext_photometryKron_KronFlux...
             pipetask: characterizeImage
-            ticket: ["DM-38691", "DM-38360", "DM-37483", "DM-37089"]
+            ticket: ["DM-39196", "DM-38691", "DM-38360", "DM-37483", "DM-37089"]
             resolved: False
             rescue: False
             flavor: "pipelines"
@@ -103,7 +103,7 @@ pandaErrorCode:
         kernel_candidacy:
             diagMessage: ".*Cannot find any objects suitable for KernelCandidacy"
             pipetask: subtractImages
-            ticket: ["DM-38691", "DM-38360", "DM-38042", "DM-37570", "DM-37483", "DM-37089", "DM-36265", "DM-36356", "DM-36066"]
+            ticket: ["DM-39196", "DM-38691", "DM-38360", "DM-38042", "DM-37570", "DM-37483", "DM-37089", "DM-36265", "DM-36356", "DM-36066"]
             resolved: False
             rescue: False
             flavor: "pipelines"
@@ -111,7 +111,7 @@ pandaErrorCode:
         psf_matching_kernel_subtractImages:
             diagMessage: ".*Unable to calculate psf matching kernel"
             pipetask: subtractImages
-            ticket: ["DM-38360", "DM-38042", "DM-37570", "DM-37089"]
+            ticket: ["DM-39196", "DM-38691", "DM-38360", "DM-38042", "DM-37570", "DM-37089"]
             resolved: False
             rescue: False
             flavor: "pipelines"
