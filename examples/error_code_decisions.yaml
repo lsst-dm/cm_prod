@@ -103,7 +103,9 @@ pandaErrorCode:
         kernel_candidacy:
             diagMessage: ".*Cannot find any objects suitable for KernelCandidacy"
             pipetask: subtractImages
-            ticket: ["DM-39196", "DM-38691", "DM-38360", "DM-38042", "DM-37570", "DM-37483", "DM-37089", "DM-36265", "DM-36356", "DM-36066"]
+            ticket: >
+                ["DM-39196", "DM-38691", "DM-38360", "DM-38042", "DM-37570", "DM-37483", "DM-37089",
+                 "DM-36265", "DM-36356", "DM-36066"]
             resolved: False
             rescue: False
             flavor: "pipelines"
