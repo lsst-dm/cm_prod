@@ -4,10 +4,10 @@ EXAMPLES=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 source $EXAMPLES/common_setup.sh
 
-config="rc2_singleframe_micro.yaml"
+config="micro_extend_test.yaml"
 config_name="rc2_singleframe_micro"
-p_name="RC2_singleframe_micro"
-lsst_version="w_2023_15"
+p_name="micro_rc2_extend"
+lsst_version="w_2023_20"
 c_name="${lsst_version}_test0"
 fullname="${p_name}/${c_name}"
 db_path="output/cm_${p_name}.db"

@@ -1,0 +1,27 @@
+extra_step:
+    class_name: lsst.cm.tools.db.step_handler.StepHandler
+    input_type: source
+    output_type: run
+    group_config: group
+    templates:
+        coll_out: "{root_coll}/{production_name}/{campaign_name}/{step_name}"
+    scripts:
+        - collect_step
+characterizeImage:
+    prerequisites: ["isr"]
+    includes: ["extra_step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#characterizeImage"
+    data_query_base: "instrument = 'HSC'"
+    split_args:
+        dataset: raw
+        field: exposure
+        min_queries: 2
+calibrate:
+    prerequisites: ["characterizeImage"]
+    includes: ["extra_step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#calibrate"
+    data_query_base: "instrument = 'HSC'"
+    split_args:
+        dataset: raw
+        field: exposure
+        min_queries: 2
