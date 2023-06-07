@@ -1,0 +1,86 @@
+prepare:
+    class_name: lsst.cm.tools.db.script_handler.PrepareScriptHandler
+ancil:
+    class_name: lsst.cm.tools.db.script_handler.AncillaryScriptHandler
+    collections:
+        - HSC/calib
+        - HSC/masks
+        - HSC/fgcmcal/lut/RC2
+        - refcats
+        - skymaps
+collect:
+    class_name: lsst.cm.tools.db.script_handler.CollectScriptHandler
+collect_step:
+    class_name: lsst.cm.tools.db.script_handler.CollectStepScriptHandler
+job:
+    class_name: lsst.cm.tools.db.job_handler.JobHandler
+workflow:
+    class_name: lsst.cm.tools.db.workflow_handler.WorkflowHandler
+    input_type: source
+    output_type: run
+    job_config: job
+rescue_workflow:
+    includes: ["workflow"]
+    rescue: True
+group:
+    class_name: lsst.cm.tools.db.group_handler.GroupHandler
+    input_type: source
+    output_type: run
+    workflow_config: workflow
+step:
+    class_name: lsst.cm.tools.db.step_handler.StepHandler
+    input_type: source
+    output_type: run
+    group_config: group
+    templates:
+        coll_out: "{root_coll}/{production_name}/{campaign_name}/{step_name}"
+    scripts:
+        - collect_step
+isr:
+    prerequisites: []
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#isr"
+    data_query_base: "instrument = 'HSC'"
+    split_args:
+        dataset: raw
+        field: exposure
+        min_queries: 2
+characterizeImage:
+    prerequisites: ["isr"]
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#characterizeImage"
+    data_query_base: "instrument = 'HSC'"
+    split_args:
+        dataset: raw
+        field: exposure
+        min_queries: 2
+calibrate:
+    prerequisites: ["characterizeImage"]
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#calibrate"
+    data_query_base: "instrument = 'HSC'"
+    split_args:
+        dataset: raw
+        field: exposure
+        min_queries: 2
+campaign:
+    class_name: lsst.cm.tools.db.campaign_handler.CampaignHandler
+    root_coll: dummy
+    input_type: tagged
+    output_type: run
+    data_query: "instrument = 'HSC' AND exposure in (30504, 30502) AND detector in (45, 46, 47, 48)"
+    bps_yaml_template: "${CM_CONFIGS}/hsc_template.yaml"
+    bps_script_template: "${CM_CONFIGS}/hsc_bps_template.sh"
+    templates:
+        coll_source: HSC/raw/RC2
+        coll_in: "{root_coll}/{production_name}/{campaign_name}_input"
+        coll_out: "{root_coll}/{production_name}/{campaign_name}_output"
+        coll_ancil: "{root_coll}/{production_name}/{campaign_name}_ancil"
+    scripts:
+        - ancil
+        - prepare
+        - collect
+    steps:
+        - isr
+        - characterizeImage
+        - calibrate
