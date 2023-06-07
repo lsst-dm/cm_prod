@@ -3,9 +3,11 @@ pipetask:
   writeObjectTable:
     requestMemory: 16384
   healSparsePropertyMaps:
-    requestMemory: 8192
+    requestMemory: 16384
   consolidateObjectTable:
     requestMemory: 16384
+  getTemplate:
+    requestMemory: 8196
   # faro tasks
   matchCatalogsPatch:
     requestMemory: 4096
@@ -24,8 +26,10 @@ pipetask:
   matchCatalogsTractMag17to21p5:
     requestMemory: 24000
   matchCatalogsTractStarsSNR5to80:
-    requestMemory: 24000
+    requestMemory: 32000
   matchCatalogsTractGxsSNR5to80:
     requestMemory: 32000
   consolidateForcedSourceTable:
     requestMemory: 64000
+  consolidateForcedSourceOnDiaObjectTable:
+    requestMemory: 120000

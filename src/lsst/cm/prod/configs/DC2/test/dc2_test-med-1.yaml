@@ -109,7 +109,7 @@ plots:
     prerequisites: ["step3"]
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#analysis_coadd_plots"
-    data_query_base: "instrument = 'LSSTCam-imSim'"
+    data_query_base: "instrument = 'LSSTCam-imSim' and skymap = 'DC2'"
     split_vals:
         field: tract
         values:
