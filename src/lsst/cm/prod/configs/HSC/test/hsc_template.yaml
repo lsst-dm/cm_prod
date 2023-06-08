@@ -16,3 +16,5 @@ executionButler:
   # no output collection
   command2: ""
   command3: ""
+
+priority: 1000
