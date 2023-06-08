@@ -21,9 +21,7 @@ legend:
 pandaErrorCode:
     pilot, 1305:
         aperture_correction:
-            diagMessage: >
-                .*Unable to measure aperture correction for required algorithm '*.': only 0 sources, but
-                require at least 2.
+            diagMessage: ".*:Unable to measure aperture correction for required algorithm.*"
             # algorithms which say this include modelfit_CModel, modelfit_CModel_exp, base_GaussianFlux,
             # ext_photometryKron_KronFlux...
             pipetask: characterizeImage
@@ -33,9 +31,7 @@ pandaErrorCode:
             flavor: "payload"
             intensity: 0.001
         psfex:
-            diagMessage: >
-                .*File "src/PsfexPsf.cc", line 233, in virtual std:shared_ptr > lsst:meas:extensions:psfex:PsfexPsf:
-                _doComputeImage(const Point2D&, const lsst:afw:image:Color&, const Point2D&) const
+            diagMessage: ".*:File .* lsst:meas:extensions:psfex:PsfexPsf:_doComputeImage.*"
             pipetask: characterizeImage
             ticket: ["DM-37570"]
             resolved: False
@@ -59,7 +55,7 @@ pandaErrorCode:
             flavor: "payload"
             intensity: 0.001
         no_use_for_photocal:
-            diagMessage: ".*No matches to use for photocal"
+            diagMessage: ".*:No matches to use for photocal"
             pipetask: calibrate
             ticket: ["DM-37483", "DM-37089", "DM-32291", "DM-36763"]
             resolved: False
@@ -524,7 +520,7 @@ pandaErrorCode:
             intensity: 0
     jobdispatcher, 100:
         lost_heartbeat:
-            diagMessage: ".*lost heartbeat"
+            diagMessage: ".*lost heartbeat.*"
             pipetask:
             ticket: ["DM-36356"]
             resolved: True
@@ -533,7 +529,7 @@ pandaErrorCode:
             intensity: 0
     pilot, 1098:
         no_space_on_disk:
-            diagMessage: ".*too little space left on local disk to run job: .* B (need > .* B)"
+            diagMessage: ".*too little space left on local disk to run job: .* "
             pipetask: forcedPhotCcd
             ticket: ["DM-36066"]
             resolved: True
