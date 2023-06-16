@@ -60,3 +60,14 @@ pipetask:
     requestMemory: 5000
   consolidateForcedSourceTable:
     requestMemory: 200000
+# analysis tasks: huge memory since we can't run a rescue this time
+  analyzeObjectTableCore:
+    requestMemory: 200000
+  analyzeObjectTableSurveyCore:
+    requestMemory: 200000
+  catalogMatchTract:
+    requestMemory: 200000
+  refCatObjectTract:
+    requestMemory: 200000
+  validateObjectTableCore:
+    requestMemory: 200000
