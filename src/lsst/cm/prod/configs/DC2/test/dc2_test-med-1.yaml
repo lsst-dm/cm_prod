@@ -100,10 +100,20 @@ step8:
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#step8"
     data_query_base: "instrument = 'LSSTCam-imSim'"
-faro:
+faro_visit:
+    prerequisites: ["step6"]
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#faro_matched"
+    data_query_base: "instrument = 'LSSTCam-imSim'"
+faro_matched:
+    prerequisites: ["step6"]
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#faro_matched"
+    data_query_base: "instrument = 'LSSTCam-imSim'"
+faro_tract:
     prerequisites: ["step3"]
     includes: ["step"]
-    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#faro_all"
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#faro_tract"
     data_query_base: "instrument = 'LSSTCam-imSim'"
 plots:
     prerequisites: ["step3"]
@@ -140,5 +150,7 @@ campaign:
         - step6
         - step7
         - step8
-        - faro
+        - faro_visit
+        - faro_matched
+        - faro_tract
         - plots
