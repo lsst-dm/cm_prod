@@ -22,12 +22,13 @@ while [ $valid_config = false ]; do
     elif [ $CONFIG = 'DC2_test-med-1' ]
     then
         source $EXAMPLES/dc2_test-med-1_setup.sh
-        butler_repo="/sdf/group/rubin/repo/dc2"
+        butler_repo='/sdf/group/rubin/repo/dc2'
         valid_config=true
         daemon_options="--max-running 10 --sleep-time 300"
     elif [ $CONFIG = 'micro' ]
     then
         source $EXAMPLES/hsc_rc2_singleframe_micro_setup.sh
+        butler_repo='/sdf/group/rubin/repo/main'
         valid_config=true
         daemon_options="--max-running 10 --sleep-time 30"
     else
