@@ -121,10 +121,20 @@ plots:
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#analysis_coadd_plots"
     data_query_base: "instrument = 'HSC'"
-faro:
+faro_visit:
+    prerequisites: ["step6"]
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#faro_visit"
+    data_query_base: "instrument = 'HSC' AND band != 'N921'"
+faro_matched:
+    prerequisites: ["step6"]
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#faro_matched"
+    data_query_base: "instrument = 'HSC' AND band != 'N921'"
+faro_tract:
     prerequisites: ["step3"]
     includes: ["step"]
-    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#faro_all"
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#faro_tract"
     data_query_base: "instrument = 'HSC' AND band != 'N921'"
 campaign:
     class_name: lsst.cm.tools.db.campaign_handler.CampaignHandler
@@ -154,4 +164,6 @@ campaign:
         - step7
         - step8
         - plots
-        - faro
+        - faro_visit
+        - faro_matched
+        - faro_tract
