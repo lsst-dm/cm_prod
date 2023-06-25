@@ -1,0 +1,30 @@
+If panda_auth reset doesn't work,
+make your you do source setupenv_sh && cd cm_prod source example/pdr2_setup.sh
+then panda_auth reset
+
+
+To rebuild cm_tools environmen.
+setup recent stack so you have a python 3.10+
+
+
+cd  /sdf/data/rubin/shared/campaigns/PDR2
+source setup_env.sh
+cd cm_prod
+source examples/pdr2_setup.sh
+
+alias cm='~/cmtools/bin/cm'
+
+
+pushd /sdf/data/rubin/shared/campaigns/PDR2/cm_prod
+pushd /sdf/data/rubin/shared/campaigns/PDR2/cm_prod/submit
+pushd /sdf/data/rubin/shared/campaigns/PDR2/cm_prod/submit
+pushd /sdf/data/rubin/shared/campaigns/PDR2/cm_prod/src/lsst/cm/prod/configs/PDR2
+
+To get workflow accepted use set-status (not set-job-status), watch the --workflow-idx and the --idx
+
+TO get step accepted use the cm accept then watch for the collect to generate and run
+
+
+srun --pty -w sdfmilan228 -p milano /bin/bash
+srun --pty --mem=350G --mincpus=32 --account rubin /bin/bash
+

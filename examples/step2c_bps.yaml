@@ -1,0 +1,24 @@
+LSST_VERSION: v24.1.0.rc3
+campaign: PDR2/v24.1.0_DM-39132
+custom_lsst_setup: ''
+executionButler:
+  command2: ''
+  command3: ''
+  queue: SLAC_Rubin_Merge
+  requestMemory: 64000
+extraQgraphOptions: -c fgcmFitCycle:nCore=12 --clobber-outputs --skip-existing-in HSC/runs/PDR2/v24.1.0_DM-39132/step2c/group0/w00_005 
+fileDistributionEndPoint: file:///sdf/data/rubin/panda_jobs/panda_cache/{operator}/panda_cache_box/{payloadFolder}/{uniqProcName}/
+includeConfigs:
+- ${CTRL_BPS_PANDA_DIR}/config/bps_usdf.yaml
+- ${CM_PROD_DIR}/src/lsst/cm/prod/configs/PDR2/requestMemory.yaml
+- ${CM_PROD_DIR}/src/lsst/cm/prod/configs/PDR2/clustering.yaml
+numberOfRetries: 1
+payload:
+  butlerConfig: /sdf/group/rubin/repo/main
+  dataQuery: instrument = 'HSC'
+  inCollection: HSC/runs/PDR2/v24.1.0_DM-39132/step2c/group0/w00_005,HSC/runs/PDR2/v24_1_0/DM-39132/step2b,HSC/runs/PDR2/v24_1_0/DM-39132/ancillary
+  outputRun: HSC/runs/PDR2/v24.1.0_DM-39132/step2c/group0/w01_005
+  payloadName: PDR2/v24.1.0_DM-39132
+pipelineYaml: ${DRP_PIPE_DIR}/pipelines/HSC/DRP.yaml#fgcmFitCycle,fgcmOutputProducts
+pipetaskOutput: ''
+project: PDR2

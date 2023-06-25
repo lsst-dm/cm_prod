@@ -1,0 +1,269 @@
+description: Lookup table for error codes from PanDA and error logs from science pipelines on HSC-RC2.
+legend:
+    pandaErrorCode: >
+        The error code given by PanDA describing the issue. This is a string describing the type of PanDA
+        error followed by a number which gives the specific type of PanDA error.
+    diagMessage: This is the diagnostic message given by the PanDA and pipeline logs.
+    pipetask: This is the specific pipetask where the error occurred.
+    ticket: >
+        Any Jira tickets associated with this issue. This can be the processing run where the error
+        came up or a ticket associated with fixing a bug.
+    resolved: >
+        Do we think we have solved this issue? i.e., have we reported and fixed a bug associated with this error?
+        This is most useful in cases where the issue seems to have been addressed. If "resolved==True" and the error
+        still comes up, we know we missed something and have to stop to look at it.
+    rescue: Can the issue associated with this error be solved with a rescue?
+    flavor: Where did this error come from? The science pipelines? PanDA? USDF?
+    intensity: >
+        How many instances of this error may occur before we must stop production and investigate? This float value
+        is a percentage. i.e., if "intensity==0.001" then we can lose 0.1% of the data products due to this error.
+        If "intensity==0" we have to stop production and investigate with any single occurrence.
+pandaErrorCode:
+    pilot, 1305:
+        psf_do_compute_image:
+            diagMessage: >
+                .*:File .* lsst:meas:extensions:psfex:PsfexPsf:_doComputeImage.*
+            pipetask: detector
+            ticket: []
+            resolved: False
+            rescue: False
+            flavor: "pipelines"
+            intensity: 0
+        aperture_correction:
+            diagMessage: >
+                .*:Unable to measure aperture correction for required algorithm.*
+            pipetask: detector
+            ticket: []
+            resolved: False
+            rescue: False
+            flavor: "pipelines"
+            intensity: 0
+        astrometry_failure:
+            diagMessage: >
+                .*:Fatal astrometry failure detected: mean on-sky distance.*
+            pipetask: detector
+            ticket: []
+            resolved: False
+            rescue: False
+            flavor: "pipelines"
+            intensity: 0
+        unable_to_match_sources:
+            diagMessage: >
+                .*:Unable to match sources
+            pipetask: detector
+            ticket: []
+            resolved: False
+            rescue: False
+            flavor: "pipelines"
+            intensity: 0
+        no_psf_stars:
+            diagMessage: >
+                .*:No objects passed our cuts for consideration as psf stars
+            pipetask: detector
+            ticket: []
+            resolved: False
+            rescue: False
+            flavor: "pipelines"
+            intensity: 0
+        fit_failed_median_scatter:
+            diagMessage: >
+                .*:Fit failed: median scatter on sky.*
+            pipetask: detector
+            ticket: []
+            resolved: False
+            rescue: False
+            flavor: "pipelines"
+            intensity: 0
+        no_matches_photocal:
+            diagMessage: >
+                .*:No matches to use for photocal
+            pipetask: detector
+            ticket: []
+            resolved: False
+            rescue: False
+            flavor: "pipelines"
+            intensity: 0
+        psf_sigma_nan:
+            diagMessage: >
+                .*:PSF sigma is NaN, cannot continue PSF determination.
+            pipetask: detector
+            ticket: []
+            resolved: False
+            rescue: False
+            flavor: "pipelines"
+            intensity: 0
+        no_good_psf_candidates:
+            diagMessage: >
+                .*:No good PSF candidates to pass to PSFEx
+            pipetask: detector
+            ticket: []
+            resolved: False
+            rescue: False
+            flavor: "pipelines"
+            intensity: 0
+        no_space_on_device:
+            diagMessage: >
+                .*No space left on device.*
+            pipetask:
+            ticket: []
+            resolved: False
+            rescue: True
+            flavor: "panda"
+            intensity: 0
+        empty_failed_to_execute:
+            diagMessage: >
+                .*Failed to execute payload$
+            pipetask:
+            ticket: []
+            resolved: False
+            rescue: True
+            flavor: "panda"
+            intensity: 0
+        monotonic_rchar_memory:
+            diagMessage: >
+                .*attempt to reduce the monitored value of monotonic rchar.*
+            pipetask:
+            ticket: []
+            resolved: False
+            rescue: True
+            flavor: "panda"
+            intensity: 0
+        cannot_convert_nan:
+            diagMessage: >
+                .*cannot convert float NaN.*
+            pipetask:
+            ticket: []
+            resolved: False
+            rescue: False
+            flavor: "pipelines"
+            intensity: 0    
+    trans, 1: {}
+    taskBuffer, 300:
+        failed_while_starting_job:
+            diagMessage: ".*The worker was failed while the job was starting.*"
+            pipetask:
+            ticket: ["DM-37570", "DM-37483", "DM-36845", "DM-36763"]
+            resolved: False
+            rescue: True
+            flavor: "panda"
+            intensity: 0
+        finished_while_starting_job:
+            diagMessage: ".*The worker was finished while the job was starting.*"
+            pipetask:
+            ticket: []
+            resolved: False
+            rescue: True
+            flavor: "panda"
+            intensity: 0
+        finished_while_running_job:
+            diagMessage: >
+                .*The worker was finished while the job was running.*
+            pipetask:
+            ticket: []
+            resolved: False
+            rescue: True
+            flavor: "panda"
+            intensity: 0
+        failed_while_running_job:
+            diagMessage: >
+                .*The worker was failed while the job was running.*
+            pipetask:
+            ticket: []
+            resolved: False
+            rescue: True
+            flavor: "panda"
+            intensity: 0
+    taskBuffer, 102:
+        expired_in_pending:
+            diagMessage: ".*expired in pending. status unchanged"
+            pipetask:
+            ticket: ["DM-37089"]
+            resolved: False
+            rescue: True
+            flavor: "panda"
+            intensity: 0
+    pilot, 1144:
+        panda_killed_job:
+            diagMessage: >
+                This job was killed by panda server
+            pipetask:
+            ticket: []
+            resolved: True
+            rescue: True
+            flavor: "panda"
+            intensity: 0
+    pilot, 1200:
+        unknown_kill_signal:
+            diagMessage: >
+                Job terminated by unknown kill signal
+            pipetask:
+            ticket: []
+            resolved: True
+            rescue: True
+            flavor: "panda"
+            intensity: 0
+    pilot, 1344:
+        resource_temporarily_unavailable:
+            diagMessage: ".*Exception caught: [Errno 11] Resource temporarily unavailable"
+            pipetask: finalizeCharacterization
+            ticket: ["DM-36066"]
+            resolved: True
+            rescue: True
+            flavor: "panda"
+            intensity: 0
+    trans, 134:
+        sigabrt:
+            diagMessage: >
+                .*New trf: Transform received signal SIGABRT; Old trf: Athena core dump or timeout, or conddb DB connect exception
+            pipetask: finalizeCharacterization
+            ticket: ["DM-36066"]
+            resolved: True
+            rescue: True
+            flavor: "panda"
+            intensity: 0
+    trans, 139:
+        SIGSEGV:
+            diagMessage: ".*SIGSEGV"
+            pipetask:
+            ticket: ["DM-38360", "DM-38042"]
+            resolved: False
+            rescue: False
+            flavor: "critical" # this means there is a segfault in the pipelines
+            intensity: 0
+    jobDispatcher, 102:
+        no_reply:
+            diagMessage: ".*Sent job didn't receive reply from pilot within 30 min"
+            pipetask: 
+            ticket: []
+            resolved: True
+            rescue: True
+            flavor: "panda"
+            intensity: 0
+    jobDispatcher, 100:
+        lost_heartbeat:
+            diagMessage: ".*lost heartbeat.*"
+            pipetask:
+            ticket: ["DM-36356"]
+            resolved: True
+            rescue: True
+            flavor: "panda"
+            intensity: 0
+    pilot, 1098:
+        no_space:
+            diagMessage: >
+                .*too little space left on local disk to run job:.*
+            pipetask: 
+            ticket: []
+            resolved: True
+            rescue: True
+            flavor: "panda"
+            intensity: 0
+    trans, 137:
+        sigkill:
+            diagMessage: ".*Transform received signal SIGKILL"
+            pipetask:
+            ticket: ["DM-38691", "DM-38042", "DM-37570", "DM-37483", "DM-36356", "DM-36741"]
+            resolved: True
+            rescue: True
+            flavor: "panda"
+            intensity: 0

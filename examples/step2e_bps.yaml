@@ -1,0 +1,22 @@
+LSST_VERSION: v24.1.0.rc3
+campaign: PDR2/v24.1.0_DM-39132
+custom_lsst_setup: ''
+executionButler:
+  command2: ''
+  command3: ''
+  queue: SLAC_Rubin_Merge
+  requestMemory: 64000
+fileDistributionEndPoint: file:///sdf/data/rubin/panda_jobs/panda_cache/{operator}/panda_cache_box/{payloadFolder}/{uniqProcName}/
+includeConfigs:
+- ${CTRL_BPS_PANDA_DIR}/config/bps_usdf.yaml
+- ${CM_PROD_DIR}/src/lsst/cm/prod/configs/PDR2/requestMemory.yaml
+numberOfRetries: 3
+payload:
+  butlerConfig: /sdf/group/rubin/repo/main
+  dataQuery: instrument = 'HSC'
+  inCollection: HSC/runs/PDR2/v24_1_0/DM-39132/step2d,HSC/runs/PDR2/v24_1_0/DM-39132/ancillary
+  outputRun: HSC/runs/PDR2/v24.1.0_DM-39132/step2e/group0/w00_005
+  payloadName: PDR2/v24.1.0_DM-39132
+pipelineYaml: ${DRP_PIPE_DIR}/pipelines/HSC/DRP.yaml#step2e
+pipetaskOutput: ''
+project: PDR2
