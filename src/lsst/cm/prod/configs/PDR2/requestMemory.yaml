@@ -1,6 +1,4 @@
 pipetask:
-  makeWarp:
-    requestMemory: 8192
   assembleCoadd:
     requestMemory: 24576
   measure:
@@ -71,3 +69,10 @@ pipetask:
     requestMemory: 480000
   makeVisitTable:
     requestMemory: 480000
+  transformObjectTable:
+    requestMemory: 30000
+  selectGoodSeeingVisits:
+    requestMemory: 8192
+# setting makeWarp memory back to default of 4GB
+# makeWarp:
+#   requestMemory: 8192
