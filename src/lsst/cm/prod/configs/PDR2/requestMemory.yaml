@@ -38,7 +38,7 @@ pipetask:
   skyCorr:
     requestMemory: 15500
   deblend:
-    requestMemory: 15500
+    requestMemory: 30000
   # new at USDF
   templateGen:
     requestMemory: 5000
