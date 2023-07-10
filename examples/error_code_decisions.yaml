@@ -21,9 +21,7 @@ legend:
 pandaErrorCode:
     pilot, 1305:
         aperture_correction:
-            diagMessage: >
-                .*Unable to measure aperture correction for required algorithm '*.': only 0 sources, but
-                require at least 2.
+            diagMessage: ".*:Unable to measure aperture correction for required algorithm.*"
             # algorithms which say this include modelfit_CModel, modelfit_CModel_exp, base_GaussianFlux,
             # ext_photometryKron_KronFlux...
             pipetask: characterizeImage
@@ -33,9 +31,7 @@ pandaErrorCode:
             flavor: "payload"
             intensity: 0.001
         psfex:
-            diagMessage: >
-                .*File "src/PsfexPsf.cc", line 233, in virtual std:shared_ptr > lsst:meas:extensions:psfex:PsfexPsf:
-                _doComputeImage(const Point2D&, const lsst:afw:image:Color&, const Point2D&) const
+            diagMessage: ".*:File .* lsst:meas:extensions:psfex:PsfexPsf:_doComputeImage.*"
             pipetask: characterizeImage
             ticket: ["DM-37570"]
             resolved: False
@@ -59,7 +55,7 @@ pandaErrorCode:
             flavor: "payload"
             intensity: 0.001
         no_use_for_photocal:
-            diagMessage: ".*No matches to use for photocal"
+            diagMessage: ".*:No matches to use for photocal"
             pipetask: calibrate
             ticket: ["DM-37483", "DM-37089", "DM-32291", "DM-36763"]
             resolved: False
@@ -83,7 +79,7 @@ pandaErrorCode:
             flavor: "payload"
             intensity: 0
         too_many_indicies:
-            diagMessage: ".*too many indices for array: array is 1-dimensional, but 2 were indexed"
+            diagMessage: ".*too many indices for array: array is 1-dimensional, but 2 were indexed.*"
             pipetask: # it occurred in healSparsePropertyMaps, but is unrelated to the specific pipetask
             ticket: ["DM-37837", "DM-37570"]
             resolved: True
@@ -92,8 +88,7 @@ pandaErrorCode:
             intensity: 0
         do_compute_kernel_image:
             diagMessage: >
-                .*File \"src/CoaddPsf.cc\", line 254, in virtual std:shared_ptr > lsst:meas:algorithms:
-                CoaddPsf:doComputeKernelImage(const Point2D&, const lsst:afw:image:Color&) const
+                .*File \"src/CoaddPsf.cc\".*doComputeKernelImage.*
             pipetask: subtractImages
             ticket: ["DM-37483", "DM-37089", "DM-36265", "DM-36356", "DM-36066"]
             resolved: False
@@ -119,7 +114,7 @@ pandaErrorCode:
             flavor: "payload"
             intensity: 0.001
         array_sample_empty:
-            diagMessage: ".*array of sample points is empty"
+            diagMessage: ".*array of sample points is empty.*"
             pipetask: subtractImages
             ticket: ["DM-37570"]
             resolved: False
@@ -127,7 +122,7 @@ pandaErrorCode:
             flavor: "payload"
             intensity: 0.001
         fp_xp:
-            diagMessage: ".*fp and xp are not of the same length."
+            diagMessage: ".*fp and xp are not of the same length.*"
             pipetask: subtractImages
             ticket: ["DM-37570"]
             resolved: False
@@ -136,10 +131,7 @@ pandaErrorCode:
             intensity: 0.001
         lmfit_mad:
             diagMessage: >
-                .*ValueError: NaN values detected in your input data or the output of your objective/model
-                 function - fitting algorithms cannot handle this! Please read
-                  https://lmfit.github.io/lmfit-py/faq.html#i-get-errors-from-nan-in-my-fit-what-can-i-do
-                  for more information.
+                .*fitting algorithms cannot handle this.*
             pipetask: detectAndMeasureDiaSources
             ticket: ["DM-38691", "DM-38360"]
             resolved: False
@@ -157,7 +149,7 @@ pandaErrorCode:
             flavor: "payload"
             intensity: 0.001
         fgcm_380:
-            diagMessage: ".*(380, 40)"
+            diagMessage: ".*(380, 40).*"
             pipetask: fgcmBuildStarsTable
             ticket: ["DM-37570"]
             resolved: False
@@ -165,7 +157,7 @@ pandaErrorCode:
             flavor: "critical"
             intensity: 0
         remote_io:
-            diagMessage: ".*(psycopg2.errors.InternalError_) could not read block .* in file \".*\": Remote I/O error"
+            diagMessage: ".*Remote I/O error.*"
             pipetask: mergeExecutionButler
             ticket: ["DM-37570"]
             resolved: True # if we see this, the merge job should be re-run
@@ -183,9 +175,7 @@ pandaErrorCode:
     trans, 1:
         p_aperture_correction:
             diagMessage: >
-                .*Execution of task 'characterizeImage' on quantum {.*} failed. Exception
-                RuntimeError: Unable to measure aperture correction for required algorithm '*.': only 0 sources, but
-                require at least 2.
+                .*Unable to measure aperture correction for required algorithm .*
             # algorithms which say this include modelfit_CModel, modelfit_CModel_exp, base_GaussianFlux,
             # ext_photometryKron_KronFlux... can note these as different errors if need be.
             pipetask: characterizeImage
@@ -195,7 +185,7 @@ pandaErrorCode:
             flavor: "payload"
             intensity: 0.001
         p_psf_matching_kernel:
-            diagMessage: ".*ERROR: Unable to calculate psf matching kernel"
+            diagMessage: ".*ERROR: Unable to calculate psf matching kernel.*"
             pipetask: characterizeImage
             ticket: ["DM-38691", "DM-38360", "DM-38042", "DM-37570", "DM-37483", "DM-36763", "DM-36356", "DM-36066"]
             resolved: False
@@ -469,7 +459,7 @@ pandaErrorCode:
             intensity: 0.001
     taskbuffer, 300:
         failed_while_starting_job:
-            diagMessage: ".*The worker was failed while the job was starting : .* gridjob roma shared .* FAILED .*."
+            diagMessage: ".*The worker was failed while the job was starting : .*"
             pipetask:
             ticket: ["DM-37570", "DM-37483", "DM-36845", "DM-36763"]
             resolved: False
@@ -524,7 +514,7 @@ pandaErrorCode:
             intensity: 0
     jobdispatcher, 100:
         lost_heartbeat:
-            diagMessage: ".*lost heartbeat"
+            diagMessage: ".*lost heartbeat.*"
             pipetask:
             ticket: ["DM-36356"]
             resolved: True
@@ -533,7 +523,7 @@ pandaErrorCode:
             intensity: 0
     pilot, 1098:
         no_space_on_disk:
-            diagMessage: ".*too little space left on local disk to run job: .* B (need > .* B)"
+            diagMessage: ".*too little space left on local disk to run job: .* "
             pipetask: forcedPhotCcd
             ticket: ["DM-36066"]
             resolved: True

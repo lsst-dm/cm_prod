@@ -12,8 +12,9 @@ while [ $valid_config = false ]; do
     if [ $CONFIG = 'HSC-RC2' ]
     then
 	    source $EXAMPLES/hsc_weekly_setup.sh
-      butler_repo='/sdf/group/rubin/repo/main'
-      valid_config=true
+        butler_repo='/sdf/group/rubin/repo/main'
+        valid_config=true
+        daemon_options="--max-running 10 --sleep-time 300"
     elif [ $CONFIG = 'rc2_subset' ]
     then
         source $EXAMPLES/hsc_rc2_subset_setup.sh
