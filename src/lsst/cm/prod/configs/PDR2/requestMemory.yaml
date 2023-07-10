@@ -6,7 +6,7 @@ pipetask:
   mergeMeasurements:
     requestMemory: 16384
   forcedPhotCoadd:
-    requestMemory: 4096
+    requestMemory: 10000
   writeObjectTable:
     requestMemory: 16384
   matchCatalogsPatch:
@@ -38,7 +38,9 @@ pipetask:
   skyCorr:
     requestMemory: 15500
   deblend:
-    requestMemory: 30000
+    requestMemory: 80000
+  mergeDetections:
+    requestMemory: 40000
   # new at USDF
   templateGen:
     requestMemory: 5000
@@ -73,6 +75,10 @@ pipetask:
     requestMemory: 30000
   selectGoodSeeingVisits:
     requestMemory: 8192
+  makeWarp:
+    requestMemory: 8192
 # setting makeWarp memory back to default of 4GB
-# makeWarp:
-#   requestMemory: 8192
+# settinf to 8GB with clustering
+# setting forcedPhotCoadd to 10G so that we dont run out of scratch   
+# forcedPhotCoadd:
+#   requestMemory: 4096
