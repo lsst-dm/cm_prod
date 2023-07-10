@@ -1,8 +1,8 @@
 includeConfigs:
 - ${CTRL_BPS_PANDA_DIR}/config/bps_usdf.yaml
-#- ${DRP_PIPE_DIR}/bps/resources/HSC/DRP-RC2.yaml
+- ${DRP_PIPE_DIR}/bps/resources/HSC/DRP-RC2.yaml
 # Custom memory request
-- ${CM_PROD_DIR}/src/lsst/cm/prod/configs/HSC/test/requestMemory.yaml
+#- ${CM_PROD_DIR}/src/lsst/cm/prod/configs/HSC/test/requestMemory.yaml
 
 numberOfRetries: 3
 
