@@ -11,25 +11,25 @@ read -p "Which config would you like to use? (HSC-RC2, rc2_subset, DC2_test-med-
 while [ $valid_config = false ]; do
     if [ $CONFIG = 'HSC-RC2' ]
     then
-	    source $EXAMPLES/hsc_weekly_setup.sh
         butler_repo='/sdf/group/rubin/repo/main'
+        source $EXAMPLES/hsc_weekly_setup.sh
         valid_config=true
         daemon_options="--max-running 10 --sleep-time 300"
     elif [ $CONFIG = 'rc2_subset' ]
     then
-        source $EXAMPLES/hsc_rc2_subset_setup.sh
         butler_repo='/sdf/group/rubin/repo/main'
+        source $EXAMPLES/hsc_rc2_subset_setup.sh
         valid_config=true
     elif [ $CONFIG = 'DC2_test-med-1' ]
     then
-        source $EXAMPLES/dc2_test-med-1_setup.sh
         butler_repo='/sdf/group/rubin/repo/dc2'
+        source $EXAMPLES/dc2_test-med-1_setup.sh
         valid_config=true
         daemon_options="--max-running 10 --sleep-time 300"
     elif [ $CONFIG = 'micro' ]
     then
-        source $EXAMPLES/hsc_rc2_singleframe_micro_setup.sh
         butler_repo='/sdf/group/rubin/repo/main'
+        source $EXAMPLES/hsc_rc2_singleframe_micro_setup.sh
         valid_config=true
         daemon_options="--max-running 10 --sleep-time 30"
     else
