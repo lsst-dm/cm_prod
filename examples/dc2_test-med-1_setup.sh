@@ -2,16 +2,16 @@
 
 EXAMPLES=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-butler_repo="/sdf/group/rubin/repo/dc2"
 source $EXAMPLES/common_setup.sh
 
 config="dc2_test-med-1.yaml"
 config_name="dc2"
-p_name="dc2-test-med-1"
-lsst_version="w_2023_17"
-c_name="${lsst_version}_test3"
+lsst_version="d_2023_07_21"
+ticket_num="DM-40157"
+p_name="${ticket_num}"
+c_name="${lsst_version}"
 fullname="${p_name}/${c_name}"
-db_path="output/cm_${p_name}_${c_name}.db"
+db_path="output/${p_name}_${c_name}.db"
 
 export CM_CONFIGS="src/lsst/cm/prod/configs/DC2/test"
 export CM_DB="sqlite:///${db_path}"
