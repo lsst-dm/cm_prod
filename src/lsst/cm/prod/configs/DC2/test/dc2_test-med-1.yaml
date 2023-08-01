@@ -103,7 +103,7 @@ step8:
 faro_visit:
     prerequisites: ["step6"]
     includes: ["step"]
-    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#faro_matched"
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#faro_visit"
     data_query_base: "instrument='LSSTCam-imSim' and skymap='DC2'"
 faro_matched:
     prerequisites: ["step6"]
