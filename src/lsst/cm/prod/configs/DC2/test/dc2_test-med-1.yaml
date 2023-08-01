@@ -94,22 +94,22 @@ step7:
     prerequisites: ["step3"]
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#step7"
-    data_query_base: "instrument = 'LSSTCam-imSim'"
+    data_query_base: "instrument='LSSTCam-imSim' and skymap='DC2'"
 step8:
-    prerequisites: ["step5"]
+    prerequisites: ["step3"]
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#step8"
-    data_query_base: "instrument = 'LSSTCam-imSim'"
+    data_query_base: "instrument='LSSTCam-imSim' and skymap='DC2'"
 faro_visit:
     prerequisites: ["step6"]
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#faro_matched"
-    data_query_base: "instrument = 'LSSTCam-imSim'"
+    data_query_base: "instrument='LSSTCam-imSim' and skymap='DC2'"
 faro_matched:
     prerequisites: ["step6"]
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#faro_matched"
-    data_query_base: "instrument = 'LSSTCam-imSim'"
+    data_query_base: "instrument='LSSTCam-imSim' and skymap='DC2'"
 faro_tract:
     prerequisites: ["step3"]
     includes: ["step"]
