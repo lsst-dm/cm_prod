@@ -25,7 +25,3 @@ export PANDA_AUTH_VO=Rubin
 
 # WMS plugin
 export BPS_WMS_SERVICE_CLASS=lsst.ctrl.bps.panda.PanDAService
-
-# Using pandaclient instead of sdfproxy
-export no_proxy=.slac.stanford.edu,.cern.ch
-export NO_PROXY=.slac.stanford.edu,.cern.ch
