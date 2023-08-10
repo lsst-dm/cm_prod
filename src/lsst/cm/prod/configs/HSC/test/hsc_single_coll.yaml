@@ -37,7 +37,7 @@ step1:
     prerequisites: []
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step1"
-    data_query_base: instrument = 'HSC'
+    data_query_base: instrument = 'HSC and skymap = 'hsc_rings_v1''
     split_args:
         dataset: raw
         field: exposure
@@ -46,7 +46,7 @@ step2:
     prerequisites: ["step1"]
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step2"
-    data_query_base: "instrument = 'HSC'"
+    data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
 step3:
     prerequisites: ["step2"]
     includes: ["step"]
@@ -88,7 +88,7 @@ step7:
     prerequisites: ["step6"]
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step7"
-    data_query_base: "instrument = 'HSC'"
+    data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
 campaign:
     class_name: lsst.cm.tools.db.campaign_handler.CampaignHandler
     root_coll: dummy

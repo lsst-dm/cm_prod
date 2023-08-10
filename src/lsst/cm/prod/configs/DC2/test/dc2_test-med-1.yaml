@@ -75,7 +75,7 @@ step5:
     prerequisites: ["step4"]
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#step5"
-    data_query_base: "instrument='LSSTCam-imSim' and skymap='DC2'"
+    data_query_base: "instrument='LSSTCam-imSim' and skymap='DC2' and tract in (3828, 3829)"
     split_vals:
         field: tract
         values:
@@ -94,32 +94,32 @@ step7:
     prerequisites: ["step3"]
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#step7"
-    data_query_base: "instrument='LSSTCam-imSim' and skymap='DC2'"
+    data_query_base: "instrument='LSSTCam-imSim' and skymap='DC2' and tract in (3828, 3829)"
 step8:
     prerequisites: ["step3"]
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#step8"
-    data_query_base: "instrument='LSSTCam-imSim' and skymap='DC2'"
+    data_query_base: "instrument='LSSTCam-imSim' and skymap='DC2' and tract in (3828, 3829)"
 faro_visit:
     prerequisites: ["step6"]
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#faro_visit"
-    data_query_base: "instrument='LSSTCam-imSim' and skymap='DC2'"
+    data_query_base: "instrument='LSSTCam-imSim' and skymap='DC2' and tract in (3828, 3829)"
 faro_matched:
     prerequisites: ["step6"]
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#faro_matched"
-    data_query_base: "instrument='LSSTCam-imSim' and skymap='DC2'"
+    data_query_base: "instrument='LSSTCam-imSim' and skymap='DC2' and tract in (3828, 3829)"
 faro_tract:
     prerequisites: ["step3"]
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#faro_tract"
-    data_query_base: "instrument = 'LSSTCam-imSim'"
+    data_query_base: "instrument = 'LSSTCam-imSim' and skymap='DC2' and tract in (3828, 3829)"
 plots:
     prerequisites: ["step3"]
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#analysis_coadd_plots"
-    data_query_base: "instrument = 'LSSTCam-imSim' and skymap = 'DC2'"
+    data_query_base: "instrument = 'LSSTCam-imSim' and skymap='DC2' and tract in (3828, 3829)"
     split_vals:
         field: tract
         values:
