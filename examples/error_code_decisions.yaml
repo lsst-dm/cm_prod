@@ -173,290 +173,267 @@ pandaErrorCode:
             flavor: "usdf"
             intensity: 0
     trans, 1:
-        p_aperture_correction:
+        check_pipeline_logs:
+            diagMessage: "Pipelines error: check logging."
+            pipetask:
+            ticket:
+            resolved: False
+            rescue: False
+            flavor: "payload"
+            intensity: 0
+    trans, 129:
+        signal_hangup:
             diagMessage: >
-                .*Unable to measure aperture correction for required algorithm .*
-            # algorithms which say this include modelfit_CModel, modelfit_CModel_exp, base_GaussianFlux,
-            # ext_photometryKron_KronFlux... can note these as different errors if need be.
-            pipetask: characterizeImage
-            ticket: ["DM-38360", "DM-37483", "DM-37089", "DM-36763", "DM-36356"]
+                SIGHUP: Hangup detected in controlling terminal or death of
+                 controlling process."
+            pipetask:
+            ticket:
             resolved: False
-            rescue: False
-            flavor: "payload"
-            intensity: 0.001
-        p_psf_matching_kernel:
-            diagMessage: ".*ERROR: Unable to calculate psf matching kernel.*"
-            pipetask: characterizeImage
-            ticket: ["DM-38691", "DM-38360", "DM-38042", "DM-37570", "DM-37483", "DM-36763", "DM-36356", "DM-36066"]
+            flavor: "panda"
+            intensity: 0
+    trans, 130:
+        keyboard_interrupt:
+            diagMessage: "SIGINT: Interrupt from keyboard."
+            pipetask:
+            ticket:
             resolved: False
-            rescue: False
-            flavor: "payload"
-            intensity: 0.001
-        psf_in_GAaP:
-            diagMessage: >
-                .*Failed to solve for PSF matching kernel in GAaP for (.*): Problematic scaling factors = .* Errors: Exception
-                ('Unable to determine kernel sum; 0 candidates')
-            pipetask: characterizeImage
-            ticket: ["DM-38042", "DM-37483", "DM-33375", "DM-36763", "DM-36356"]
+            flavor: "panda"
+            intensity: 0
+    trans, 131:
+        keyboard_quit:
+            diagMessage: "SIGQUIT: Quit from keyboard."
+            pipetask:
+            ticket:
             resolved: False
-            rescue: False
-            flavor: "payload"
-            intensity: 0.001
-        p_psfex:
-            diagMessage: ".*Only spatial variation (ndim == 2) is supported; saw 0"
-            pipetask: characterizeImage
-            ticket: ["DM-37570"]
+            flavor: "panda"
+            intensity: 0
+    trans, 132:
+        illegal_instruction:
+            diagMessage: "SIGILL: Illegal instruction."
+            pipetask:
+            ticket:
             resolved: False
-            rescue: False
-            flavor: "payload"
-            intensity: 0.001
-        p_no_use_for_photocal:
-            diagMessage: >
-                .*Execution of task 'calibrate' on quantum {.*} failed. Exception
-                RuntimeError: No matches to use for photocal
-            pipetask: calibrate
-            ticket: ["DM-37483", "DM-37089", "DM-32291", "DM-36763"]
+            flavor: "panda"
+            intensity: 0
+    trans, 133:
+        breakpoint_trap:
+            diagMessage: "SIGTRAP: Trace/breakpoint trap."
+            pipetask:
+            ticket:
             resolved: False
-            rescue: False
-            flavor: "payload"
-            intensity: 0.001
-        p_NaN_to_int_calibrate:
-            diagMessage: >
-                .*Execution of task 'calibrate' on quantum {.*} failed. Exception
-                ValueError: cannot convert float NaN to integer
-            pipetask: calibrate
-            ticket: ["DM-36356"]
-            resolved: False
-            rescue: False
-            flavor: "payload"
-            intensity: 0.001
-        p_FWHM_value_of_nan:
-            diagMessage: >
-                .*Execution of task 'calibrate' on quantum {.*} failed. Exception
-                ValueError: PSF at (.*) has an invalid FWHM value of nan
-            pipetask: calibrate
-            ticket: ["DM-37089", "DM-36763"]
-            resolved: False
-            rescue: False
-            flavor: "payload"
-            intensity: 0.001
-        finalizeCharacterization_failed:
-            diagMessage: >
-                .*Task <TaskDef(lsst.pipe.tasks.finalizeCharacterization.FinalizeCharacterizationTask, label=
-                finalizeCharacterization) dataId={.*}> failed; processing will continue for remaining
-                tasks.
+            flavor: "panda"
+            intensity: 0
+    trans, 134:
+        signal_abort:
+            diagMessage: "SIGABRT: Abort signal."
             pipetask: finalizeCharacterization
             ticket: ["DM-36066"]
             resolved: True
             rescue: True
             flavor: "panda"
             intensity: 0
-        cant_start_new_thread:
-            diagMessage: ".*RuntimeError: can't start new thread"
-            pipetask: finalizeCharacterization
-            ticket: ["DM-36066"]
+    trans, 135:
+        bus_error:
+            diagMessage: "SIGBUS: Bus error (bad memory access)."
+            pipetask:
+            ticket:
+            resolved: False
+            flavor: "panda"
+            intensity: 0
+    trans, 136:
+        floating_pt_exemption:
+            diagMessage: "SIGFPE: Floating Point Exemption."
+            pipetask:
+            ticket:
+            resolved: False
+            flavor: "panda"
+            intensity: 0
+    trans, 137:
+        signal_kill:
+            diagMessage: "SIGKILL: Kill signal."
+            pipetask:
+            ticket: ["DM-38691", "DM-38042", "DM-37570", "DM-37483", "DM-36356", "DM-36741"]
             resolved: True
             rescue: True
             flavor: "panda"
             intensity: 0
-        rchar:
-            diagMessage: ".*Error: attempt to reduce the monitored value of monotonic rchar from .* to .*"
-            pipetask: finalizeCharacterization
-            ticket: ["DM-36066"]
-            resolved: True
-            rescue: True
+    trans, 138:
+        user_defined_signal:
+            diagMessage: "SIGUSR1: User defined signal."
+            pipetask:
+            ticket:
+            resolved: False
             flavor: "panda"
             intensity: 0
-        read_bytes:
-            diagMessage: ".*Error: attempt to reduce the monitored value of monotonic read_bytes from .* to .*"
-            pipetask: finalizeCharacterization
-            ticket: ["DM-36066"]
-            resolved: True
-            rescue: True
-            flavor: "panda"
-            intensity: 0
-        terminate_after_sys_err:
-            diagMessage: >
-                .*terminate called after throwing an instance of 'std::system_error' what(): Resource temporarily unavailable
-            pipetask: finalizeCharacterization
-            ticket: ["DM-36066"]
-            resolved: True
-            rescue: True
-            flavor: "panda"
-            intensity: 0
-        pthread_create:
-            diagMessage: ".*ERROR; return code from pthread_create() is 11 Error detail: Resource temporarily unavailable"
-            pipetask: finalizeCharacterization
-            ticket: ["DM-36066"]
-            resolved: True
-            rescue: True
-            flavor: "panda"
-            intensity: 0
-        url_timeout:
-            diagMessage: >
-                .*url=/cvmfs/atlas.cern.ch/repo/sw/local/etc/cric_pandaqueues.json, error: TimeoutException: Timeout reached,
-                timeout=20 seconds .. trying to use data from cache=/tmp/atlas_4WNdEEY5/agis_schedconf.cvmfs.json
-            pipetask: finalizeCharacterization
-            ticket: ["DM-36066"]
-            resolved: True
-            rescue: True
-            flavor: "panda"
-            intensity: 0
-        p_fgcm_380:
-            diagMessage: ".*Exception KeyError: (380, 40)"
-            pipetask: fgcmBuildStarsTable
-            ticket: ["DM-37570"]
+    trans, 139:
+        invalid_memory_ref:
+            diagMessage: "SIGSEGV: Invalid memory reference."
+            pipetask:
+            ticket: ["DM-38360", "DM-38042"]
             resolved: False
             rescue: False
+            flavor: "critical" # this means there is a segfault in the pipelines
+            intensity: 0
+    trans, 140:
+        user_defined_signal_2:
+            diagMessage: "SIGUSR2: User defined signal."
+            pipetask:
+            ticket:
+            resolved: False
+            flavor: "panda"
+            intensity: 0
+    trans, 141:
+        broken_pipe:
+            diagMessage: "SIGPIPE: Broken pipe."
+            pipetask:
+            ticket:
+            resolved: False
+            flavor: "panda"
+            intensity: 0
+    trans, 142:
+        signal_alarm:
+            diagMessage: "SIGALRM: Timer signal."
+            pipetask:
+            ticket:
+            resolved: False
+            flavor: "panda"
+            intensity: 0
+    trans, 143:
+        termination_signal:
+            diagMessage: "SIGTERM: Termination signal."
+            pipetask:
+            ticket:
+            resolved: False
+            flavor: "panda"
+            intensity: 0
+    trans, 144:
+        stack_fault:
+            diagMessage: "SIGSTKFLT: Stack fault on coprocessor"
+            pipetask:
+            ticket:
+            resolved: False
+            flavor: "panda"
+            intensity: 0
+    trans, 145:
+        child_terminated:
+            diagMessage: "SIGCHILD: Child stopped or terminated."
+            pipetask:
+            ticket:
+            resolved: False
+            flavor: "panda"
+            intensity: 0
+    trans, 146:
+        cont_if_stop:
+            diagMessage: "SIGCONT: Continue if stopped."
+            pipetask:
+            ticket:
+            resolved: False
+            flavor: "panda"
+            intensity: 0
+    trans, 147:
+        stop_process:
+            diagMessage: "SIGSTOP: Stop process."
+            pipetask:
+            ticket:
+            resolved: False
+            flavor: "panda"
+            intensity: 0
+    trans, 148:
+        stopped_at_terminal:
+            diagMessage: "SIGTSTP: Stop typed at terminal."
+            pipetask:
+            ticket:
+            resolved: False
+            flavor: "panda"
+            intensity: 0
+    trans, 149:
+        terminal_bg_in:
+            diagMessage: "SIGTTIN: Terminal input for background process."
+            pipetask:
+            ticket:
+            resolved: False
+            flavor: "panda"
+            intensity: 0
+    trans, 150:
+        terminal_bg_out:
+            diagMessage: "SIGTTOU: Terminal output for background process."
+            pipetask:
+            ticket:
+            resolved: False
+            flavor: "panda"
+            intensity: 0
+    trans, 151:
+        urgent_socket:
+            diagMessage: "SIGURG: Urgent condition on socket."
+            pipetask:
+            ticket:
+            resolved: False
+            flavor: "panda"
+            intensity: 0
+    trans, 152:
+        cpu_limit:
+            diagMessage: "SIGXCPU: CPU Time Limit Exceeded."
+            pipetask:
+            ticket:
+            resolved: False
+            flavor: "panda"
+            intensity: 0
+    trans, 153:
+        file_limit:
+            diagMessage: "SIGXFSZ: File size limit exceeded."
+            pipetask:
+            ticket:
+            resolved: False
+            flavor: "panda"
+            intensity: 0
+    trans, 154:
+        virtual_alarm:
+            diagMessage: "SIGVTALRM: Virtual alarm clock."
+            pipetask:
+            ticket:
+            resolved: False
+            flavor: "panda"
+            intensity: 0
+    trans, 155:
+        profiling_timer_expired:
+            diagMessage: "SIGPROF: Profiling timer expired."
+            pipetask:
+            ticket:
+            resolved: False
+            flavor: "panda"
+            intensity: 0
+    trans, 156:
+        window_resize:
+            diagMessage: "SIGWINCH: Window resize signal."
+            pipetask:
+            ticket:
+            resolved: False
+            flavor: "panda"
+            intensity: 0
+    trans, 157:
+        io:
+            diagMessage: "SIGIO: I/O now possible"
+            pipetask:
+            ticket:
+            resolved: False
+            flavor: "panda"
+            intensity: 0
+    trans, 158:
+        power_failure:
+            diagMessage: "SIGPWR: Power failure"
+            pipetask:
+            ticket:
+            resolved: False
             flavor: "critical"
             intensity: 0
-        keyerror_0:
-            diagMessage: |
-                .*exposure = input_exposures[detector_id].get()
-                KeyError: 0
-            pipetask: updateVisitSummary
-            ticket: ["DM-37786", "DM-37570"]
-            resolved: True
-            rescue: False
-            flavor: "payload"
+    trans, 159:
+        bad_system_call:
+            diagMessage: "SIGSYS: Bad system call"
+            pipetask:
+            ticket:
+            resolved: False
+            flavor: "panda"
             intensity: 0
-        outside_image_bounds:
-            diagMessage: >
-                .*Execution of task 'measure' on quantum {.*} failed. Exception
-                IndexError: Index (.*) outside image bounds (.*) to (.*).
-            pipetask: measure
-            ticket: ["DM-35722", "DM-36066"]
-            resolved: True
-            rescue: False
-            flavor: "payload"
-            intensity: 0.001
-        p_NaN_to_int_detection:
-            diagMessage: >
-                .*Execution of task 'detection' on quantum {.*} failed. Exception
-                ValueError: cannot convert float NaN to integer
-            pipetask: detection
-            ticket: ["DM-36763", "DM-36356", "DM-36066"]
-            resolved: False
-            rescue: False
-            flavor: "payload"
-            intensity: 0.001
-        p_all_pixels_masked:
-            diagMessage: ".*All pixels masked. Cannot estimate background"
-            pipetask: detection
-            ticket: ["DM-37570"]
-            resolved: True
-            rescue: False
-            flavor: "payload"
-            intensity: 0
-        p_psf_matching_kernel_subtractImages:
-            diagMessage: ".*ERROR: Unable to calculate psf matching kernel"
-            pipetask: subtractImages
-            ticket: ["DM-38042", "DM-37570", "DM-37483", "DM-37089", "DM-36265", "DM-36356", "DM-36066"]
-            resolved: False
-            rescue: False
-            flavor: "payload"
-            intensity: 0.001
-        cannot_compute_coaddpsf:
-            diagMessage: >
-                .*Execution of task 'subtractImages' on quantum {.*} failed. Exception
-                InvalidParameterError:\nFile \"\"src/CoaddPsf.cc\", line .*, in virtual std::shared_ptr<lsst::afw::image::
-                Image<double> > lsst::meas::algorithms::CoaddPsf::doComputeKernelImage(const Point2D&, const lsst::afw::image::
-                Color&) const\nCannot compute CoaddPsf at point (.*); no input images at that point. {0} lsst::pex::exceptions::
-                InvalidParameterError: 'Cannot compute CoaddPsf at point (.*); no input images at that point.'
-            pipetask: subtractImages
-            ticket: ["DM-37570", "DM-37483", "DM-37089", "DM-36265", "DM-36356", "DM-36066"]
-            resolved: False
-            rescue: False
-            flavor: "payload"
-            intensity: 0.001
-        p_kernel_candidacy:
-            diagMessage: >
-                .*Execution of task 'subtractImages' on quantum {.*} failed. Exception
-                RuntimeError: Cannot find any objects suitable for KernelCandidacy
-            pipetask: subtractImages
-            ticket: ["DM-38360", "DM-38042", "DM-37570", "DM-37483", "DM-36265", "DM-36356", "DM-36066"]
-            resolved: False
-            rescue: False
-            flavor: "payload"
-            intensity: 0.001
-        p_do_compute_kernel_image:
-            diagMessage: >
-                .*File "src/CoaddPsf.cc", line 254, in virtual std:shared_ptr > lsst:meas:
-                algorithms:CoaddPsf:doComputeKernelImage(const Point2D&, const lsst:afw:image:Color&) const"
-            pipetask: subtractImages
-            ticket: ["DM-37570", "DM-37483", "DM-36265", "DM-36356", "DM-36066"]
-            resolved: False
-            rescue: False
-            flavor: "payload"
-            intensity: 0.001
-        kernel_does_not_exist:
-            diagMessage: ".*Original kernel does not exist {0}.* Visiting candidate {1}{{}}"
-            pipetask: subtractImages
-            ticket: ["DM-38691", "DM-37570", "DM-37483", "DM-36265", "DM-36356", "DM-36066"]
-            resolved: False
-            rescue: False
-            flavor: "payload"
-            intensity: 0.001
-        kernel_sum:
-            diagMessage: ".*Unable to determine kernel sum; 0 candidates"
-            pipetask: subtractImages
-            ticket: ["DM-38360", "DM-38042", "DM-37483", "DM-36265", "DM-36356", "DM-36066"]
-            resolved: False
-            rescue: False
-            flavor: "payload"
-            intensity: 0.001
-        p_NaN_to_int_subtractImages:
-            diagMessage: ".*Exception ValueError: cannot convert float NaN to integer"
-            pipetask: subtractImages
-            ticket: ["DM-36265", "DM-36356", "DM-36066"]
-            resolved: False
-            rescue: False
-            flavor: "payload"
-            intensity: 0.001
-        p_array_sample_empty:
-            diagMessage: ".*array of sample points is empty"
-            pipetask: subtractImages
-            ticket: ["DM-37570"]
-            resolved: False
-            rescue: False
-            flavor: "payload"
-            intensity: 0.001
-        p_fp_xp:
-            diagMessage: ".*fp and xp are not of the same length."
-            pipetask: subtractImages
-            ticket: ["DM-37570"]
-            resolved: False
-            rescue: False
-            flavor: "payload"
-            intensity: 0.001
-        u_psf:
-            diagMessage: >
-                .*Exception ValueError: Failure from formatter 'lsst.daf.butler.formatters.parquet.ParquetFormatter' for
-                dataset .*: Unrecognized column name 'u_psfFlux_flag'.
-            pipetask: catalogMatchTract
-            ticket: ["DM-36305", "DM-36356"]
-            resolved: False
-            rescue: False
-            flavor: "payload"
-            intensity: 0.001
-        p_remote_io:
-            diagMessage: >
-                .*sqlalchemy.exc.InternalError: (psycopg2.errors.InternalError_) could not read block .* in file ".*":
-                Remote I/O error
-            pipetask: mergeExecutionButler
-            ticket: ["DM-37570"]
-            resolved: True # if we see this, the merge job should be re-run
-            rescue: False
-            flavor: "critical" # this is a usdf failure, but it was enough to stop production
-            intensity: 0
-        input_X_contains_NaN:
-            diagMessage: ".*ValueError: Input X contains NaN."
-            pipetask: plot_yFit_CModel
-            ticket: ["DM-39092", "DM-38781", "DM-37822"]
-            resolved: False
-            rescue: False
-            flavor: "payload"
-            intensity: 0.001
     taskbuffer, 300:
         failed_while_starting_job:
             diagMessage: ".*The worker was failed while the job was starting : .*"
@@ -484,25 +461,6 @@ pandaErrorCode:
             rescue: True
             flavor: "panda"
             intensity: 0
-    trans, 134:
-        sigabrt:
-            diagMessage: >
-                .*New trf: Transform received signal SIGABRT; Old trf: Athena core dump or timeout, or conddb DB connect exception
-            pipetask: finalizeCharacterization
-            ticket: ["DM-36066"]
-            resolved: True
-            rescue: True
-            flavor: "panda"
-            intensity: 0
-    trans, 139:
-        SIGSEGV:
-            diagMessage: ".*SIGSEGV"
-            pipetask:
-            ticket: ["DM-38360", "DM-38042"]
-            resolved: False
-            rescue: False
-            flavor: "critical" # this means there is a segfault in the pipelines
-            intensity: 0
     jobdispatcher, 102:
         no_reply:
             diagMessage: ".*Sent job didn't receive reply from pilot within 30 min"
@@ -526,15 +484,6 @@ pandaErrorCode:
             diagMessage: ".*too little space left on local disk to run job: .* "
             pipetask: forcedPhotCcd
             ticket: ["DM-36066"]
-            resolved: True
-            rescue: True
-            flavor: "panda"
-            intensity: 0
-    trans, 137:
-        sigkill:
-            diagMessage: ".*Transform received signal SIGKILL"
-            pipetask:
-            ticket: ["DM-38691", "DM-38042", "DM-37570", "DM-37483", "DM-36356", "DM-36741"]
             resolved: True
             rescue: True
             flavor: "panda"
