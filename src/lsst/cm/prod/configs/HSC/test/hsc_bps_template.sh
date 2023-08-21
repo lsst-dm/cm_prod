@@ -22,7 +22,3 @@ panda_auth status
 # Uncomment this for any custom bps setups
 #setup -j -r path/to/local/ctrl_bps
 #setup -j -r path/to/local/ctrl_bps_panda
-
-# Using pandaclient instead of sdfproxy
-export no_proxy=.slac.stanford.edu,.cern.ch
-export NO_PROXY=.slac.stanford.edu,.cern.ch

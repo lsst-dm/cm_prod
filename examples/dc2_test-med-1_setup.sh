@@ -2,7 +2,6 @@
 
 EXAMPLES=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-butler_repo="/sdf/group/rubin/repo/dc2"
 source $EXAMPLES/common_setup.sh
 
 config="dc2_test-med-1.yaml"
