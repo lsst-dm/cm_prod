@@ -75,7 +75,7 @@ step5:
     prerequisites: ["step4"]
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2_subset.yaml#nightlyStep5"
-    data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1' and tract = 9813"
+    data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1' and tract = 9813, band IN ('g', 'r', 'i', 'z', 'y')"
 step8:
     prerequisites: ["step3"]
     includes: ["step"]
