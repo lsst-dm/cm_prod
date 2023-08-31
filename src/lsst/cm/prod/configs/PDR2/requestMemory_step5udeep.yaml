@@ -55,16 +55,16 @@ pipetask:
   getTemplate:
     requestMemory: 5000
   consolidateFullDiaObjectTable:
-    requestMemory: 10000
+    requestMemory: 100000
   consolidateForcedSourceOnDiaObjectTable:
     requestMemory: 350000
     queue: "SLAC_Rubin_Merge"
   transformForcedSourceOnDiaObjectTable:
-    requestMemory: 55000
+    requestMemory: 255000
   transformForcedSourceTable:
-    requestMemory: 7000
+    requestMemory: 70000
   consolidateAssocDiaSourceTable:
-    requestMemory: 5000
+    requestMemory: 50000
   consolidateForcedSourceTable:
     requestMemory: 200000
 # pipetaskInit:

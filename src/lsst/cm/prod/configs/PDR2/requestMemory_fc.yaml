@@ -1,16 +1,14 @@
 pipetask:
+  makeWarp:
+    requestMemory: 8192
   assembleCoadd:
     requestMemory: 24576
   measure:
     requestMemory: 16384
   mergeMeasurements:
     requestMemory: 16384
-# trying to get these to run in lowest memory queue without filing scratch
-# forcedPhotCoadd:
-#    requestMemory: 4096
-# requestCpus: 2
   forcedPhotCoadd:
-    requestMemory: 10000
+    requestMemory: 4096
   writeObjectTable:
     requestMemory: 16384
   matchCatalogsPatch:
@@ -42,9 +40,7 @@ pipetask:
   skyCorr:
     requestMemory: 15500
   deblend:
-    requestMemory: 80000
-  mergeDetections:
-    requestMemory: 40000
+    requestMemory: 15500
   # new at USDF
   templateGen:
     requestMemory: 5000
@@ -60,35 +56,14 @@ pipetask:
     requestMemory: 350000
     queue: "SLAC_Rubin_Merge"
   transformForcedSourceOnDiaObjectTable:
-    requestMemory: 55000
-  transformForcedSourceTable:
-    requestMemory: 7000
+    requestMemory: 10000
   consolidateAssocDiaSourceTable:
     requestMemory: 5000
   consolidateForcedSourceTable:
     requestMemory: 200000
-# pipetaskInit:
-# requestMemory: 32000
-# pipetaskInit:
-#    requestMemory: 8192
+  pipetaskInit:
+    requestMemory: 32000
   writeRecalibratedSourceTable:
     requestMemory: 16000
   finalizeCharacterization:
     requestMemory: 16000
-  makeCcdVisitTable:
-    requestMemory: 480000
-  makeVisitTable:
-    requestMemory: 480000
-  transformObjectTable:
-    requestMemory: 30000
-  selectGoodSeeingVisits:
-    requestMemory: 8192
-  makeWarp:
-    requestMemory: 8192
-# setting makeWarp memory back to default of 4GB
-# settinf to 8GB with clustering
-# setting forcedPhotCoadd to 10G so that we dont run out of scratch   
-# forcedPhotCoadd:
-#   requestMemory: 4096
-  consolidateHealSparsePropertyMaps:
-    requestMemory: 200000
