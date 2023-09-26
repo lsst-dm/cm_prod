@@ -114,7 +114,8 @@ faro_tract:
     prerequisites: ["step3"]
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#faro_tract"
-    data_query_base: "instrument = 'LSSTCam-imSim' and skymap='DC2' and tract in (3828, 3829)"
+    data_query_base: >
+     instrument = 'LSSTCam-imSim' and skymap='DC2' and tract in (3828, 3829) and band in ('u', 'g', 'r', 'i', 'z', 'y')
 plots:
     prerequisites: ["step3"]
     includes: ["step"]
