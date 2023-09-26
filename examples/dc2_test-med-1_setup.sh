@@ -6,8 +6,8 @@ source $EXAMPLES/common_setup.sh
 
 config="dc2_test-med-1.yaml"
 config_name="dc2"
-lsst_version="w_2023_34"
-ticket_num="DM-40459"
+lsst_version="w_2023_37"
+ticket_num="DM-40870"
 p_name="${lsst_version}"
 c_name="${ticket_num}"
 fullname="${p_name}/${c_name}"

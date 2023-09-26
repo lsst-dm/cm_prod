@@ -24,11 +24,11 @@ pipetask:
   TE2:
     requestMemory: 16384
   matchCatalogsTractMag17to21p5:
-    requestMemory: 24000
+    requestMemory: 32000
   matchCatalogsTractStarsSNR5to80:
     requestMemory: 32000
   matchCatalogsTractGxsSNR5to80:
-    requestMemory: 32000
+    requestMemory: 40000
   consolidateForcedSourceTable:
     requestMemory: 64000
   consolidateForcedSourceOnDiaObjectTable:
