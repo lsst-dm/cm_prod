@@ -7,11 +7,7 @@ collect_step:
 ancil:
     class_name: lsst.cm.tools.db.script_handler.AncillaryScriptHandler
     collections:
-        - HSC/calib
-        - HSC/masks
-        - HSC/fgcmcal/lut/RC2
-        - refcats
-        - skymaps
+        - HSC/RC2_subset/defaults
 job:
     class_name: lsst.cm.tools.db.job_handler.JobHandler
 workflow:
@@ -39,42 +35,48 @@ step:
 step1:
     prerequisites: []
     includes: ["step"]
-    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step1"
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2_subset.yaml#nightlyStep1"
     data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
 step2a:
     prerequisites: ["step1"]
     includes: ["step"]
-    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step2a"
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2_subset.yaml#nightlyStep2a"
     data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
 step2b:
     prerequisites: ["step2a"]
     includes: ["step"]
-    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step2b"
-    data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
-step2cde:
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2_subset.yaml#nightlyStep2b"
+    data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1' and tract = '9813'"
+step2c:
     prerequisites: ["step2b"]
     includes: ["step"]
-    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step2cde"
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2_subset.yaml#nightlyStep2c"
+    data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
+step2d:
+    prerequisites: ["step2c"]
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2_subset.yaml#nightlyStep2d"
     data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
 step3:
-    prerequisites: ["step2cde"]
+    prerequisites: ["step2d"]
     includes: ["step"]
-    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step3"
-    data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1' and tract = 9813"
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2_subset.yaml#nightlyStep3"
+    data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1' and tract = 9813 and patch IN (40)"
 step4:
     prerequisites: ["step3"]
     includes: ["step"]
-    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step4"
-    data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2_subset.yaml#nightlyStep4"
+    data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1' and patch IN (40)"
 step5:
     prerequisites: ["step4"]
     includes: ["step"]
-    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step5"
-    data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1' and tract = 9813"
-step6:
-    prerequisites: ["step5"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2_subset.yaml#nightlyStep5"
+    data_query_base: >
+        instrument = 'HSC' and skymap = 'hsc_rings_v1' and tract = 9813, band IN ('g', 'r', 'i', 'z', 'y') and patch IN (40)
+step8:
+    prerequisites: ["step3"]
     includes: ["step"]
-    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step6"
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2_subset.yaml#nightlyStep8"
     data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
 campaign:
     class_name: lsst.cm.tools.db.campaign_handler.CampaignHandler
@@ -96,8 +98,9 @@ campaign:
         - step1
         - step2a
         - step2b
-        - step2cde
+        - step2c
+        - step2d
         - step3
         - step4
         - step5
-        - step6
+        - step8
