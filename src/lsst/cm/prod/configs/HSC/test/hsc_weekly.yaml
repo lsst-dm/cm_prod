@@ -135,7 +135,7 @@ faro_tract:
     prerequisites: ["step3"]
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#faro_tract"
-    data_query_base: "instrument = 'HSC' AND band != 'N921' and skymap = 'hsc_rings_v1'"
+    data_query_base: "instrument = 'HSC' AND band != 'N921' and skymap = 'hsc_rings_v1' and band in ('g', 'r', 'i', 'z', 'y')"
 campaign:
     class_name: lsst.cm.tools.db.campaign_handler.CampaignHandler
     root_coll: dummy
