@@ -51,7 +51,7 @@ step2:
     prerequisites: ["step1"]
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#step2"
-    data_query_base: "instrument='LSSTCam-imSim' and skymap='DC2' and tract in (3828, 3829)"
+    data_query_base: "instrument='LSSTCam-imSim' and skymap='DC2'"
 step3:
     prerequisites: ["step2"]
     includes: ["step"]
