@@ -17,7 +17,7 @@ while [ $valid_config = false ]; do
         daemon_options="--max-running 10 --sleep-time 300"
     elif [ $CONFIG = 'rc2_subset' ]
     then
-        butler_repo='/sdf/group/rubin/repo/main'
+        butler_repo='/repo/main+sasquatch_dev'
         source $EXAMPLES/hsc_rc2_subset_setup.sh
         valid_config=true
     elif [ $CONFIG = 'DC2_test-med-1' ]

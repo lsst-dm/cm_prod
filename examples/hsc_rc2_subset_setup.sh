@@ -7,8 +7,8 @@ source $EXAMPLES/common_setup.sh
 config="hsc_rc2_subset.yaml"
 config_name="hsc_rc2_subset"
 p_name="HSC_rc2_subset"
-lsst_version="w_2023_08"
-c_name="${lsst_version}_test0"
+lsst_version="w_2023_50"
+c_name="${lsst_version}_sasquatch_test"
 fullname="${p_name}/${c_name}"
 db_path="output/cm_${p_name}.db"
 
