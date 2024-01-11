@@ -1,5 +1,7 @@
 includeConfigs:
 - ${CTRL_BPS_PANDA_DIR}/config/bps_usdf.yaml
+# To use clustering, leave the following line uncommented:
+- ${DRP_PIPE_DIR}/bps/clustering/DRP-recalibrated.yaml
 - ${DRP_PIPE_DIR}/bps/resources/HSC/DRP-RC2.yaml
 # The above is all that's needed to request only the memory specified in the
 # drp_pipe defaults which should be updated regularly. To use custom memory
