@@ -6,11 +6,12 @@ source $EXAMPLES/common_setup.sh
 
 config="hsc_weekly.yaml"
 config_name="hsc_weekly"
-p_name="HSC"
-lsst_version="w_2023_08"
-c_name="${lsst_version}_test0"
+lsst_version="w_2024_02"
+p_name="${lsst_version}"
+ticket_num="DM-42454"
+c_name="${ticket_num}"
 fullname="${p_name}/${c_name}"
-db_path="output/cm_${p_name}.db"
+db_path="output/cm_{p_name}_${c_name}.db"
 
 
 export CM_CONFIGS="src/lsst/cm/prod/configs/HSC/test"
