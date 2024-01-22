@@ -115,7 +115,7 @@ step8:
     prerequisites: ["step3"]
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step8"
-    data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
+    data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1' and tract in (9615, 9697, 9813)"
 plots:
     prerequisites: ["step3"]
     includes: ["step"]
@@ -130,7 +130,7 @@ faro_matched:
     prerequisites: ["step6"]
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#faro_matched"
-    data_query_base: "instrument = 'HSC' AND band != 'N921' and skymap = 'hsc_rings_v1'"
+    data_query_base: "instrument = 'HSC' AND band != 'N921' and skymap = 'hsc_rings_v1' and tract in (9615, 9697, 9813)"
 faro_tract:
     prerequisites: ["step3"]
     includes: ["step"]
