@@ -40,7 +40,7 @@ step1:
     prerequisites: []
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step1"
-    data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
+    data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1' AND band IN ('g','r','i','z','y')"
     split_args:
         dataset: raw
         field: exposure
@@ -90,7 +90,7 @@ step5:
     prerequisites: ["step4"]
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step5"
-    data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
+    data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1' AND band IN ('g','r','i','z','y')'"
     split_vals:
         field: tract
         values:
