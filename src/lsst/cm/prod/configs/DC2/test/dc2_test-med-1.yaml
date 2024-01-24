@@ -68,7 +68,7 @@ step4:
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#step4"
     data_query_base: "instrument='LSSTCam-imSim' and skymap='DC2' and tract in (3828, 3829)"
     split_args:
-        dataset: calexp # test or research the reasonable arguments here
+        dataset: calexp         # test or research the reasonable arguments here
         field: visit
         min_queries: 4
 step5:
@@ -87,7 +87,7 @@ step6:
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#step6"
     data_query_base: "instrument='LSSTCam-imSim' and skymap='DC2' and tract in (3828, 3829)"
     split_args:
-        dataset: calexp # could also be DiaSource_something
+        dataset: calexp                      # could also be DiaSource_something
         field: visit
         min_queries: 4
 step7:
