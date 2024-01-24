@@ -1,0 +1,151 @@
+prepare_step3:
+    class_name: lsst.cm.tools.db.script_handler.PrepareStep3Handler
+    data_id_file: "${CM_CONFIGS}/step3_veto_filter.yml"
+collect:
+    class_name: lsst.cm.tools.db.script_handler.CollectScriptHandler
+collect_step:
+    class_name: lsst.cm.tools.db.script_handler.CollectStepScriptHandler
+ancil:
+    class_name: lsst.cm.tools.db.script_handler.AncillaryScriptHandler
+    collections:
+        - HSC/calib
+        - HSC/masks
+        - HSC/fgcmcal/lut/PDR2/DM-39549
+        - refcats
+        - skymaps
+job:
+    class_name: lsst.cm.tools.db.job_handler.JobHandler
+workflow:
+    class_name: lsst.cm.tools.db.workflow_handler.WorkflowHandler
+    input_type: source
+    output_type: run
+    job_config: job
+rescue_workflow:
+    includes: ["workflow"]
+    rescue: True
+group:
+    class_name: lsst.cm.tools.db.group_handler.GroupHandler
+    input_type: source
+    output_type: run
+    workflow_config: workflow
+step:
+    class_name: lsst.cm.tools.db.step_handler.StepHandler
+    input_type: source
+    output_type: run
+    group_config: group
+    scripts:
+        - collect_step
+    templates:
+        coll_out: "u/sierrav/panda_testing/DM-42607/{step_name}"
+step1:
+    prerequisites: []
+    includes: ["step"]
+    pipeline_yaml: "${CM_PROD_DIR}/src/lsst/cm/prod/configs/PDR2/fitAffineWcsConfig.yaml#step1"
+    data_query_base: "instrument = 'HSC' and detector != 9 and detector < 140 and band in ('g', 'r', 'i', 'z', 'y')"
+    split_args:
+        dataset: raw
+        field: exposure
+        min_queries: 40
+step2a:
+    prerequisites: ["step1"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step2a"
+    data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
+step2b:
+    prerequisites: ["step2a"]
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step2b"
+    data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
+    split_args:
+        dataset: calexp
+        field: tract
+        min_queries: 30
+step2c:
+    prerequisites: ["step2b"]
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step2c"
+    data_query_base: "instrument = 'HSC' and detector != 9 and detector < 140 and band in ('g', 'r', 'i', 'z', 'y')"
+step2d:
+    prerequisites: ["step2c"]
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step2d"
+    data_query_base: >
+      instrument = 'HSC' and skymap = 'hsc_rings_v1' and detector != 9 and detector < 140
+      and band in ('g', 'r', 'i', 'z', 'y')
+    split_args:
+        dataset: raw
+        field: exposure
+        min_queries: 15
+step2e:
+    prerequisites: ["step2d"]
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step2e"
+    data_query_base: "instrument = 'HSC' and detector != 9 and detector < 140 and band in ('g', 'r', 'i', 'z', 'y')"
+step3:
+    prerequisites: ["step2e"]
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step3"
+    data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
+    scripts:
+        - prepare_step3
+        - collect_step
+step4:
+    prerequisites: ["step3"]
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step4"
+    data_query_base: >
+      instrument = 'HSC' and skymap = 'hsc_rings_v1' and detector != 9 and detector < 140
+      and band in ('g', 'r', 'i', 'z', 'y')
+    split_args:
+        dataset: raw
+        field: visit
+        min_queries: 40
+step5:
+    prerequisites: ["step4"]
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step5"
+    data_query_base: "instrument = 'HSC' and skymap = 'hsc_rings_v1'"
+    split_args:
+        dataset: isolated_star_cat
+        field: tract
+        min_queries: 90
+step6:
+    prerequisites: ["step4"]
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step6"
+    data_query_base: "instrument = 'HSC' and detector != 9 and detector < 140 and band in ('g', 'r', 'i', 'z', 'y')"
+    split_args:
+        dataset: raw
+        field: exposure
+        min_queries: 20
+step7:
+    prerequisites: ["step3"]
+    includes: ["step"]
+    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/HSC/DRP-RC2.yaml#step7"
+    data_query_base: "instrument = 'HSC'"
+campaign:
+    class_name: lsst.cm.tools.db.campaign_handler.CampaignHandler
+    root_coll: dummy
+    input_type: tagged
+    output_type: run
+    bps_yaml_template: "${CM_CONFIGS}/pdr2_template.yaml"
+    bps_script_template: "${CM_CONFIGS}/pdr2_bps_template.sh"
+    templates:
+        coll_source: HSC/raw/PDR2/all
+        coll_in: HSC/raw/PDR2/all
+        coll_out: u/sierrav/panda_testing/DM-42607
+        coll_ancil: u/sierrav/panda_testing/DM-42607/ancillary
+    scripts:
+        - ancil
+        - collect
+    steps:
+        - step1
+        - step2a
+        - step2b
+        - step2c
+        - step2d
+        - step2e
+        - step3
+        - step4
+        - step5
+        - step6
+        - step7

@@ -1,0 +1,130 @@
+pipetask:
+  assembleCoadd:
+    requestMemory: 24576
+  measure:
+    requestMemory: 16384
+  mergeMeasurements:
+    requestMemory: 16384
+# trying to get these to run in lowest memory queue without filing scratch
+# forcedPhotCoadd:
+#    requestMemory: 4096
+# requestCpus: 2
+  forcedPhotCoadd:
+    requestMemory: 10000
+  writeObjectTable:
+    requestMemory: 16384
+  matchCatalogsPatch:
+    requestMemory: 170000
+  modelPhotRepGal4:
+    requestMemory: 60096
+  modelPhotRepGal1:
+    requestMemory: 60096
+  modelPhotRepGal2:
+    requestMemory: 60096
+  modelPhotRepGal3:
+    requestMemory: 60096
+  modelPhotRepStar1:
+    requestMemory: 60096
+  modelPhotRepStar2:
+    requestMemory: 60096
+  modelPhotRepStar3:
+    requestMemory: 60096
+  modelPhotRepStar4:
+    requestMemory: 60096
+  psfPhotRepStar4:
+    requestMemory: 60096
+  psfPhotRepStar3:
+    requestMemory: 60096
+  psfPhotRepStar2:
+    requestMemory: 60096
+  psfPhotRepStar1:
+    requestMemory: 60096
+  imageDifference:
+    requestMemory: 4096
+  matchCatalogsPatchMultiBand:
+    requestMemory: 120000
+  matchCatalogsTract:
+    requestMemory: 420000
+  matchCatalogsTractGxsSNR5to80:
+    requestMemory: 420000
+  matchCatalogsTractMag17to21p5:
+    requestMemory: 420000
+  matchCatalogsTractStarsSNR5to80:
+    requestMemory: 420000
+  AF2_design:
+    requestMemory: 100000
+  AD2_design:
+    requestMemory: 100000
+  AD1_design:
+    requestMemory: 100000
+  AF1_design:
+    requestMemory: 100000
+  wPerp:
+    requestMemory: 120000
+  TE1:
+    requestMemory: 46000
+  TE2:
+    requestMemory: 46000
+  # from Brock
+  fgcmBuildStarsTable:
+    requestMemory: 350000
+  fgcmFitCycle:
+    requestMemory: 13000
+    queue: SLAC_Rubin_Extra_Himem_32Cores
+  fgcmOutputProducts:
+    requestMemory: 150000
+  jointcal:
+    requestMemory: 21000
+  skyCorr:
+    requestMemory: 15500
+  deblend:
+    requestMemory: 80000
+  mergeDetections:
+    requestMemory: 40000
+  # new at USDF
+  templateGen:
+    requestMemory: 5000
+  healSparsePropertyMaps:
+    requestMemory: 30000
+  consolidateObjectTable:
+    requestMemory: 30000
+  getTemplate:
+    requestMemory: 5000
+  consolidateFullDiaObjectTable:
+    requestMemory: 10000
+  consolidateForcedSourceOnDiaObjectTable:
+    requestMemory: 350000
+    queue: "SLAC_Rubin_Merge"
+  transformForcedSourceOnDiaObjectTable:
+    requestMemory: 55000
+  transformForcedSourceTable:
+    requestMemory: 7000
+  consolidateAssocDiaSourceTable:
+    requestMemory: 5000
+  consolidateForcedSourceTable:
+    requestMemory: 200000
+# pipetaskInit:
+# requestMemory: 32000
+# pipetaskInit:
+#    requestMemory: 8192
+  writeRecalibratedSourceTable:
+    requestMemory: 16000
+  finalizeCharacterization:
+    requestMemory: 16000
+  makeCcdVisitTable:
+    requestMemory: 480000
+  makeVisitTable:
+    requestMemory: 480000
+  transformObjectTable:
+    requestMemory: 30000
+  selectGoodSeeingVisits:
+    requestMemory: 8192
+  makeWarp:
+    requestMemory: 8192
+# setting makeWarp memory back to default of 4GB
+# settinf to 8GB with clustering
+# setting forcedPhotCoadd to 10G so that we dont run out of scratch
+# forcedPhotCoadd:
+#   requestMemory: 4096
+  consolidateHealSparsePropertyMaps:
+    requestMemory: 200000

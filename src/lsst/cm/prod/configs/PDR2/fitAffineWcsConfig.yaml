@@ -1,0 +1,10 @@
+description: Retarget wcsFitter to FitAffineWcsTask
+imports:
+  - $DRP_PIPE_DIR/pipelines/HSC/DRP-RC2.yaml
+tasks:
+  calibrate:
+    class: lsst.pipe.tasks.calibrate.CalibrateTask
+    config:
+    python: |
+      from lsst.meas.astrom import FitAffineWcsTask
+      config.astrometry.wcsFitter.retarget(FitAffineWcsTask)
