@@ -10,7 +10,7 @@ legend:
         came up or a ticket associated with fixing a bug.
     resolved: >
         Do we think we have solved this issue? i.e., have we reported and fixed a bug associated with this error?
-        This is most useful in cases where the issue seems to have been addressed. If "resolved==True" and the error
+        This is most useful in cases where the issue seems to have been addressed. If "resolved==true" and the error
         still comes up, we know we missed something and have to stop to look at it.
     rescue: Can the issue associated with this error be solved with a rescue?
     flavor: Where did this error come from? The science pipelines? PanDA? USDF?
@@ -26,64 +26,64 @@ pandaErrorCode:
             # ext_photometryKron_KronFlux...
             pipetask: characterizeImage
             ticket: ["DM-39196", "DM-38691", "DM-38360", "DM-37483", "DM-37089"]
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "payload"
             intensity: 0.001
         psfex:
             diagMessage: ".*:File .* lsst:meas:extensions:psfex:PsfexPsf:_doComputeImage.*"
             pipetask: characterizeImage
             ticket: ["DM-37570"]
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "payload"
             intensity: 0.001
         FWHM_value_of_nan:
             diagMessage: ".*PSF at (.*) has an invalid FWHM value of nan"
             pipetask: calibrate
             ticket: ["DM-37089"]
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "payload"
             intensity: 0.001
         NaN_to_int_calibrate:
             diagMessage: ".*cannot convert float NaN to integer"
             pipetask: calibrate
             ticket: ["DM-36356"]
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "payload"
             intensity: 0.001
         no_use_for_photocal:
             diagMessage: ".*:No matches to use for photocal"
             pipetask: calibrate
             ticket: ["DM-37483", "DM-37089", "DM-32291", "DM-36763"]
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "payload"
             intensity: 0.001
         NaN_to_int_detection:
             diagMessage: ".*cannot convert float NaN to integer"
             pipetask: detection
             ticket: ["DM-36763", "DM-36356", "DM-36066"]
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "payload"
             intensity: 0.001
         all_pixels_masked:
             diagMessage: ".*All pixels masked. Cannot estimate background"
             pipetask: detection
             ticket: ["DM-37837", "DM-37570"]
-            resolved: True
-            rescue: False
+            resolved: true
+            rescue: false
             flavor: "payload"
             intensity: 0
         too_many_indicies:
             diagMessage: ".*too many indices for array: array is 1-dimensional, but 2 were indexed.*"
             pipetask: # it occurred in healSparsePropertyMaps, but is unrelated to the specific pipetask
             ticket: ["DM-37837", "DM-37570"]
-            resolved: True
-            rescue: False
+            resolved: true
+            rescue: false
             flavor: "payload"
             intensity: 0
         do_compute_kernel_image:
@@ -91,8 +91,8 @@ pandaErrorCode:
                 .*File \"src/CoaddPsf.cc\".*doComputeKernelImage.*
             pipetask: subtractImages
             ticket: ["DM-37483", "DM-37089", "DM-36265", "DM-36356", "DM-36066"]
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "payload"
             intensity: 0.001
         kernel_candidacy:
@@ -101,32 +101,32 @@ pandaErrorCode:
             ticket: >
                 ["DM-39196", "DM-38691", "DM-38360", "DM-38042", "DM-37570", "DM-37483", "DM-37089",
                  "DM-36265", "DM-36356", "DM-36066"]
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "payload"
             intensity: 0.001
         psf_matching_kernel_subtractImages:
             diagMessage: ".*Unable to calculate psf matching kernel"
             pipetask: subtractImages
             ticket: ["DM-39196", "DM-38691", "DM-38360", "DM-38042", "DM-37570", "DM-37089"]
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "payload"
             intensity: 0.001
         array_sample_empty:
             diagMessage: ".*array of sample points is empty.*"
             pipetask: subtractImages
             ticket: ["DM-37570"]
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "payload"
             intensity: 0.001
         fp_xp:
             diagMessage: ".*fp and xp are not of the same length.*"
             pipetask: subtractImages
             ticket: ["DM-37570"]
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "payload"
             intensity: 0.001
         lmfit_mad:
@@ -134,8 +134,8 @@ pandaErrorCode:
                 .*fitting algorithms cannot handle this.*
             pipetask: detectAndMeasureDiaSources
             ticket: ["DM-38691", "DM-38360"]
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "payload"
             intensity: 0.001
         parquet_formatter:
@@ -144,32 +144,32 @@ pandaErrorCode:
                 .*
             pipetask: catalogMatchTract
             ticket: ["DM-36306", "DM-36356"]
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "payload"
             intensity: 0.001
         fgcm_380:
             diagMessage: ".*(380, 40).*"
             pipetask: fgcmBuildStarsTable
             ticket: ["DM-37570"]
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "critical"
             intensity: 0
         remote_io:
             diagMessage: ".*Remote I/O error.*"
             pipetask: mergeExecutionButler
             ticket: ["DM-37570"]
-            resolved: True # if we see this, the merge job should be re-run
-            rescue: False
+            resolved: true # if we see this, the merge job should be re-run
+            rescue: false
             flavor: "critical" # this is a usdf failure, but it was enough to stop production
             intensity: 0
         butler_unreachable:
             diagMessage: ".*[Errno 2] No such file or directory: '/sdf/group/rubin/repo/.*'"
             pipetask:
             ticket: ["DM-38360"]
-            resolved: False # we had problems finding the butler; could happen for many reasons
-            rescue: True
+            resolved: false # we had problems finding the butler; could happen for many reasons
+            rescue: true
             flavor: "usdf"
             intensity: 0
     trans, 1:
@@ -177,8 +177,8 @@ pandaErrorCode:
             diagMessage: "Pipelines error: check logging."
             pipetask:
             ticket:
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "payload"
             intensity: 0
     trans, 129:
@@ -188,8 +188,8 @@ pandaErrorCode:
                  controlling process."
             pipetask:
             ticket:
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "panda"
             intensity: 0
     trans, 130:
@@ -197,8 +197,8 @@ pandaErrorCode:
             diagMessage: "SIGINT: Interrupt from keyboard."
             pipetask:
             ticket:
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "panda"
             intensity: 0
     trans, 131:
@@ -206,8 +206,8 @@ pandaErrorCode:
             diagMessage: "SIGQUIT: Quit from keyboard."
             pipetask:
             ticket:
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "panda"
             intensity: 0
     trans, 132:
@@ -215,8 +215,8 @@ pandaErrorCode:
             diagMessage: "SIGILL: Illegal instruction."
             pipetask:
             ticket:
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "panda"
             intensity: 0
     trans, 133:
@@ -224,8 +224,8 @@ pandaErrorCode:
             diagMessage: "SIGTRAP: Trace/breakpoint trap."
             pipetask:
             ticket:
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "panda"
             intensity: 0
     trans, 134:
@@ -233,8 +233,8 @@ pandaErrorCode:
             diagMessage: "SIGABRT: Abort signal."
             pipetask: finalizeCharacterization
             ticket: ["DM-36066"]
-            resolved: True
-            rescue: True
+            resolved: true
+            rescue: true
             flavor: "panda"
             intensity: 0
     trans, 135:
@@ -242,8 +242,8 @@ pandaErrorCode:
             diagMessage: "SIGBUS: Bus error (bad memory access)."
             pipetask:
             ticket:
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "panda"
             intensity: 0
     trans, 136:
@@ -251,8 +251,8 @@ pandaErrorCode:
             diagMessage: "SIGFPE: Floating Point Exemption."
             pipetask:
             ticket:
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "panda"
             intensity: 0
     trans, 137:
@@ -260,8 +260,8 @@ pandaErrorCode:
             diagMessage: "SIGKILL: Kill signal."
             pipetask:
             ticket: ["DM-38691", "DM-38042", "DM-37570", "DM-37483", "DM-36356", "DM-36741"]
-            resolved: True
-            rescue: True
+            resolved: true
+            rescue: true
             flavor: "panda"
             intensity: 0
     trans, 138:
@@ -269,8 +269,8 @@ pandaErrorCode:
             diagMessage: "SIGUSR1: User defined signal."
             pipetask:
             ticket:
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "panda"
             intensity: 0
     trans, 139:
@@ -278,8 +278,8 @@ pandaErrorCode:
             diagMessage: "SIGSEGV: Invalid memory reference."
             pipetask:
             ticket: ["DM-38360", "DM-38042"]
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "critical" # this means there is a segfault in the pipelines
             intensity: 0
     trans, 140:
@@ -287,8 +287,8 @@ pandaErrorCode:
             diagMessage: "SIGUSR2: User defined signal."
             pipetask:
             ticket:
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "panda"
             intensity: 0
     trans, 141:
@@ -296,8 +296,8 @@ pandaErrorCode:
             diagMessage: "SIGPIPE: Broken pipe."
             pipetask:
             ticket:
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "panda"
             intensity: 0
     trans, 142:
@@ -305,8 +305,8 @@ pandaErrorCode:
             diagMessage: "SIGALRM: Timer signal."
             pipetask:
             ticket:
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "panda"
             intensity: 0
     trans, 143:
@@ -314,8 +314,8 @@ pandaErrorCode:
             diagMessage: "SIGTERM: Termination signal."
             pipetask:
             ticket:
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "panda"
             intensity: 0
     trans, 144:
@@ -323,8 +323,8 @@ pandaErrorCode:
             diagMessage: "SIGSTKFLT: Stack fault on coprocessor"
             pipetask:
             ticket:
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "panda"
             intensity: 0
     trans, 145:
@@ -332,8 +332,8 @@ pandaErrorCode:
             diagMessage: "SIGCHILD: Child stopped or terminated."
             pipetask:
             ticket:
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "panda"
             intensity: 0
     trans, 146:
@@ -341,8 +341,8 @@ pandaErrorCode:
             diagMessage: "SIGCONT: Continue if stopped."
             pipetask:
             ticket:
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "panda"
             intensity: 0
     trans, 147:
@@ -350,8 +350,8 @@ pandaErrorCode:
             diagMessage: "SIGSTOP: Stop process."
             pipetask:
             ticket:
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "panda"
             intensity: 0
     trans, 148:
@@ -359,8 +359,8 @@ pandaErrorCode:
             diagMessage: "SIGTSTP: Stop typed at terminal."
             pipetask:
             ticket:
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "panda"
             intensity: 0
     trans, 149:
@@ -368,8 +368,8 @@ pandaErrorCode:
             diagMessage: "SIGTTIN: Terminal input for background process."
             pipetask:
             ticket:
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "panda"
             intensity: 0
     trans, 150:
@@ -377,8 +377,8 @@ pandaErrorCode:
             diagMessage: "SIGTTOU: Terminal output for background process."
             pipetask:
             ticket:
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "panda"
             intensity: 0
     trans, 151:
@@ -386,8 +386,8 @@ pandaErrorCode:
             diagMessage: "SIGURG: Urgent condition on socket."
             pipetask:
             ticket:
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "panda"
             intensity: 0
     trans, 152:
@@ -395,8 +395,8 @@ pandaErrorCode:
             diagMessage: "SIGXCPU: CPU Time Limit Exceeded."
             pipetask:
             ticket:
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "panda"
             intensity: 0
     trans, 153:
@@ -404,8 +404,8 @@ pandaErrorCode:
             diagMessage: "SIGXFSZ: File size limit exceeded."
             pipetask:
             ticket:
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "panda"
             intensity: 0
     trans, 154:
@@ -413,8 +413,8 @@ pandaErrorCode:
             diagMessage: "SIGVTALRM: Virtual alarm clock."
             pipetask:
             ticket:
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "panda"
             intensity: 0
     trans, 155:
@@ -422,8 +422,8 @@ pandaErrorCode:
             diagMessage: "SIGPROF: Profiling timer expired."
             pipetask:
             ticket:
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "panda"
             intensity: 0
     trans, 156:
@@ -431,8 +431,8 @@ pandaErrorCode:
             diagMessage: "SIGWINCH: Window resize signal."
             pipetask:
             ticket:
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "panda"
             intensity: 0
     trans, 157:
@@ -440,8 +440,8 @@ pandaErrorCode:
             diagMessage: "SIGIO: I/O now possible"
             pipetask:
             ticket:
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "panda"
             intensity: 0
     trans, 158:
@@ -449,8 +449,8 @@ pandaErrorCode:
             diagMessage: "SIGPWR: Power failure"
             pipetask:
             ticket:
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "critical"
             intensity: 0
     trans, 159:
@@ -458,8 +458,8 @@ pandaErrorCode:
             diagMessage: "SIGSYS: Bad system call"
             pipetask:
             ticket:
-            resolved: False
-            rescue: False
+            resolved: false
+            rescue: false
             flavor: "panda"
             intensity: 0
     taskbuffer, 300:
@@ -467,8 +467,8 @@ pandaErrorCode:
             diagMessage: ".*The worker was failed while the job was starting : .*"
             pipetask:
             ticket: ["DM-37570", "DM-37483", "DM-36845", "DM-36763"]
-            resolved: False
-            rescue: True
+            resolved: false
+            rescue: true
             flavor: "panda"
             intensity: 0
     taskbuffer, 102:
@@ -476,8 +476,8 @@ pandaErrorCode:
             diagMessage: ".*expired in pending. status unchanged"
             pipetask:
             ticket: ["DM-37089"]
-            resolved: False
-            rescue: True
+            resolved: false
+            rescue: true
             flavor: "panda"
             intensity: 0
     pilot, 1344:
@@ -485,8 +485,8 @@ pandaErrorCode:
             diagMessage: ".*Exception caught: [Errno 11] Resource temporarily unavailable"
             pipetask: finalizeCharacterization
             ticket: ["DM-36066"]
-            resolved: True
-            rescue: True
+            resolved: true
+            rescue: true
             flavor: "panda"
             intensity: 0
     jobdispatcher, 102:
@@ -494,8 +494,8 @@ pandaErrorCode:
             diagMessage: ".*Sent job didn't receive reply from pilot within 30 min"
             pipetask: finalizeCharacterization
             ticket: ["DM-36066"]
-            resolved: True
-            rescue: True
+            resolved: true
+            rescue: true
             flavor: "panda"
             intensity: 0
     jobdispatcher, 100:
@@ -503,8 +503,8 @@ pandaErrorCode:
             diagMessage: ".*lost heartbeat.*"
             pipetask:
             ticket: ["DM-36356"]
-            resolved: True
-            rescue: True
+            resolved: true
+            rescue: true
             flavor: "panda"
             intensity: 0
     pilot, 1098:
@@ -512,7 +512,7 @@ pandaErrorCode:
             diagMessage: ".*too little space left on local disk to run job: .* "
             pipetask: forcedPhotCcd
             ticket: ["DM-36066"]
-            resolved: True
-            rescue: True
+            resolved: true
+            rescue: true
             flavor: "panda"
             intensity: 0
