@@ -17,7 +17,7 @@ workflow:
     job_config: job
 rescue_workflow:
     includes: ["workflow"]
-    rescue: True
+    rescue: true
 group:
     class_name: lsst.cm.tools.db.group_handler.GroupHandler
     input_type: source
