@@ -25,7 +25,7 @@ while [ $valid_config = false ]; do
         butler_repo='/sdf/group/rubin/repo/dc2'
         source $EXAMPLES/dc2_test-med-1_setup.sh
         valid_config=true
-        daemon_options="--max-running 10 --sleep-time 300"
+        daemon_options="--max-running 20 --sleep-time 300"
     elif [ $CONFIG = 'micro' ]
     then
         butler_repo='/sdf/group/rubin/repo/main'
