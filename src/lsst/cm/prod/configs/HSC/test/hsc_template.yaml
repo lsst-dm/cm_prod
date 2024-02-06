@@ -13,3 +13,11 @@ numberOfRetries: 3
 custom_lsst_setup: ""
 
 priority: 1000
+
+executionButler:
+  requestMemory: 64000
+  queue: "SLAC_Rubin_Merge"
+  # turn off chaining in the execution butler because
+  # no output collection
+  command2: ""
+  command3: ""

@@ -7,7 +7,7 @@
 # setup LSST env (the LSST stack).
 export WEEKLY='{lsst_version}'
 source /cvmfs/sw.lsst.eu/linux-x86_64/lsst_distrib/${WEEKLY}/loadLSST.bash
-setup lsst_distrib
+setup lsst_distrib -t ${WEEKLY}
 
 # setup PanDA env.
 # If the stack is not set up elsewhere first, this setup will be insufficient.
