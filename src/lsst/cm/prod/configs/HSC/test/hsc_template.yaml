@@ -12,6 +12,13 @@ numberOfRetries: 3
 
 custom_lsst_setup: ""
 
+finalJob:
+  command1: >-
+    ${DAF_BUTLER_DIR}/bin/butler {finalPreCmdOpts} transfer-from-graph
+    {fileDistributionEndPoint}{qgraphFile}
+    {butlerConfig}
+    --register-dataset-types
+
 priority: 1000
 
 executionButler:
@@ -21,3 +28,5 @@ executionButler:
   # no output collection
   command2: ""
   command3: ""
+
+pipetaskOutput: ''
