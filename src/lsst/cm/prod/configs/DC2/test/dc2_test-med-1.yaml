@@ -95,11 +95,6 @@ step7:
     includes: ["step"]
     pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#step7"
     data_query_base: "instrument='LSSTCam-imSim' and skymap='DC2' and tract in (3828, 3829)"
-step8:
-    prerequisites: ["step3"]
-    includes: ["step"]
-    pipeline_yaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-test-med-1.yaml#step8"
-    data_query_base: "instrument='LSSTCam-imSim' and skymap='DC2' and tract in (3828, 3829)"
 faro_visit:
     prerequisites: ["step6"]
     includes: ["step"]
@@ -150,7 +145,6 @@ campaign:
         - step5
         - step6
         - step7
-        - step8
         - faro_visit
         - faro_matched
         - faro_tract

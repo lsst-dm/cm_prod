@@ -3,9 +3,9 @@
 EXAMPLES=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 # Use this for tests or things you're not quite sure of
-#root_coll="u/${USER}/cm"
+root_coll="u/${USER}/cm"
 # Use this for runs you want in the butler in the traditional place
-root_coll="HSC/runs/RC2"
+#root_coll="HSC/runs/RC2"
 #root_coll="2.2i/runs/test-med-1"
 
 export CM_PROD_DIR=`echo ${EXAMPLES} | sed 's/\/examples//'`
