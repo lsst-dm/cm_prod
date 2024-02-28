@@ -13,6 +13,8 @@ includeConfigs:
 
 custom_lsst_setup: ""
 
+pipetaskOutput: ""
+
 finalJob:
   command1: >-
     ${DAF_BUTLER_DIR}/bin/butler {finalPreCmdOpts} transfer-from-graph
