@@ -6,7 +6,7 @@ source $EXAMPLES/common_setup.sh
 
 config="hsc_weekly.yaml"
 config_name="hsc_weekly"
-lsst_version="w_2024_06"
+lsst_version="w_2024_10"
 p_name="${lsst_version}"
 ticket_num="ticket_num"
 c_name="${ticket_num}"
